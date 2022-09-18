@@ -509,7 +509,7 @@ namespace ReceptionApp.Data.Migrations
                         .HasForeignKey("AddedByUserID");
 
                     b.HasOne("ReceptionApp.Data.Models.Recipe", "Recipe")
-                        .WithMany()
+                        .WithMany("Images")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -576,6 +576,8 @@ namespace ReceptionApp.Data.Migrations
 
             modelBuilder.Entity("ReceptionApp.Data.Models.Recipe", b =>
                 {
+                    b.Navigation("Images");
+
                     b.Navigation("Ingredients");
                 });
 #pragma warning restore 612, 618

@@ -12,8 +12,8 @@ using ReceptionApp.Data;
 namespace ReceptionApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220918154546_AddRecipe")]
-    partial class AddRecipe
+    [Migration("20220918161249_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -511,7 +511,7 @@ namespace ReceptionApp.Data.Migrations
                         .HasForeignKey("AddedByUserID");
 
                     b.HasOne("ReceptionApp.Data.Models.Recipe", "Recipe")
-                        .WithMany()
+                        .WithMany("Images")
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -578,6 +578,8 @@ namespace ReceptionApp.Data.Migrations
 
             modelBuilder.Entity("ReceptionApp.Data.Models.Recipe", b =>
                 {
+                    b.Navigation("Images");
+
                     b.Navigation("Ingredients");
                 });
 #pragma warning restore 612, 618
