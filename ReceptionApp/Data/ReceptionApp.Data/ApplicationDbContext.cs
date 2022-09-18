@@ -25,6 +25,16 @@
 
         public DbSet<Setting> Settings { get; set; }
 
+        public virtual DbSet<Recipe> Recipes { get; set; }
+
+        public virtual DbSet<Category> Categories { get; set; }
+
+        public virtual DbSet<Image> Images { get; set; }
+
+        public virtual DbSet<Ingredient> Ingredients { get; set; }
+
+        public virtual DbSet<RecipeIngredient> RecipeIngredients { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
