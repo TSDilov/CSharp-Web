@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\ReceptionApp.Data.Common\ReceptionApp.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\ReceptionApp.Data.Models\ReceptionApp.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\ReceptionApp.Web.ViewModels\ReceptionApp.Web.ViewModels.csproj" />
     <ProjectReference Include="..\ReceptionApp.Services.Mapping\ReceptionApp.Services.Mapping.csproj" />
   </ItemGroup>
 

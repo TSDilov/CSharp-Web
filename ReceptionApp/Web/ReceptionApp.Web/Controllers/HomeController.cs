@@ -1,15 +1,29 @@
 ﻿namespace ReceptionApp.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Linq;
 
     using Microsoft.AspNetCore.Mvc;
+    using ReceptionApp.Data;
+    using ReceptionApp.Data.Common.Repositories;
+    using ReceptionApp.Data.Models;
+    using ReceptionApp.Services.Data;
     using ReceptionApp.Web.ViewModels;
+    using ReceptionApp.Web.ViewModels.Home;
 
     public class HomeController : BaseController
     {
+        private readonly IGetCountsService countsService;
+
+        public HomeController(IGetCountsService countsService)
+        {
+            this.countsService = countsService;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            var viewModel = this.countsService.GetCounts();
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()
