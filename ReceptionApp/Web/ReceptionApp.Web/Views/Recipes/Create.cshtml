@@ -37,6 +37,15 @@
         <select asp-for="CategoryId" class="form-control" asp-items="categoryItems"></select>
         <span asp-validation-for="CategoryId" class="text-danger"></span>
     </div>
+    <div id="IngredientsConteiner">
+        <label asp-for="Ingredients"></label>
+        <a class="btn btn-success" onclick="AddMoreIngredients()">+</a>
+    </div>
     <br>
     <input type="submit" class="btn btn-primary"/>
 </form>
+
+@section Scripts
+    {
+    <script src="~/js/Recipes.js"></script>
+}

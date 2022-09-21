@@ -25,7 +25,7 @@
 
         public string AddedByUserID { get; set; }
 
-        public virtual ApplicationUser AddedByByUser { get; set; }
+        public virtual ApplicationUser AddedByUser { get; set; }
 
         public int CategoryId { get; set; }
 
