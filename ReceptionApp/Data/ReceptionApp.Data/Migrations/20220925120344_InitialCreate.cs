@@ -225,8 +225,7 @@ namespace ReceptionApp.Data.Migrations
                     PreparationTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     CookingTIme = table.Column<TimeSpan>(type: "time", nullable: false),
                     PortionCount = table.Column<int>(type: "int", nullable: false),
-                    AddedByUserID = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AddedByByUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    AddedByUserID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -237,8 +236,8 @@ namespace ReceptionApp.Data.Migrations
                 {
                     table.PrimaryKey("PK_Recipes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recipes_AspNetUsers_AddedByByUserId",
-                        column: x => x.AddedByByUserId,
+                        name: "FK_Recipes_AspNetUsers_AddedByUserID",
+                        column: x => x.AddedByUserID,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -383,9 +382,9 @@ namespace ReceptionApp.Data.Migrations
                 column: "RecipeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Recipes_AddedByByUserId",
+                name: "IX_Recipes_AddedByUserID",
                 table: "Recipes",
-                column: "AddedByByUserId");
+                column: "AddedByUserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recipes_CategoryId",

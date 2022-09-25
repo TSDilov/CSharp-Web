@@ -23,6 +23,8 @@
 
         public int PortionCount { get; set; }
 
+        public string OriginalUrl { get; set; }
+
         public string AddedByUserID { get; set; }
 
         public virtual ApplicationUser AddedByUser { get; set; }

@@ -12,8 +12,8 @@ using ReceptionApp.Data;
 namespace ReceptionApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220918161249_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220925160306_Modify")]
+    partial class Modify
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -347,11 +347,8 @@ namespace ReceptionApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("AddedByByUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("AddedByUserID")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
@@ -377,6 +374,9 @@ namespace ReceptionApp.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("OriginalUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("PortionCount")
                         .HasColumnType("int");
 
@@ -385,7 +385,7 @@ namespace ReceptionApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AddedByByUserId");
+                    b.HasIndex("AddedByUserID");
 
                     b.HasIndex("CategoryId");
 
@@ -523,9 +523,9 @@ namespace ReceptionApp.Data.Migrations
 
             modelBuilder.Entity("ReceptionApp.Data.Models.Recipe", b =>
                 {
-                    b.HasOne("ReceptionApp.Data.Models.ApplicationUser", "AddedByByUser")
+                    b.HasOne("ReceptionApp.Data.Models.ApplicationUser", "AddedByUser")
                         .WithMany()
-                        .HasForeignKey("AddedByByUserId");
+                        .HasForeignKey("AddedByUserID");
 
                     b.HasOne("ReceptionApp.Data.Models.Category", "Category")
                         .WithMany("Recipes")
@@ -533,7 +533,7 @@ namespace ReceptionApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("AddedByByUser");
+                    b.Navigation("AddedByUser");
 
                     b.Navigation("Category");
                 });

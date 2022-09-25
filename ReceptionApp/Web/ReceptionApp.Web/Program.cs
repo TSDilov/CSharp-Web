@@ -15,6 +15,7 @@
     using ReceptionApp.Data.Models;
     using ReceptionApp.Data.Repositories;
     using ReceptionApp.Data.Seeding;
+    using ReceptionApp.Services;
     using ReceptionApp.Services.Data;
     using ReceptionApp.Services.Mapping;
     using ReceptionApp.Services.Messaging;
@@ -67,6 +68,7 @@
             services.AddTransient<IGetCountsService, GetCountsService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IRecipeService, RecipeService>();
+            services.AddTransient<IRecipeTrackerService, RecipeTrackerService>();
         }
 
         private static void Configure(WebApplication app)

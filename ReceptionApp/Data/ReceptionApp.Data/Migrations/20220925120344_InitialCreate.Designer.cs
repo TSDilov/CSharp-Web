@@ -12,8 +12,8 @@ using ReceptionApp.Data;
 namespace ReceptionApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220921173057_AddedUserMistacke")]
-    partial class AddedUserMistacke
+    [Migration("20220925120344_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
