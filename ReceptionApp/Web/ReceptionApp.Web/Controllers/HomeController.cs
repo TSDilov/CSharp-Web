@@ -15,35 +15,16 @@
     public class HomeController : BaseController
     {
         private readonly IGetCountsService countsService;
-        private readonly IRecipeTrackerService recipeTrackerService;
 
-        public HomeController(IGetCountsService countsService, IRecipeTrackerService recipeTrackerService)
+        public HomeController(IGetCountsService countsService)
         {
             this.countsService = countsService;
-            this.recipeTrackerService = recipeTrackerService;
         }
 
         public IActionResult Index()
         {
             var viewModel = this.countsService.GetCounts();
             return this.View(viewModel);
-        }
-
-        public IActionResult AddFromGotvq()
-        {
-            return this.View();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddFromGotvq(AddFromGotvqViewModel model)
-        {
-            if (!this.ModelState.IsValid)
-            {
-                return this.View();
-            }
-
-            await this.recipeTrackerService.PopulateDBwithRecipe(model.recipeUrl);
-            return this.Redirect("/");
         }
 
         public IActionResult Privacy()

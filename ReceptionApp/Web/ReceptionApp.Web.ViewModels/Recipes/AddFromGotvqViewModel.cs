@@ -1,4 +1,4 @@
-﻿namespace ReceptionApp.Web.ViewModels.Home
+﻿namespace ReceptionApp.Web.ViewModels.Recipes
 {
     using System;
     using System.Collections.Generic;
