@@ -12,7 +12,7 @@ using ReceptionApp.Data;
 namespace ReceptionApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220925120344_InitialCreate")]
+    [Migration("20221001084438_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -300,6 +300,9 @@ namespace ReceptionApp.Data.Migrations
                     b.Property<int>("RecipeId")
                         .HasColumnType("int");
 
+                    b.Property<string>("RemoteImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddedByUserID");
@@ -372,6 +375,9 @@ namespace ReceptionApp.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OriginalUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PortionCount")

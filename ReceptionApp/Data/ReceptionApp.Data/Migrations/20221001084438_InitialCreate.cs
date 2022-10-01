@@ -225,6 +225,7 @@ namespace ReceptionApp.Data.Migrations
                     PreparationTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     CookingTIme = table.Column<TimeSpan>(type: "time", nullable: false),
                     PortionCount = table.Column<int>(type: "int", nullable: false),
+                    OriginalUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddedByUserID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -255,6 +256,7 @@ namespace ReceptionApp.Data.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     RecipeId = table.Column<int>(type: "int", nullable: false),
                     Extension = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RemoteImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AddedByUserID = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
