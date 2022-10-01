@@ -1,11 +1,13 @@
 ﻿namespace ReceptionApp.Services.Data
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using ReceptionApp.Data.Common.Repositories;
     using ReceptionApp.Data.Models;
+    using ReceptionApp.Services.Mapping;
     using ReceptionApp.Web.ViewModels.Recipes;
 
     public class RecipeService : IRecipeService
@@ -21,7 +23,7 @@
             this.ingredientRepository = ingredientRepository;
         }
 
-        public async Task CreateAsync(CreateRecipeModel input)
+        public async Task CreateAsync(CreateRecipeModel input, string userId)
         {
             var recipe = new Recipe
             {
@@ -29,8 +31,9 @@
                 Name = input.Name,
                 CookingTIme = TimeSpan.FromMinutes(input.CookingTime),
                 Instructions = input.Instructions,
-                PortionCount = input.PortionCount,
+                PortionsCount = input.PortionCount,
                 PreparationTime = TimeSpan.FromMinutes(input.PreparationTime),
+                AddedByUserID = userId,
             };
 
             foreach (var ingredient in input.Ingredients)
@@ -50,6 +53,21 @@
 
             await this.recipesRepository.AddAsync(recipe);
             await this.recipesRepository.SaveChangesAsync();
+        }
+
+        public IEnumerable<T> GetAll<T>(int page, int itemsPerPage = 12)
+        {
+            return this.recipesRepository.AllAsNoTracking()
+                .OrderByDescending(x => x.Id)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .To<T>()
+                .ToList();
+        }
+
+        public int GetCount()
+        {
+            return this.recipesRepository.All().Count();
         }
     }
 }
