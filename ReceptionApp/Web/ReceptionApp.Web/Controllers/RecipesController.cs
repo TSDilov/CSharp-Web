@@ -1,11 +1,14 @@
 ﻿namespace ReceptionApp.Web.Controllers
 {
+    using System;
     using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using ReceptionApp.Data.Models;
     using ReceptionApp.Services;
     using ReceptionApp.Services.Data;
@@ -16,15 +19,18 @@
         private readonly ICategoriesService categoriesService;
         private readonly IRecipeService recipeService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IWebHostEnvironment environment;
 
         public RecipesController(
             ICategoriesService categoriesService,
             IRecipeService recipeService,
-            UserManager<ApplicationUser> userManager)
+            UserManager<ApplicationUser> userManager,
+            IWebHostEnvironment environment)
         {
             this.categoriesService = categoriesService;
             this.recipeService = recipeService;
             this.userManager = userManager;
+            this.environment = environment;
         }
 
         [Authorize]
@@ -46,7 +52,16 @@
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.recipeService.CreateAsync(input, user.Id);
+            try
+            {
+                await this.recipeService.CreateAsync(input, user.Id, $"{this.environment.WebRootPath}/images");
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError(string.Empty, ex.Message);
+                input.CategoryItems = this.categoriesService.GetAllCategoriesAsKeyValuePairs();
+                return this.View(input);
+            }
 
             return this.Redirect("/");
         }

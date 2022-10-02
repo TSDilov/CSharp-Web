@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@
     using ReceptionApp.Data.Models;
     using ReceptionApp.Services.Mapping;
     using ReceptionApp.Web.ViewModels.Recipes;
+    using static System.Net.WebRequestMethods;
 
     public class RecipeService : IRecipeService
     {
@@ -23,7 +25,7 @@
             this.ingredientRepository = ingredientRepository;
         }
 
-        public async Task CreateAsync(CreateRecipeModel input, string userId)
+        public async Task CreateAsync(CreateRecipeModel input, string userId, string imagePath)
         {
             var recipe = new Recipe
             {
@@ -49,6 +51,30 @@
                     Ingredient = ingredientInDb,
                     Quantity = ingredient.Quantity,
                 });
+            }
+
+            var allowedExtensions = new[] { "jpg", "png", "gif" };
+            Directory.CreateDirectory($"{imagePath}/recipes/");
+            foreach (var image in input.Images)
+            {
+                var extension = Path.GetExtension(image.FileName).TrimStart('.');
+                if (!allowedExtensions.Contains(extension))
+                {
+                    throw new Exception($"Invalid image extension {extension}");
+                }
+
+                var dbImage = new Image
+                {
+                    AddedByUserID = userId,
+                    Extension = extension,
+                };
+
+                recipe.Images.Add(dbImage);
+                var physicalPath = $"{imagePath}/recipes/{dbImage.Id}.{extension}";
+                using (Stream fileStream = new FileStream(physicalPath, FileMode.Create))
+                {
+                    await image.CopyToAsync(fileStream);
+                }
             }
 
             await this.recipesRepository.AddAsync(recipe);

@@ -14,8 +14,6 @@
 
         public string Name { get; set; }
 
-        public int MyProperty { get; set; }
-
         public int CategoryId { get; set; }
 
         public string CategoryName { get; set; }
@@ -26,7 +24,7 @@
                 .ForMember(x => x.ImageUrl, opt =>
                 opt.MapFrom(x => x.Images.FirstOrDefault().RemoteImageUrl != null ?
                         x.Images.FirstOrDefault().RemoteImageUrl :
-                        "images/recipes/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
+                        "/images/recipes/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
         }
     }
 }
