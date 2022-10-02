@@ -1,0 +1,102 @@
+﻿@model ReceptionApp.Web.ViewModels.Recipes.SingleRecipeViewModel
+@{
+    this.ViewData["Title"] = Model.Name;
+}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="receipe-slider owl-carousel owl-loaded owl-drag">
+                <div class="owl-stage-outer">
+                    <img src="@Model.ImageUrl" alt="@Model.Name" class="img-fluid w-100">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="receipe-content-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-8">
+                <div class="receipe-headline my-5">
+                    <span>@Model.CreatedOn.ToShortDateString() by @(Model.AddedByUserUserName ?? "anonymous")</span>
+                    <h4>@Model.CategoryName</h4>
+                    <h2>@Model.Name</h2>
+                    <div class="receipe-duration">
+                        <h6>Prep: @Model.PreparationTime</h6>
+                        <h6>Cook: @Model.CookingTIme</h6>
+                        <h6>Yields: @Model.PortionsCount @(Model.PortionsCount == 1 ? "Serving" : "Servings")</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-4">
+                <div class="receipe-ratings text-right my-5">
+                    <div class="ratings">
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <i class="fa fa-star-o" aria-hidden="true"></i>
+                    </div>
+                    <a href="#" class="btn delicious-btn">For Begginers</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <!-- Single Preparation Step -->
+                <h4>Instructions:</h4>
+                <br />
+                <p>@Model.Instructions</p>
+            </div>
+
+            <!-- Ingredients -->
+            <div class="col-12 col-lg-4">
+                <div class="ingredients">
+                    <h4>Ingredients</h4>
+                    @foreach (var ingredient in Model.Ingredients)
+                    {
+                        <div class="custom-control custom-checkbox">
+                            <label class="custom-control-label" for="customCheck1">@ingredient.IngredientName - @ingredient.Quantity</label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="section-heading text-left">
+                    <h3>Leave a comment</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="contact-form-area">
+                    <form action="#" method="post">
+                        <div class="row">
+                            <div class="col-12 col-lg-6">
+                                <input type="text" class="form-control" id="name" placeholder="Name">
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <input type="email" class="form-control" id="email" placeholder="E-mail">
+                            </div>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="subject" placeholder="Subject">
+                            </div>
+                            <div class="col-12">
+                                <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button class="btn delicious-btn mt-30" type="submit">Post Comments</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
