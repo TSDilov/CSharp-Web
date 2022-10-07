@@ -53,7 +53,7 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
             };
 
             await this.postService.CreateAsync(modelForBase);
-            return this.Redirect("/");
+            return this.RedirectToAction("All");
         }
 
         public IActionResult Edit(int id)
