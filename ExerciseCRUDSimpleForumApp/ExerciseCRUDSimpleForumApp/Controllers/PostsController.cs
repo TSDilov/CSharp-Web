@@ -78,8 +78,14 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
             postFromBase.Title = model.Title;
             postFromBase.Content = model.Content;
             await this.postService.EditAsync(postFromBase, id);
-            this.postService.GetAll();
 
+            return RedirectToAction("All");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.postService.DeleteAsync(id);
             return RedirectToAction("All");
         }
     }

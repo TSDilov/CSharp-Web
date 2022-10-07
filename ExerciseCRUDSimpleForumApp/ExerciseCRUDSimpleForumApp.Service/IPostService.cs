@@ -16,5 +16,7 @@ namespace ExerciseCRUDSimpleForumApp.Service
         Post GetById(int id);
 
         Task EditAsync(Post post, int id);
+
+        Task DeleteAsync(int id);
     }
 }

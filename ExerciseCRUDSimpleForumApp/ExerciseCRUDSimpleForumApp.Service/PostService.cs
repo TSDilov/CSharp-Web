@@ -24,6 +24,14 @@ namespace ExerciseCRUDSimpleForumApp.Service
             return Task.CompletedTask;
         }
 
+        public Task DeleteAsync(int id)
+        {
+            var post = this.GetById(id);
+            post.IsDeleted = true;
+            this.dbContext.SaveChanges();
+            return Task.CompletedTask;
+        }
+
         public Task EditAsync(Post post, int id)
         {
             var postFromBase = this.GetById(id);
@@ -35,7 +43,9 @@ namespace ExerciseCRUDSimpleForumApp.Service
 
         public IEnumerable<Post> GetAll()
         {
-            return this.dbContext.Posts.ToList();
+            return this.dbContext.Posts
+                .Where(x => x.IsDeleted == false)
+                .ToList();
         }
 
         public Post GetById(int id)
