@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseCRUDSimpleForumApp.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseCRUDSimpleForumApp.Data", "ExerciseCRUDSimpleForumApp.Data\ExerciseCRUDSimpleForumApp.Data.csproj", "{6A90CFEB-DA9C-4A1E-AB0A-68CDE58C9490}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseCRUDSimpleForumApp.Service", "ExerciseCRUDSimpleForumApp.Service\ExerciseCRUDSimpleForumApp.Service.csproj", "{57BA84F3-E6A2-4F51-91FE-BFB272453A28}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6A90CFEB-DA9C-4A1E-AB0A-68CDE58C9490}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A90CFEB-DA9C-4A1E-AB0A-68CDE58C9490}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A90CFEB-DA9C-4A1E-AB0A-68CDE58C9490}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57BA84F3-E6A2-4F51-91FE-BFB272453A28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57BA84F3-E6A2-4F51-91FE-BFB272453A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57BA84F3-E6A2-4F51-91FE-BFB272453A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57BA84F3-E6A2-4F51-91FE-BFB272453A28}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
