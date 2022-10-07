@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseCRUDSimpleForumApp.Web", "ExerciseCRUDSimpleForumApp\ExerciseCRUDSimpleForumApp.Web.csproj", "{67C4CF09-6914-4984-BAD9-F81198ABFAF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExerciseCRUDSimpleForumApp.Data", "ExerciseCRUDSimpleForumApp.Data\ExerciseCRUDSimpleForumApp.Data.csproj", "{6A90CFEB-DA9C-4A1E-AB0A-68CDE58C9490}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{67C4CF09-6914-4984-BAD9-F81198ABFAF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67C4CF09-6914-4984-BAD9-F81198ABFAF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67C4CF09-6914-4984-BAD9-F81198ABFAF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67C4CF09-6914-4984-BAD9-F81198ABFAF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A90CFEB-DA9C-4A1E-AB0A-68CDE58C9490}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A90CFEB-DA9C-4A1E-AB0A-68CDE58C9490}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A90CFEB-DA9C-4A1E-AB0A-68CDE58C9490}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A90CFEB-DA9C-4A1E-AB0A-68CDE58C9490}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0C880222-8641-41F4-9BBC-DACB12C8A580}
+	EndGlobalSection
+EndGlobal
