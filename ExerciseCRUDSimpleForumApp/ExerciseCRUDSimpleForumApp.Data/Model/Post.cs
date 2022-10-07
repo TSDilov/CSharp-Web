@@ -19,6 +19,6 @@ namespace ExerciseCRUDSimpleForumApp.Data.Model
         [MaxLength(50)]
         public string? Content { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }
