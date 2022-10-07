@@ -10,5 +10,11 @@ namespace ExerciseCRUDSimpleForumApp.Service
     public interface IPostService
     {
         IEnumerable<Post> GetAll();
+
+        Task CreateAsync(Post post);
+
+        Post GetById(int id);
+
+        Task EditAsync(Post post, int id);
     }
 }

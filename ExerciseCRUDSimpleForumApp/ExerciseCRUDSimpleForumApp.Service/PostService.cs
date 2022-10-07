@@ -17,9 +17,30 @@ namespace ExerciseCRUDSimpleForumApp.Service
             this.dbContext = dbContext;
         }
 
+        public Task CreateAsync(Post post)
+        {
+            this.dbContext.Posts.Add(post);
+            this.dbContext.SaveChanges();
+            return Task.CompletedTask;
+        }
+
+        public Task EditAsync(Post post, int id)
+        {
+            var postFromBase = this.GetById(id);
+            postFromBase.Title = post.Title;
+            postFromBase.Content = post.Content;
+            this.dbContext.SaveChanges();
+            return Task.CompletedTask;
+        }
+
         public IEnumerable<Post> GetAll()
         {
             return this.dbContext.Posts.ToList();
+        }
+
+        public Post GetById(int id)
+        {
+            return this.dbContext.Posts.FirstOrDefault(x => x.Id == id);
         }
     }
 }
