@@ -1,4 +1,5 @@
 ﻿using ExerciseCRUDSimpleForumApp.Data.Model;
+using ExerciseCRUDSimpleForumApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +12,11 @@ namespace ExerciseCRUDSimpleForumApp.Service
     {
         IEnumerable<Post> GetAll();
 
-        Task CreateAsync(Post post);
+        Task CreateAsync(CreatePostViewModel post);
 
         Post GetById(int id);
 
-        Task EditAsync(Post post, int id);
+        Task EditAsync(CreatePostViewModel post, int id);
 
         Task DeleteAsync(int id);
     }

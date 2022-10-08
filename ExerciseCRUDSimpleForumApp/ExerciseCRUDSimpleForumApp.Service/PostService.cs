@@ -1,5 +1,6 @@
 ﻿using ExerciseCRUDSimpleForumApp.Data;
 using ExerciseCRUDSimpleForumApp.Data.Model;
+using ExerciseCRUDSimpleForumApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,15 @@ namespace ExerciseCRUDSimpleForumApp.Service
             this.dbContext = dbContext;
         }
 
-        public Task CreateAsync(Post post)
+        public Task CreateAsync(CreatePostViewModel post)
         {
-            this.dbContext.Posts.Add(post);
+            var newPost = new Post 
+            {
+                Title = post.Title,
+                Content = post.Content,
+            };
+
+            this.dbContext.Posts.Add(newPost);
             this.dbContext.SaveChanges();
             return Task.CompletedTask;
         }
@@ -32,7 +39,7 @@ namespace ExerciseCRUDSimpleForumApp.Service
             return Task.CompletedTask;
         }
 
-        public Task EditAsync(Post post, int id)
+        public Task EditAsync(CreatePostViewModel post, int id)
         {
             var postFromBase = this.GetById(id);
             postFromBase.Title = post.Title;

@@ -1,6 +1,6 @@
 ﻿using ExerciseCRUDSimpleForumApp.Data.Model;
 using ExerciseCRUDSimpleForumApp.Service;
-using ExerciseCRUDSimpleForumApp.Web.Models;
+using ExerciseCRUDSimpleForumApp.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExerciseCRUDSimpleForumApp.Web.Controllers
@@ -46,23 +46,17 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
                 return View(model);
             }
 
-            var modelForBase = new Post
-            {
-                Title = model.Title,
-                Content = model.Content,
-            };
-
-            await this.postService.CreateAsync(modelForBase);
+            await this.postService.CreateAsync(model);
             return this.RedirectToAction("All");
         }
 
         public IActionResult Edit(int id)
         {
-            var post = this.postService.GetById(id);
+            var postFromBase = this.postService.GetById(id);
             return View(new CreatePostViewModel() 
             {
-                Title = post.Title,
-                Content=post.Content,
+                Title = postFromBase.Title,
+                Content = postFromBase.Content,
             });
         }
 
@@ -74,11 +68,7 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
                 return View(model);
             }
 
-            var postFromBase = this.postService.GetById(id);
-            postFromBase.Title = model.Title;
-            postFromBase.Content = model.Content;
-            await this.postService.EditAsync(postFromBase, id);
-
+            await this.postService.EditAsync(model, id);
             return RedirectToAction("All");
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -20,5 +21,9 @@ namespace ExerciseCRUDSimpleForumApp.Data.Model
         public string? Content { get; set; }
 
         public bool IsDeleted { get; set; } = false;
+
+        public string? AddedByUserId { get; set; }
+
+        public IdentityUser? AddedByUser { get; set; }
     }
 }

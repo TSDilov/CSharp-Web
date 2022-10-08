@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ExerciseCRUDSimpleForumApp.Data\ExerciseCRUDSimpleForumApp.Data.csproj" />
     <ProjectReference Include="..\ExerciseCRUDSimpleForumApp.Service\ExerciseCRUDSimpleForumApp.Service.csproj" />
+    <ProjectReference Include="..\ExerciseCRUDSimpleForumApp.ViewModels\ExerciseCRUDSimpleForumApp.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
