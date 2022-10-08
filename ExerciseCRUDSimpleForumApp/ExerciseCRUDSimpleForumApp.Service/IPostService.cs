@@ -10,7 +10,7 @@ namespace ExerciseCRUDSimpleForumApp.Service
 {
     public interface IPostService
     {
-        IEnumerable<Post> GetAll();
+        IEnumerable<PostViewModel> GetAll();
 
         Task CreateAsync(CreatePostViewModel post);
 

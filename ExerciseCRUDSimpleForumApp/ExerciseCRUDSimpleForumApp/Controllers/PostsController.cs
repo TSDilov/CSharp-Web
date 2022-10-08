@@ -1,6 +1,7 @@
 ﻿using ExerciseCRUDSimpleForumApp.Data.Model;
 using ExerciseCRUDSimpleForumApp.Service;
 using ExerciseCRUDSimpleForumApp.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExerciseCRUDSimpleForumApp.Web.Controllers
@@ -8,32 +9,23 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
     public class PostsController : Controller
     {
         private readonly IPostService postService;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public PostsController(IPostService postService)
+        public PostsController(
+            IPostService postService,
+            UserManager<IdentityUser> userManager)
         {
             this.postService = postService;
+            this.userManager = userManager;
         }
 
         public IActionResult All()
         {
-            var posts = new List<PostViewModel>();
-            var postsFromBase = this.postService.GetAll();
-
-            foreach (var post in postsFromBase)
-            {
-                var postForView = new PostViewModel 
-                {
-                    Id = post.Id,
-                    Title = post.Title,
-                    Content = post.Content,
-                };
-
-                posts.Add(postForView);
-            }
+            var posts = this.postService.GetAll();
             return View(posts);
         }
 
-        public IActionResult Add()
+        public async Task<IActionResult> Add()
         {
             return View();
         }
@@ -46,6 +38,10 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
                 return View(model);
             }
 
+            var user = await this.userManager.GetUserAsync(this.User);
+            model.AddedByUserId = user.Id;
+            model.Username = user.UserName;
+
             await this.postService.CreateAsync(model);
             return this.RedirectToAction("All");
         }
@@ -53,10 +49,11 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
         public IActionResult Edit(int id)
         {
             var postFromBase = this.postService.GetById(id);
-            return View(new CreatePostViewModel() 
+            return View(new CreatePostViewModel()
             {
                 Title = postFromBase.Title,
                 Content = postFromBase.Content,
+                AddedByUserId = postFromBase.AddedByUserId
             });
         }
 

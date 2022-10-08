@@ -24,6 +24,8 @@ namespace ExerciseCRUDSimpleForumApp.Service
             {
                 Title = post.Title,
                 Content = post.Content,
+                AddedByUserId = post.AddedByUserId,
+                Username = post.Username,
             };
 
             this.dbContext.Posts.Add(newPost);
@@ -48,11 +50,28 @@ namespace ExerciseCRUDSimpleForumApp.Service
             return Task.CompletedTask;
         }
 
-        public IEnumerable<Post> GetAll()
+        public IEnumerable<PostViewModel> GetAll()
         {
-            return this.dbContext.Posts
+            var postsForTheApp = new List<PostViewModel>();
+            var postFromBase =  this.dbContext.Posts
                 .Where(x => x.IsDeleted == false)
                 .ToList();
+
+            foreach (var post in postFromBase)
+            {
+                var postForTheApp = new PostViewModel
+                {
+                    Id = post.Id,
+                    Title = post.Title,
+                    Content = post.Content,
+                    AddedByUserId = post.AddedByUserId,
+                    UserName = post.Username,
+                };
+                
+                postsForTheApp.Add(postForTheApp);
+            }
+
+            return postsForTheApp;
         }
 
         public Post GetById(int id)

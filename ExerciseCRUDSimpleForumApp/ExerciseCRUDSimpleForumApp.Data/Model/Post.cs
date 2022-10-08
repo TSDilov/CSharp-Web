@@ -25,5 +25,7 @@ namespace ExerciseCRUDSimpleForumApp.Data.Model
         public string? AddedByUserId { get; set; }
 
         public IdentityUser? AddedByUser { get; set; }
+
+        public string? Username { get; set; }
     }
 }

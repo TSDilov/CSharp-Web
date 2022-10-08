@@ -11,5 +11,9 @@ namespace ExerciseCRUDSimpleForumApp.ViewModels
         [Required]
         [StringLength(1500, MinimumLength = 25)]
         public string? Content { get; set; }
+
+        public string? AddedByUserId { get; set; }
+
+        public string? Username { get; set; }
     }
 }
