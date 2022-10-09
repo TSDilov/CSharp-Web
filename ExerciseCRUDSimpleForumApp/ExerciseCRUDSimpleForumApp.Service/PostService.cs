@@ -1,6 +1,8 @@
 ﻿using ExerciseCRUDSimpleForumApp.Data;
 using ExerciseCRUDSimpleForumApp.Data.Model;
+using ExerciseCRUDSimpleForumApp.Data.Repositories;
 using ExerciseCRUDSimpleForumApp.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +14,18 @@ namespace ExerciseCRUDSimpleForumApp.Service
     public class PostService : IPostService
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly IRepository repository;
 
-        public PostService(ApplicationDbContext dbContext)
+        public PostService(
+            ApplicationDbContext dbContext,
+            IRepository repository
+            )
         {
             this.dbContext = dbContext;
+            this.repository = repository;
         }
 
-        public Task CreateAsync(CreatePostViewModel post)
+        public async Task CreateAsync(CreatePostViewModel post)
         {
             var newPost = new Post 
             {
@@ -28,17 +35,20 @@ namespace ExerciseCRUDSimpleForumApp.Service
                 Username = post.Username,
             };
 
-            this.dbContext.Posts.Add(newPost);
-            this.dbContext.SaveChanges();
-            return Task.CompletedTask;
+            await this.repository.AddAsync(newPost);
+            await this.repository.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            var post = this.GetById(id);
-            post.IsDeleted = true;
-            this.dbContext.SaveChanges();
-            return Task.CompletedTask;
+            var post = this.repository.All<Post>()
+                .FirstOrDefault(x => x.Id == id);
+
+            if (post!= null)
+            {
+                post.IsDeleted = true;
+                await this.repository.SaveChangesAsync();
+            }
         }
 
         public Task EditAsync(CreatePostViewModel post, int id)
@@ -87,7 +97,7 @@ namespace ExerciseCRUDSimpleForumApp.Service
                 postsForTheApp.Add(postForTheApp);
             }
 
-            return postsForTheApp;
+            return postsForTheApp;          
         }
 
         public Post GetById(int id)

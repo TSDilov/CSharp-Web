@@ -1,4 +1,5 @@
 using ExerciseCRUDSimpleForumApp.Data;
+using ExerciseCRUDSimpleForumApp.Data.Repositories;
 using ExerciseCRUDSimpleForumApp.Service;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+
+builder.Services.AddScoped<IRepository, Repository>();
 
 builder.Services.AddTransient<IPostService, PostService>();
 builder.Services.AddTransient<ICommentService, CommentService>();
