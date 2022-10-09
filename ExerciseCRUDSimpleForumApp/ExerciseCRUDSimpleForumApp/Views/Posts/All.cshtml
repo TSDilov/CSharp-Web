@@ -41,6 +41,13 @@
                             </div>
                         }
                     </div>
+                    <div class="card-body">
+                        @foreach (var comment in post.Comments)
+                        {
+                            <p class="alert-info">@comment.Username: @comment.Content</p>
+                        }
+                    </div>
+                    <a asp-controller="Comments" asp-action="Add" asp-route-id="@post.Id" class="btn btn-success">Add Comment</a>
                 </div>
             </div>
         }

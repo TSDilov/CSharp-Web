@@ -4,18 +4,20 @@ namespace ExerciseCRUDSimpleForumApp.ViewModels
 {
     public class PostViewModel
     {
+        public PostViewModel()
+        {
+            this.Comments = new List<CommentViewModel>();
+        }
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(50)]
         public string? Title { get; set; }
 
-        [Required]
-        [MaxLength(50)]
         public string? Content { get; set; }
 
         public string? AddedByUserId { get; set; }
 
         public string? UserName { get; set; }
+
+        public ICollection<CommentViewModel>? Comments { get; set; }
     }
 }

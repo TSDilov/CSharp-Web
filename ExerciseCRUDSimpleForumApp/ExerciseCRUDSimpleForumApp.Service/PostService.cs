@@ -67,6 +67,22 @@ namespace ExerciseCRUDSimpleForumApp.Service
                     AddedByUserId = post.AddedByUserId,
                     UserName = post.Username,
                 };
+
+                var commentsFromBase = this.dbContext.Comments
+                    .Where(x => x.PostId == post.Id)
+                    .ToList();
+
+                foreach (var comment in commentsFromBase)
+                {
+                    postForTheApp.Comments.Add(new CommentViewModel
+                    {
+                        Id = comment.Id,
+                        Content = comment.Content,
+                        PostId = comment.PostId,
+                        AddedByUserId = comment.AddedByUserId,
+                        Username = comment.Username,
+                    });
+                }
                 
                 postsForTheApp.Add(postForTheApp);
             }
