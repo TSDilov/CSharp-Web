@@ -8,22 +8,16 @@ using System.Threading.Tasks;
 
 namespace ExerciseCRUDSimpleForumApp.Data.Model
 {
-    public class Post
+    public class Comment
     {
-        public Post()
-        {
-            this.Comments = new HashSet<Comment>();
-        }
-
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string? Title { get; set; }
-
-        [Required]
-        [MaxLength(50)]
         public string? Content { get; set; }
+
+        public int PostId { get; set; }
+
+        public Post? Post { get; set; }
 
         public bool IsDeleted { get; set; } = false;
 
@@ -32,7 +26,5 @@ namespace ExerciseCRUDSimpleForumApp.Data.Model
         public IdentityUser? AddedByUser { get; set; }
 
         public string? Username { get; set; }
-
-        public ICollection<Comment>? Comments { get; set; }
     }
 }
