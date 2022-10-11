@@ -43,6 +43,8 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
             model.Username = user.UserName;
 
             await this.postService.CreateAsync(model);
+
+            this.TempData["Message"] = "Added new post!";
             return this.RedirectToAction("All");
         }
 

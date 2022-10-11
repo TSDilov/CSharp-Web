@@ -10,6 +10,11 @@
 <h2 class="text-center">@ViewData["Title"]</h2>
 <hr />
 
+@if (this.TempData.ContainsKey("Message"))
+{
+    <div class="alert alert-success">@this.TempData["Message"]</div>
+}
+
 @if (this.User.Identity.IsAuthenticated)
 {
     <div class="d-grid gap-2 mb-2">
