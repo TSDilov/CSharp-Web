@@ -4,6 +4,7 @@ using ExerciseTaskBoardApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExerciseTaskBoardApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221014172531_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -78,18 +80,21 @@ namespace ExerciseTaskBoardApp.Data.Migrations
 
                     b.Property<string>("OwnerId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(70)
                         .HasColumnType("nvarchar(70)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BoardId");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Tasks");
 
@@ -98,36 +103,36 @@ namespace ExerciseTaskBoardApp.Data.Migrations
                         {
                             Id = 1,
                             BoardId = 1,
-                            CreatedOn = new DateTime(2022, 9, 14, 20, 38, 51, 964, DateTimeKind.Local).AddTicks(8439),
+                            CreatedOn = new DateTime(2022, 9, 14, 20, 25, 30, 856, DateTimeKind.Local).AddTicks(2606),
                             Description = "Learn using ASP.NET  Core Identity",
-                            OwnerId = "5217f29c-138f-47c5-b2eb-38dfac629b1f",
+                            OwnerId = "16714b1d-806f-4fb1-b3d8-ac2afc18c2bd",
                             Title = "Prepare for ASP.NET Fundamentals exam"
                         },
                         new
                         {
                             Id = 2,
                             BoardId = 3,
-                            CreatedOn = new DateTime(2022, 5, 14, 20, 38, 51, 964, DateTimeKind.Local).AddTicks(8479),
+                            CreatedOn = new DateTime(2022, 5, 14, 20, 25, 30, 856, DateTimeKind.Local).AddTicks(2642),
                             Description = "Learn using EF Core and MS SQL Management studio",
-                            OwnerId = "5217f29c-138f-47c5-b2eb-38dfac629b1f",
+                            OwnerId = "16714b1d-806f-4fb1-b3d8-ac2afc18c2bd",
                             Title = "Improve EF Core skills"
                         },
                         new
                         {
                             Id = 3,
                             BoardId = 2,
-                            CreatedOn = new DateTime(2022, 10, 4, 20, 38, 51, 964, DateTimeKind.Local).AddTicks(8482),
+                            CreatedOn = new DateTime(2022, 10, 4, 20, 25, 30, 856, DateTimeKind.Local).AddTicks(2645),
                             Description = "Learn using ASP.NET Core Identity",
-                            OwnerId = "5217f29c-138f-47c5-b2eb-38dfac629b1f",
+                            OwnerId = "16714b1d-806f-4fb1-b3d8-ac2afc18c2bd",
                             Title = "Improve ASP.NET Core skills"
                         },
                         new
                         {
                             Id = 4,
                             BoardId = 3,
-                            CreatedOn = new DateTime(2021, 10, 14, 20, 38, 51, 964, DateTimeKind.Local).AddTicks(8485),
+                            CreatedOn = new DateTime(2021, 10, 14, 20, 25, 30, 856, DateTimeKind.Local).AddTicks(2648),
                             Description = "Prepare by solving old Mid and Final exams",
-                            OwnerId = "5217f29c-138f-47c5-b2eb-38dfac629b1f",
+                            OwnerId = "16714b1d-806f-4fb1-b3d8-ac2afc18c2bd",
                             Title = "Prepare for C# Fundamentals Exam"
                         });
                 });
@@ -209,9 +214,9 @@ namespace ExerciseTaskBoardApp.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5217f29c-138f-47c5-b2eb-38dfac629b1f",
+                            Id = "16714b1d-806f-4fb1-b3d8-ac2afc18c2bd",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b390e671-ab96-4c1b-a9bb-a673c2ec77c5",
+                            ConcurrencyStamp = "2556f6c3-3cb4-42b4-acc7-9750ed2e7217",
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Guest",
@@ -219,9 +224,9 @@ namespace ExerciseTaskBoardApp.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "GUEST@MAIL.COM",
                             NormalizedUserName = "GUEST",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGDhIX+eyaevURoVxB0NO7MJoWYSsxsHI+7NlHVsTmDpLEEQRsMIeZVv4Qv/Fs5z7A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENBzT5TkB/iDxpt3UozGjebezY477GtemXFrxGJaAksS3G6wHwjleWKh2sJQWxlmjw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9cde34ae-b9f7-4cb6-a8fc-09573f641c51",
+                            SecurityStamp = "5e303272-bd3b-4c25-adb7-c7903dee5856",
                             TwoFactorEnabled = false,
                             UserName = "guest"
                         });
@@ -368,15 +373,13 @@ namespace ExerciseTaskBoardApp.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ExerciseTaskBoardApp.Data.Models.User", "Owner")
+                    b.HasOne("ExerciseTaskBoardApp.Data.Models.User", "User")
                         .WithMany("Tasks")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Board");
 
-                    b.Navigation("Owner");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
