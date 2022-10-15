@@ -25,7 +25,7 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
             return View(posts);
         }
 
-        public async Task<IActionResult> Add()
+        public IActionResult Add()
         {
             return View();
         }

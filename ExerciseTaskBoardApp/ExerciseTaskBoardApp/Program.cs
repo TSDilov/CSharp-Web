@@ -13,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddTransient<IBoardService, BoardService>();
+builder.Services.AddTransient<ITaskService, TaskService>();
 
 builder.Services.AddDefaultIdentity<User>(options =>
     {

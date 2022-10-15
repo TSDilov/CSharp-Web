@@ -1,5 +1,6 @@
 ﻿using ExerciseTaskBoardApp.Data;
 using ExerciseTaskBoardApp.ViewModels;
+using ExerciseTaskBoardApp.ViewModels.Task;
 
 namespace ExerciseTaskBoardApp.Service
 {
@@ -29,6 +30,17 @@ namespace ExerciseTaskBoardApp.Service
                 .ToList();
 
             return boards;
+        }
+
+        public IEnumerable<TaskBoardModel> GetBoards()
+        {
+            return this.dbContext.Boards
+                .Select(b => new TaskBoardModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                })
+                .ToList();
         }
     }
 }

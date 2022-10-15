@@ -84,7 +84,7 @@ namespace ExerciseCRUDSimpleForumApp.Service
 
                 foreach (var comment in commentsFromBase)
                 {
-                    postForTheApp.Comments.Add(new CommentViewModel
+                    postForTheApp.Comments?.Add(new CommentViewModel
                     {
                         Id = comment.Id,
                         Content = comment.Content,
