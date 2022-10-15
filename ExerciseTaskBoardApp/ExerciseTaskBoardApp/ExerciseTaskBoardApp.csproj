@@ -21,6 +21,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ExerciseTaskBoardApp.Data\ExerciseTaskBoardApp.Data.csproj" />
+    <ProjectReference Include="..\ExerciseTaskBoardApp.Service\ExerciseTaskBoardApp.Service.csproj" />
+    <ProjectReference Include="..\ExerciseTaskBoardApp.ViewModels\ExerciseTaskBoardApp.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
