@@ -33,9 +33,24 @@ namespace ExerciseTaskBoardApp.Service
             await this.dbContext.SaveChangesAsync();
         }
 
-        public TaskDetailsViewModel? GetTaskByIdAsync(int id)
+        public async Task EditAsync(CreateTaskViewModel model, int id)
         {
-            return this.dbContext
+            var taskFromBase = this.GetById(id);
+            taskFromBase.Title = model.Title;
+            taskFromBase.Description = model.Description;
+            taskFromBase.BoardId = model.BoardId;
+
+            await this.dbContext.SaveChangesAsync();
+        }
+
+        public TaskA GetById(int id)
+        {
+            return this.dbContext.Tasks.FirstOrDefault(t => t.Id == id);
+        }
+
+        public async Task<TaskDetailsViewModel?> GetTaskByIdAsync(int id)
+        {
+            return  this.dbContext
                 .Tasks
                 .Where(t => t.Id == id)
                 .Select(t => new TaskDetailsViewModel()

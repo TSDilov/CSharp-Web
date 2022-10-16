@@ -43,15 +43,52 @@ namespace ExerciseTaskBoardApp.Controllers
             return RedirectToAction("All", "Boards");
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var task = this.taskService.GetTaskByIdAsync(id);
+            var task = await this.taskService.GetTaskByIdAsync(id);
             if (task == null)
             {
                 return BadRequest();
             }
 
             return View(task);
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var task = this.taskService.GetById(id);
+            if (task == null)
+            {
+                return BadRequest();
+            }
+
+            var currentUserId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (currentUserId != task.OwnerId)
+            {
+                return Unauthorized();
+            }
+
+            CreateTaskViewModel model = new CreateTaskViewModel()
+            {
+                Title = task.Title,
+                Description = task.Description,
+                BoardId = task.BoardId,
+                Boards = this.boardService.GetBoards(),
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, CreateTaskViewModel model)
+        {
+            if (!this.boardService.GetBoards().Any(b => b.Id == model.BoardId))
+            {
+                this.ModelState.AddModelError(nameof(model.BoardId), "Board does not exist!");
+            }
+
+            await this.taskService.EditAsync(model, id);
+            return RedirectToAction("All", "Board");
         }
     }
 }

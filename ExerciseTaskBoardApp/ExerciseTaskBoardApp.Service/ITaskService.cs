@@ -1,4 +1,5 @@
-﻿using ExerciseTaskBoardApp.ViewModels.Task;
+﻿using ExerciseTaskBoardApp.Data.Models;
+using ExerciseTaskBoardApp.ViewModels.Task;
 
 namespace ExerciseTaskBoardApp.Service
 {
@@ -6,6 +7,10 @@ namespace ExerciseTaskBoardApp.Service
     {
         Task CreateAsync(CreateTaskViewModel model, string userId);
 
-        TaskDetailsViewModel GetTaskByIdAsync(int id);
+        Task<TaskDetailsViewModel> GetTaskByIdAsync(int id);
+
+        TaskA GetById(int id);
+
+        Task EditAsync(CreateTaskViewModel model, int id);
     }
 }

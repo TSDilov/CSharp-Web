@@ -19,7 +19,5 @@ namespace ExerciseTaskBoardApp.ViewModels.Task
         public int BoardId { get; set; }
 
         public IEnumerable<TaskBoardModel>? Boards { get; set; }
-
-        public bool HasBoard { get; set; }
     }
 }
