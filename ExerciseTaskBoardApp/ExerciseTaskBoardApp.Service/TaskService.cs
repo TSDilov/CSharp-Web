@@ -50,6 +50,8 @@ namespace ExerciseTaskBoardApp.Service
             await this.dbContext.SaveChangesAsync();
         }
 
+        public int GetAllTasksCount() => this.dbContext.Tasks.Count();
+
         public TaskA GetById(int id)
         {
             return this.dbContext.Tasks.FirstOrDefault(t => t.Id == id);
@@ -57,7 +59,7 @@ namespace ExerciseTaskBoardApp.Service
 
         public async Task<TaskDetailsViewModel?> GetTaskByIdAsync(int id)
         {
-            return  this.dbContext
+            return this.dbContext
                 .Tasks
                 .Where(t => t.Id == id)
                 .Select(t => new TaskDetailsViewModel()
@@ -70,6 +72,13 @@ namespace ExerciseTaskBoardApp.Service
                     Owner = t.Owner.UserName,
                 })
                 .FirstOrDefault();
+        }
+
+        public int GetUsersTasksCount(string userId)
+        {
+            return this.dbContext.Tasks
+                .Where(t => t.OwnerId == userId)
+                .Count();
         }
     }
 }

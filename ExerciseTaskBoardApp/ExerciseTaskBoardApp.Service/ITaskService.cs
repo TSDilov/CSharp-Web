@@ -14,5 +14,9 @@ namespace ExerciseTaskBoardApp.Service
         Task EditAsync(CreateTaskViewModel model, int id);
 
         Task DeleteAsync(int id);
+
+        int GetUsersTasksCount(string userId);
+
+        int GetAllTasksCount();
     }
 }

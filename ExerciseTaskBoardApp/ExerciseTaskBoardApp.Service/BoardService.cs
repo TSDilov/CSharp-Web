@@ -42,5 +42,27 @@ namespace ExerciseTaskBoardApp.Service
                 })
                 .ToList();
         }
+
+        public List<HomeBoardModel> GetHomeModel()
+        {
+            var tasksBoards = this.dbContext.Boards
+                .Select(b => b.Name)
+                .ToList();
+
+            var tasksCount = new List<HomeBoardModel>();
+            foreach (var boardName in tasksBoards)
+            {
+                var tasksInBoard = this.dbContext.Tasks
+                    .Where(t => t.Board.Name == boardName)
+                    .Count();
+                tasksCount.Add(new HomeBoardModel()
+                {
+                    BoardName = boardName,
+                    TasksCount = tasksInBoard
+                });
+            }
+
+            return tasksCount;
+        }
     }
 }

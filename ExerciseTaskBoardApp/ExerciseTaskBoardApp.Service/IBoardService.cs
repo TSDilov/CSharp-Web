@@ -8,5 +8,7 @@ namespace ExerciseTaskBoardApp.Service
         IEnumerable<BoardViewModel> GetAll();
 
         IEnumerable<TaskBoardModel> GetBoards();
+
+        List<HomeBoardModel> GetHomeModel();
     }
 }
