@@ -12,5 +12,7 @@ namespace ExerciseTaskBoardApp.Service
         TaskA GetById(int id);
 
         Task EditAsync(CreateTaskViewModel model, int id);
+
+        Task DeleteAsync(int id);
     }
 }

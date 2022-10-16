@@ -33,6 +33,13 @@ namespace ExerciseTaskBoardApp.Service
             await this.dbContext.SaveChangesAsync();
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            var task = this.GetById(id);
+            this.dbContext.Tasks.Remove(task);
+            await this.dbContext.SaveChangesAsync();
+        }
+
         public async Task EditAsync(CreateTaskViewModel model, int id)
         {
             var taskFromBase = this.GetById(id);
