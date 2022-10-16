@@ -51,13 +51,13 @@ namespace ExerciseCRUDSimpleForumApp.Service
             }
         }
 
-        public Task EditAsync(CreatePostViewModel post, int id)
+        public async Task EditAsync(CreatePostViewModel post, int id)
         {
             var postFromBase = this.GetById(id);
             postFromBase.Title = post.Title;
             postFromBase.Content = post.Content;
-            this.dbContext.SaveChanges();
-            return Task.CompletedTask;
+            this.repository.Update(postFromBase);
+            await this.repository.SaveChangesAsync();
         }
 
         public IEnumerable<PostViewModel> GetAll()
