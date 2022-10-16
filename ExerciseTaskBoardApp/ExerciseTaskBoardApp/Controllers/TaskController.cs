@@ -42,5 +42,16 @@ namespace ExerciseTaskBoardApp.Controllers
             await this.taskService.CreateAsync(model, currentUserId);
             return RedirectToAction("All", "Boards");
         }
+
+        public IActionResult Details(int id)
+        {
+            var task = this.taskService.GetTaskByIdAsync(id);
+            if (task == null)
+            {
+                return BadRequest();
+            }
+
+            return View(task);
+        }
     }
 }

@@ -32,5 +32,22 @@ namespace ExerciseTaskBoardApp.Service
             await this.dbContext.Tasks.AddAsync(task);
             await this.dbContext.SaveChangesAsync();
         }
+
+        public TaskDetailsViewModel? GetTaskByIdAsync(int id)
+        {
+            return this.dbContext
+                .Tasks
+                .Where(t => t.Id == id)
+                .Select(t => new TaskDetailsViewModel()
+                {
+                    Id = t.Id,
+                    Title = t.Title,
+                    Description = t.Description,
+                    CreatedOn = t.CreatedOn.ToString("dd/MM/yyyy HH:mm"),
+                    Board = t.Board.Name,
+                    Owner = t.Owner.UserName,
+                })
+                .FirstOrDefault();
+        }
     }
 }

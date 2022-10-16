@@ -5,5 +5,7 @@ namespace ExerciseTaskBoardApp.Service
     public interface ITaskService
     {
         Task CreateAsync(CreateTaskViewModel model, string userId);
+
+        TaskDetailsViewModel GetTaskByIdAsync(int id);
     }
 }
