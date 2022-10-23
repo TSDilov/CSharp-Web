@@ -6,11 +6,11 @@
     using System.Linq;
     using System.Threading.Tasks;
 
+    using Microsoft.EntityFrameworkCore;
     using ReceptionApp.Data.Common.Repositories;
     using ReceptionApp.Data.Models;
     using ReceptionApp.Services.Mapping;
     using ReceptionApp.Web.ViewModels.Recipes;
-    using static System.Net.WebRequestMethods;
 
     public class RecipeService : IRecipeService
     {
@@ -102,6 +102,15 @@
         public int GetCount()
         {
             return this.recipesRepository.All().Count();
+        }
+
+        public IEnumerable<T> GetRandom<T>(int count)
+        {
+            return this.recipesRepository.All()
+                .OrderBy(x => Guid.NewGuid())
+                .Take(count)
+                .To<T>()
+                .ToList();
         }
     }
 }

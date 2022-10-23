@@ -15,10 +15,14 @@
     public class HomeController : BaseController
     {
         private readonly IGetCountsService countsService;
+        private readonly IRecipeService recipeService;
 
-        public HomeController(IGetCountsService countsService)
+        public HomeController(
+            IGetCountsService countsService,
+            IRecipeService recipeService)
         {
             this.countsService = countsService;
+            this.recipeService = recipeService;
         }
 
         public IActionResult Index()
