@@ -1,40 +1,37 @@
 ﻿namespace ReceptionApp.Web.Areas.Administration.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.EntityFrameworkCore;
-    using ReceptionApp.Data;
+    using ReceptionApp.Data.Common.Repositories;
     using ReceptionApp.Data.Models;
 
     public class CategoriesController : AdministrationController
     {
-        private readonly ApplicationDbContext context;
+        private readonly IDeletableEntityRepository<Category> dataRepository;
 
-        public CategoriesController(ApplicationDbContext context)
+        public CategoriesController(IDeletableEntityRepository<Category> dataRepository)
         {
-            this.context = context;
+            this.dataRepository = dataRepository;
         }
 
         // GET: Administration/Categories
         public async Task<IActionResult> Index()
         {
-              return this.View(await this.context.Categories.ToListAsync());
+              return this.View(await this.dataRepository.All().ToListAsync());
         }
 
         // GET: Administration/Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || this.context.Categories == null)
+            if (id == null)
             {
                 return this.NotFound();
             }
 
-            var category = await this.context.Categories
+            var category = await this.dataRepository.All()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -59,8 +56,8 @@
         {
             if (this.ModelState.IsValid)
             {
-                this.context.Add(category);
-                await this.context.SaveChangesAsync();
+                await this.dataRepository.AddAsync(category);
+                await this.dataRepository.SaveChangesAsync();
                 return this.RedirectToAction(nameof(this.Index));
             }
 
@@ -70,12 +67,13 @@
         // GET: Administration/Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || this.context.Categories == null)
+            if (id == null || this.dataRepository.All() == null)
             {
                 return this.NotFound();
             }
 
-            var category = await this.context.Categories.FindAsync(id);
+            var category = await this.dataRepository.All()
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (category == null)
             {
                 return this.NotFound();
@@ -100,8 +98,8 @@
             {
                 try
                 {
-                    this.context.Update(category);
-                    await this.context.SaveChangesAsync();
+                    this.dataRepository.Update(category);
+                    await this.dataRepository.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -114,20 +112,22 @@
                         throw;
                     }
                 }
+
                 return this.RedirectToAction(nameof(this.Index));
             }
+
             return this.View(category);
         }
 
         // GET: Administration/Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || this.context.Categories == null)
+            if (id == null || this.dataRepository.All() == null)
             {
                 return this.NotFound();
             }
 
-            var category = await this.context.Categories
+            var category = await this.dataRepository.All()
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (category == null)
             {
@@ -143,35 +143,25 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (this.context.Categories == null)
+            if (this.dataRepository.All() == null)
             {
                 return this.Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
             }
 
-            var category = await this.context.Categories.FindAsync(id);
+            var category = await this.dataRepository.All()
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (category != null)
             {
-                this.context.Categories.Remove(category);
+                this.dataRepository.Delete(category);
             }
 
-            await this.context.SaveChangesAsync();
+            await this.dataRepository.SaveChangesAsync();
             return this.RedirectToAction(nameof(this.Index));
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is CategoriesController controller &&
-                   EqualityComparer<ApplicationDbContext>.Default.Equals(this.context, controller.context);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(this.context);
         }
 
         private bool CategoryExists(int id)
         {
-          return this.context.Categories.Any(e => e.Id == id);
+          return this.dataRepository.All().Any(e => e.Id == id);
         }
     }
 }
