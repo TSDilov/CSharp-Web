@@ -12,8 +12,8 @@ using ReceptionApp.Data;
 namespace ReceptionApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221002135259_AddVoteForRecipe")]
-    partial class AddVoteForRecipe
+    [Migration("20221023165012_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
