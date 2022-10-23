@@ -10,6 +10,7 @@
     using Microsoft.EntityFrameworkCore;
     using ReceptionApp.Data.Common.Models;
     using ReceptionApp.Data.Models;
+    using ReceptionApp.Data.Seeding;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {

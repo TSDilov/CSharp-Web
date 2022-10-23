@@ -4,6 +4,6 @@
     {
         public const string SystemName = "ReceptionApp";
 
-        public const string AdministratorRoleName = "Administrator";
+        public const string AdministratorRoleName = "Admin";
     }
 }
