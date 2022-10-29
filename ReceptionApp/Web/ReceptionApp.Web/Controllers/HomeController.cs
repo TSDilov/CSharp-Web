@@ -3,6 +3,7 @@
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using ReceptionApp.Data;
     using ReceptionApp.Data.Common.Repositories;
@@ -29,6 +30,12 @@
         {
             var viewModel = this.countsService.GetCounts();
             return this.View(viewModel);
+        }
+
+        [Authorize]
+        public IActionResult Chat()
+        {
+            return this.View();
         }
 
         public IActionResult Privacy()

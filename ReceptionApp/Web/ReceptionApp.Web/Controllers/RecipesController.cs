@@ -2,13 +2,15 @@
 {
     using System;
     using System.Security.Claims;
+    using System.Security.Cryptography;
     using System.Threading.Tasks;
-
+    using AngleSharp.Html;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using ReceptionApp.Common;
     using ReceptionApp.Data.Models;
     using ReceptionApp.Services;
     using ReceptionApp.Services.Data;
@@ -64,6 +66,28 @@
             }
 
             return this.Redirect("/");
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public IActionResult Edit(int id)
+        {
+            var model = this.recipeService.GetById<EditRecipeInputModel>(id);
+            model.CategoryItems = this.categoriesService.GetAllCategoriesAsKeyValuePairs();
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Edit(int id, EditRecipeInputModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                model.CategoryItems = this.categoriesService.GetAllCategoriesAsKeyValuePairs();
+                return this.View(model);
+            }
+
+            await this.recipeService.UpdateAsync(id, model);
+            return this.RedirectToAction(nameof(this.ById), new { id });
         }
 
         public IActionResult All(int id = 1)

@@ -39,7 +39,10 @@
                         <i class="fas fa-star" data-vote="5"></i>
                         <div><span id="averageVoteValue">@Model.VotesAverageValue.ToString("0.0")</span><span> / 5</span></div>
                     </div>
-                    <a href="#" class="btn delicious-btn">For Begginers</a>
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@Model.Id" class="btn delicious-btn">Edit</a>
+                    }
                 </div>
             </div>
         </div>
