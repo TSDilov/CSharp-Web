@@ -42,6 +42,14 @@
                     @if (this.User.IsInRole("Admin"))
                     {
                         <a asp-controller="Recipes" asp-action="Edit" asp-route-id="@Model.Id" class="btn delicious-btn">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@Model.Id">
+                            <br>
+                            <button type="submit" class="btn btn-danger"
+                                onclick="return confirm('Are you sure you want  to delete recipe: @Model.Name ?')">
+                                Delete
+                            </button>
+                        </form>
+                       
                     }
                 </div>
             </div>

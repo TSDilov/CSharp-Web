@@ -20,5 +20,7 @@
         Task UpdateAsync(int id, EditRecipeInputModel input);
 
         Task<IEnumerable<T>> GetByIngredientsAsync<T>(IEnumerable<int> ingredientIds);
+
+        Task DeleteAsync(int id);
     }
 }
