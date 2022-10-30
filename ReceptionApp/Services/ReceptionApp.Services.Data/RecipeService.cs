@@ -99,6 +99,17 @@
                 .FirstOrDefault();
         }
 
+        public async Task<IEnumerable<T>> GetByIngredientsAsync<T>(IEnumerable<int> ingredientIds)
+        {
+            var query = this.recipesRepository.All().AsQueryable();
+            foreach (var ingredientId in ingredientIds)
+            {
+                query = query.Where(x => x.Ingredients.Any(i => i.IngredientId == ingredientId));
+            }
+
+            return await query.To<T>().ToListAsync();
+        }
+
         public int GetCount()
         {
             return this.recipesRepository.All().Count();
