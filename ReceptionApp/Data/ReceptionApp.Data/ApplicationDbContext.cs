@@ -38,6 +38,8 @@
 
         public virtual DbSet<Vote> Votes { get; set; }
 
+        public virtual DbSet<ChatMessage> ChatMessages { get; set; }
+
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
