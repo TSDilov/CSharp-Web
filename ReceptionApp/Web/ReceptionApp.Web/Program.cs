@@ -19,6 +19,7 @@
     using ReceptionApp.Services.Data;
     using ReceptionApp.Services.Mapping;
     using ReceptionApp.Services.Messaging;
+    using ReceptionApp.Web.Hubs;
     using ReceptionApp.Web.ViewModels;
 
     public class Program
@@ -117,7 +118,7 @@
             app.UseEndpoints(
                 endpoints =>
                 {
-                    //endpoints.MapHub<ChatHub>("/chat");
+                    endpoints.MapHub<ChatHub>("/chat");
                     endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                     endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
                     endpoints.MapRazorPages();
