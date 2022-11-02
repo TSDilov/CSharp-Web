@@ -6,6 +6,7 @@ using System.Security.Claims;
 
 namespace Library.Controllers
 {
+    [Authorize]
     public class BooksController : Controller
     {
         private readonly IBookService bookService;
@@ -17,11 +18,6 @@ namespace Library.Controllers
 
         public async Task<IActionResult> All()
         {
-            if (!this.User.Identity.IsAuthenticated)
-            {
-                return this.RedirectToAction("Login", "User");
-            }
-
             var model = await this.bookService.GetAllAsync();
 
             return View(model);
@@ -29,11 +25,6 @@ namespace Library.Controllers
 
         public async Task<IActionResult> Add()
         {
-            if (!this.User.Identity.IsAuthenticated)
-            {
-                return this.RedirectToAction("Login","User");
-            }
-
             var addModel = new AddBookViewModel()
             {
                 Categories = await this.bookService.GetCategoryAsync(),
@@ -45,11 +36,6 @@ namespace Library.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(AddBookViewModel addModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(addModel);
-            }
-
             try
             {
                 await this.bookService.AddBookAsync(addModel);
@@ -65,11 +51,6 @@ namespace Library.Controllers
 
         public async Task<IActionResult> AddToCollection(int bookId)
         {
-            if (!this.User.Identity.IsAuthenticated)
-            {
-                return this.RedirectToAction("Login", "User");
-            }
-
             try
             {
                 var userId = this.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
@@ -86,11 +67,6 @@ namespace Library.Controllers
 
         public async Task<IActionResult> Mine()
         {
-            if (!this.User.Identity.IsAuthenticated)
-            {
-                return this.RedirectToAction("Login", "User");
-            }
-
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             var model = await this.bookService.GetMineAsync(userId);
 
@@ -99,11 +75,6 @@ namespace Library.Controllers
 
         public async Task<IActionResult> RemoveFromCollection(int bookId)
         {
-            if (!this.User.Identity.IsAuthenticated)
-            {
-                return this.RedirectToAction("Login", "User");
-            }
-
             var userId = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
             await this.bookService.RemoveMovieFromCollectionAsync(bookId, userId);
 
