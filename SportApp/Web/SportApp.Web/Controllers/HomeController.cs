@@ -2,9 +2,9 @@
 {
     using System.Diagnostics;
 
-    using SportApp.Web.ViewModels;
-
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
+    using SportApp.Web.ViewModels;
 
     public class HomeController : BaseController
     {
