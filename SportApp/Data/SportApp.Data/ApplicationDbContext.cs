@@ -23,6 +23,12 @@
         {
         }
 
+        public DbSet<Trainer> Trainers { get; set; }
+
+        public DbSet<Image> Images { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
+
         public DbSet<Setting> Settings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
@@ -46,6 +52,22 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<ApplicationUserTrainer>()
+                .HasKey(x => new { x.ApplicationUserId, x.TrainerId });
+
+            builder.Entity<TrainerCategory>()
+                .HasKey(x => new { x.TrainerId, x.CategoryId });
+
+            builder.Entity<ApplicationUser>()
+                .Property(u => u.UserName)
+                .HasMaxLength(20)
+                .IsRequired();
+
+            builder.Entity<ApplicationUser>()
+                .Property(u => u.Email)
+                .HasMaxLength(60)
+                .IsRequired();
+
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 

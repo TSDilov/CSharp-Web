@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportApp.Data;
 
@@ -11,9 +12,10 @@ using SportApp.Data;
 namespace SportApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221105185717_AddingTrainerImageCategoryTables")]
+    partial class AddingTrainerImageCategoryTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -417,15 +419,15 @@ namespace SportApp.Data.Migrations
 
             modelBuilder.Entity("SportApp.Data.Models.TrainerCategory", b =>
                 {
-                    b.Property<int>("TrainerId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.HasKey("TrainerId", "CategoryId");
+                    b.Property<int>("TrainerId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("CategoryId");
+                    b.HasKey("CategoryId", "TrainerId");
+
+                    b.HasIndex("TrainerId");
 
                     b.ToTable("TrainerCategory");
                 });
