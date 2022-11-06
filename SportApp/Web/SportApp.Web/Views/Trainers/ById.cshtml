@@ -23,7 +23,7 @@
                         <i class="fas fa-star" data-vote="3"></i>
                         <i class="fas fa-star" data-vote="4"></i>
                         <i class="fas fa-star" data-vote="5"></i>
-                        @*<div><span id="averageVoteValue">@Model.VotesAverageValue.ToString("0.0")</span><span> / 5</span></div>*@
+                        <div><span id="averageVoteValue">@Model.VotesAverageValue.ToString("0.0")</span><span> / 5</span></div>
                     </div>
                     @if (this.User.IsInRole("Administrator"))
                     {
@@ -79,3 +79,28 @@
 
 <form method="post" id="antiForgeryForm"></form>
 
+@section Scripts {
+    <script>
+        $("i[data-vote]").each(function (el){
+            $(this).click(function () {
+                let value = $(this).attr("data-vote");
+                let trainerId = @Model.Id;
+                let antiForgeryToken = $('#antiForgeryForm input[name=__RequestVerificationToken]').val();
+                let data = { trainerId: trainerId, value: value };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/api/Votes",
+                    data: JSON.stringify(data),
+                    headers: {
+                        'X-CSRF-TOKEN': antiForgeryToken,
+                    },
+                    success: function (data) {
+                        $('#averageVoteValue').html(data.averageVote.toFixed(1));
+                    },
+                    contentType: 'application/json',
+                });
+            });
+        });
+    </script>
+}

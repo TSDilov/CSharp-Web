@@ -27,9 +27,13 @@
 
         public decimal PricePerTraining { get; set; }
 
+        public double VotesAverageValue { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Trainer, SingleTrainerViewModel>()
+                .ForMember(x => x.VotesAverageValue, opt =>
+                opt.MapFrom(x => x.Votes.Count() == 0 ? 0 : x.Votes.Average(x => x.Value)))
                 .ForMember(x => x.ImageUrl, opt =>
                 opt.MapFrom(x => x.Images.FirstOrDefault().RemoteImageUrl != null ?
                         x.Images.FirstOrDefault().RemoteImageUrl :

@@ -16,6 +16,7 @@ namespace SportApp.Data.Models
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
             this.ApplicationUsersTrainers = new HashSet<ApplicationUserTrainer>();
+            this.Votes = new HashSet<Vote>();
         }
 
         // Audit info
@@ -35,5 +36,7 @@ namespace SportApp.Data.Models
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
         public virtual ICollection<ApplicationUserTrainer> ApplicationUsersTrainers { get; set; }
+
+        public virtual ICollection<Vote> Votes { get; set; }
     }
 }

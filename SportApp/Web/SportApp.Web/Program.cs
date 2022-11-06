@@ -65,6 +65,10 @@
 
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddAntiforgery(options =>
+            {
+                options.HeaderName = "X-CSRF-TOKEN";
+            });
 
             services.AddSingleton(configuration);
 
@@ -78,6 +82,7 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ITrainerService, TrainerService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<IVoteService, VoteService>();
         }
 
         private static void Configure(WebApplication app)
