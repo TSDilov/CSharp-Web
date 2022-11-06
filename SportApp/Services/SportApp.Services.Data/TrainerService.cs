@@ -35,7 +35,7 @@
                 CategotyId = input.CategoryId,
             };
 
-            var allowedExtensions = new[] { "jpg", "png", "gif" };
+            var allowedExtensions = new[] { "jpg", "png", "gif", "jfif" };
             Directory.CreateDirectory($"{imagePath}/recipes/");
             foreach (var image in input.Images)
             {
