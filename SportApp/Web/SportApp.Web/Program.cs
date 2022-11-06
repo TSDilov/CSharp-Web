@@ -20,6 +20,7 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using SportApp.Web.Model_Binders;
 
     public class Program
     {
@@ -56,7 +57,12 @@
                 options =>
                 {
                     options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
-                }).AddRazorRuntimeCompilation();
+                }).AddRazorRuntimeCompilation()
+                .AddMvcOptions(options =>
+                {
+                    options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+                });
+
             services.AddRazorPages();
             services.AddDatabaseDeveloperPageExceptionFilter();
 

@@ -29,6 +29,9 @@
         [Required]
         public DateTime DateOfBirth { get; set; }
 
+        [Required]
+        public decimal PricePerTraining { get; set; }
+
         [ForeignKey("Image")]
         public string ImageId { get; set; }
 
