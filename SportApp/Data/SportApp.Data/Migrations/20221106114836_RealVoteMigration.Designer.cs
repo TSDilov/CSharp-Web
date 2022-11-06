@@ -12,8 +12,8 @@ using SportApp.Data;
 namespace SportApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221106075916_AddingPriceOnTrainerTable")]
-    partial class AddingPriceOnTrainerTable
+    [Migration("20221106114836_RealVoteMigration")]
+    partial class RealVoteMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,6 @@ namespace SportApp.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("CategoryTrainer", b =>
-                {
-                    b.Property<int>("CategoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrainersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoriesId", "TrainersId");
-
-                    b.HasIndex("TrainersId");
-
-                    b.ToTable("CategoryTrainer");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
@@ -380,6 +365,9 @@ namespace SportApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CategotyId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -388,9 +376,6 @@ namespace SportApp.Data.Migrations
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("InfoCard")
                         .IsRequired()
@@ -413,41 +398,43 @@ namespace SportApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId");
+                    b.HasIndex("CategotyId");
 
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Trainers");
                 });
 
-            modelBuilder.Entity("SportApp.Data.Models.TrainerCategory", b =>
+            modelBuilder.Entity("SportApp.Data.Models.Vote", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("TrainerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("TrainerId", "CategoryId");
+                    b.Property<byte>("Value")
+                        .HasColumnType("tinyint");
 
-                    b.HasIndex("CategoryId");
+                    b.HasKey("Id");
 
-                    b.ToTable("TrainerCategory");
-                });
+                    b.HasIndex("TrainerId");
 
-            modelBuilder.Entity("CategoryTrainer", b =>
-                {
-                    b.HasOne("SportApp.Data.Models.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasIndex("UserId");
 
-                    b.HasOne("SportApp.Data.Models.Trainer", null)
-                        .WithMany()
-                        .HasForeignKey("TrainersId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.ToTable("Votes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -523,7 +510,7 @@ namespace SportApp.Data.Migrations
             modelBuilder.Entity("SportApp.Data.Models.Image", b =>
                 {
                     b.HasOne("SportApp.Data.Models.Trainer", "Trainer")
-                        .WithMany()
+                        .WithMany("Images")
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -533,30 +520,30 @@ namespace SportApp.Data.Migrations
 
             modelBuilder.Entity("SportApp.Data.Models.Trainer", b =>
                 {
-                    b.HasOne("SportApp.Data.Models.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
-
-                    b.Navigation("Image");
-                });
-
-            modelBuilder.Entity("SportApp.Data.Models.TrainerCategory", b =>
-                {
                     b.HasOne("SportApp.Data.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
+                        .WithMany("Trainers")
+                        .HasForeignKey("CategotyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("SportApp.Data.Models.Vote", b =>
+                {
                     b.HasOne("SportApp.Data.Models.Trainer", "Trainer")
                         .WithMany()
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Category");
+                    b.HasOne("SportApp.Data.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Trainer");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("SportApp.Data.Models.ApplicationUser", b =>
@@ -570,9 +557,16 @@ namespace SportApp.Data.Migrations
                     b.Navigation("Roles");
                 });
 
+            modelBuilder.Entity("SportApp.Data.Models.Category", b =>
+                {
+                    b.Navigation("Trainers");
+                });
+
             modelBuilder.Entity("SportApp.Data.Models.Trainer", b =>
                 {
                     b.Navigation("ApplicationUsersTrainers");
+
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }

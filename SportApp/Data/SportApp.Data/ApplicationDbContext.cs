@@ -29,6 +29,8 @@
 
         public DbSet<Category> Categories { get; set; }
 
+        public virtual DbSet<Vote> Votes { get; set; }
+
         public DbSet<Setting> Settings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
@@ -54,9 +56,6 @@
         {
             builder.Entity<ApplicationUserTrainer>()
                 .HasKey(x => new { x.ApplicationUserId, x.TrainerId });
-
-            builder.Entity<TrainerCategory>()
-                .HasKey(x => new { x.TrainerId, x.CategoryId });
 
             builder.Entity<ApplicationUser>()
                 .Property(u => u.UserName)

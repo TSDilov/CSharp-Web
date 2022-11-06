@@ -12,8 +12,8 @@ using SportApp.Data;
 namespace SportApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221105190340_SomeUpdates")]
-    partial class SomeUpdates
+    [Migration("20221106114117_VoteTable")]
+    partial class VoteTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,21 +23,6 @@ namespace SportApp.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("CategoryTrainer", b =>
-                {
-                    b.Property<int>("CategoriesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TrainersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CategoriesId", "TrainersId");
-
-                    b.HasIndex("TrainersId");
-
-                    b.ToTable("CategoryTrainer");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
@@ -380,6 +365,9 @@ namespace SportApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("CategotyId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -388,9 +376,6 @@ namespace SportApp.Data.Migrations
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("InfoCard")
                         .IsRequired()
@@ -408,43 +393,16 @@ namespace SportApp.Data.Migrations
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
 
+                    b.Property<decimal>("PricePerTraining")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId");
+                    b.HasIndex("CategotyId");
 
                     b.HasIndex("IsDeleted");
 
                     b.ToTable("Trainers");
-                });
-
-            modelBuilder.Entity("SportApp.Data.Models.TrainerCategory", b =>
-                {
-                    b.Property<int>("TrainerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TrainerId", "CategoryId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("TrainerCategory");
-                });
-
-            modelBuilder.Entity("CategoryTrainer", b =>
-                {
-                    b.HasOne("SportApp.Data.Models.Category", null)
-                        .WithMany()
-                        .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SportApp.Data.Models.Trainer", null)
-                        .WithMany()
-                        .HasForeignKey("TrainersId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -520,7 +478,7 @@ namespace SportApp.Data.Migrations
             modelBuilder.Entity("SportApp.Data.Models.Image", b =>
                 {
                     b.HasOne("SportApp.Data.Models.Trainer", "Trainer")
-                        .WithMany()
+                        .WithMany("Images")
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -530,30 +488,13 @@ namespace SportApp.Data.Migrations
 
             modelBuilder.Entity("SportApp.Data.Models.Trainer", b =>
                 {
-                    b.HasOne("SportApp.Data.Models.Image", "Image")
-                        .WithMany()
-                        .HasForeignKey("ImageId");
-
-                    b.Navigation("Image");
-                });
-
-            modelBuilder.Entity("SportApp.Data.Models.TrainerCategory", b =>
-                {
                     b.HasOne("SportApp.Data.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SportApp.Data.Models.Trainer", "Trainer")
-                        .WithMany()
-                        .HasForeignKey("TrainerId")
+                        .WithMany("Trainers")
+                        .HasForeignKey("CategotyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Category");
-
-                    b.Navigation("Trainer");
                 });
 
             modelBuilder.Entity("SportApp.Data.Models.ApplicationUser", b =>
@@ -567,9 +508,16 @@ namespace SportApp.Data.Migrations
                     b.Navigation("Roles");
                 });
 
+            modelBuilder.Entity("SportApp.Data.Models.Category", b =>
+                {
+                    b.Navigation("Trainers");
+                });
+
             modelBuilder.Entity("SportApp.Data.Models.Trainer", b =>
                 {
                     b.Navigation("ApplicationUsersTrainers");
+
+                    b.Navigation("Images");
                 });
 #pragma warning restore 612, 618
         }
