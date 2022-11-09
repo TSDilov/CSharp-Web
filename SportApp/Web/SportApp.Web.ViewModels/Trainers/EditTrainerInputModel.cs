@@ -6,8 +6,11 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class TrainersListViewModel : PagingViewModel
+    using SportApp.Data.Models;
+    using SportApp.Services.Mapping;
+
+    public class EditTrainerInputModel : BaseTrainerInputModel, IMapFrom<Trainer>
     {
-        public IEnumerable<TrainerInListViewModel> Trainers { get; set; }
+        public int Id { get; set; }
     }
 }

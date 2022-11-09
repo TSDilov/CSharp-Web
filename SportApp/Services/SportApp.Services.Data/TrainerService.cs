@@ -62,10 +62,19 @@
             await this.trainerRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>()
+        public async Task DeleteAsync(int id)
         {
-            return await this.trainerRepository
-                .AllAsNoTracking()
+            var recipe = await this.trainerRepository.All().FirstOrDefaultAsync(r => r.Id == id);
+            this.trainerRepository.Delete(recipe);
+            await this.trainerRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAll<T>(int page, int itemsPerPage = 12)
+        {
+            return await this.trainerRepository.AllAsNoTracking()
+                .OrderByDescending(x => x.Id)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .To<T>()
                 .ToListAsync();
         }
@@ -76,6 +85,25 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefault();
+        }
+
+        public int GetCount()
+        {
+            return this.trainerRepository.All().Count();
+        }
+
+        public async Task UpdateAsync(int id, EditTrainerInputModel input)
+        {
+            var trainer = await this.trainerRepository.All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            trainer.Name = input.Name;
+            trainer.InfoCard = input.InfoCard;
+            trainer.DateOfBirth = input.DateOfBirth;
+            trainer.PricePerTraining = input.PricePerTraining;
+            trainer.CategotyId = input.CategoryId;
+
+            await this.trainerRepository.SaveChangesAsync();
         }
     }
 }

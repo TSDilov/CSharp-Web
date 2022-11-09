@@ -30,11 +30,15 @@
             this.environment = environment;
         }
 
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(int id = 1)
         {
+            const int ItemsPerPage = 12;
             var viewModel = new TrainersListViewModel
             {
-                Trainers = await this.trainerService.GetAll<TrainerInListViewModel>(),
+                PageNumber = id,
+                Trainers = await this.trainerService.GetAll<TrainerInListViewModel>(id, ItemsPerPage),
+                TrainersCount = this.trainerService.GetCount(),
+                ItemsPerPage = ItemsPerPage,
             };
 
             return this.View(viewModel);
@@ -78,6 +82,36 @@
         {
             var trainer = this.trainerService.GetById<SingleTrainerViewModel>(id);
             return this.View(trainer);
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public IActionResult Edit(int id)
+        {
+            var model = this.trainerService.GetById<EditTrainerInputModel>(id);
+            model.CategoryItems = this.categoriesService.GetAllCategoriesAsKeyValuePairs();
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Edit(int id, EditTrainerInputModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                model.CategoryItems = this.categoriesService.GetAllCategoriesAsKeyValuePairs();
+                return this.View(model);
+            }
+
+            await this.trainerService.UpdateAsync(id, model);
+            return this.RedirectToAction(nameof(this.ById), new { id });
+        }
+
+        [HttpPost]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await this.trainerService.DeleteAsync(id);
+            return this.RedirectToAction(nameof(this.All));
         }
     }
 }

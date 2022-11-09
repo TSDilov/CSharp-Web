@@ -10,10 +10,16 @@
 
     public interface ITrainerService
     {
-        Task<IEnumerable<T>> GetAll<T>();
+        Task<IEnumerable<T>> GetAll<T>(int page, int itemsPerPage = 12);
 
         Task CreateAsync(CreateTrainerInputModel input, string userId, string imagePath);
 
         T GetById<T>(int id);
+
+        Task UpdateAsync(int id, EditTrainerInputModel input);
+
+        Task DeleteAsync(int id);
+
+        int GetCount();
     }
 }
