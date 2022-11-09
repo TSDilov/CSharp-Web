@@ -11,8 +11,9 @@
 			<h3 class="card-title text-color">@Model.Name</h3>
 			<h6 class="card-subtitle pb-4 letter-spacing">@Model.CategoryName</h6>
 			<div>
-				<p >Date of birth: @Model.DateOfBirth.Day/@Model.DateOfBirth.Month/@Model.DateOfBirth.Year</p>
-				<p >Price Per Training: @Model.PricePerTraining</p>
+				<p>Date of birth: @Model.DateOfBirth.Day/@Model.DateOfBirth.Month/@Model.DateOfBirth.Year</p>
+				<p>Price Per Training: @Model.PricePerTraining</p>
+                <p>People training with this trainer: @Model.UsersBooked</p>
 			</div>			
 			<p class="mb-5">@Model.InfoCard</p>
             <div class="col-12 col-md-4">
@@ -37,6 +38,8 @@
                         </form>
 
                     }
+                    <br/>
+                    <a asp-controller="Trainers" asp-action="Book" asp-route-id="@Model.Id" class="btn btn-primary">Book Trainer</a>
                 </div>
             </div>
 		</div>

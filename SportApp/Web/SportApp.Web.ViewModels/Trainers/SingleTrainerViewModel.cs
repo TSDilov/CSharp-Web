@@ -29,6 +29,8 @@
 
         public double VotesAverageValue { get; set; }
 
+        public int UsersBooked { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Trainer, SingleTrainerViewModel>()
@@ -37,7 +39,9 @@
                 .ForMember(x => x.ImageUrl, opt =>
                 opt.MapFrom(x => x.Images.FirstOrDefault().RemoteImageUrl != null ?
                         x.Images.FirstOrDefault().RemoteImageUrl :
-                        "/images/trainerss/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension));
+                        "/images/trainerss/" + x.Images.FirstOrDefault().Id + "." + x.Images.FirstOrDefault().Extension))
+                .ForMember(x => x.UsersBooked, opt =>
+                opt.MapFrom(x => x.ApplicationUsersTrainers.Count()));
         }
     }
 }

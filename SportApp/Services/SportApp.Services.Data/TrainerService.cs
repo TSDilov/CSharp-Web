@@ -18,10 +18,34 @@
     public class TrainerService : ITrainerService
     {
         private readonly IDeletableEntityRepository<Trainer> trainerRepository;
+        private readonly IRepository<ApplicationUserTrainer> aplicationUserTrainer;
 
-        public TrainerService(IDeletableEntityRepository<Trainer> trainerRepository)
+        public TrainerService(
+            IDeletableEntityRepository<Trainer> trainerRepository,
+            IRepository<ApplicationUserTrainer> aplicationUserTrainer)
         {
             this.trainerRepository = trainerRepository;
+            this.aplicationUserTrainer = aplicationUserTrainer;
+        }
+
+        public async Task BookTrainerAsync(int id, string userId)
+        {
+            var trainerUser = await this.aplicationUserTrainer.All()
+                .FirstOrDefaultAsync(x => x.TrainerId == id && x.ApplicationUserId == userId);
+
+            if (trainerUser == null)
+            {
+                trainerUser = new ApplicationUserTrainer
+                {
+                    TrainerId = id,
+                    ApplicationUserId = userId,
+                };
+
+                var trainer = await this.trainerRepository.All()
+                    .FirstOrDefaultAsync(t => t.Id == id);
+                trainer.ApplicationUsersTrainers.Add(trainerUser);
+                await this.trainerRepository.SaveChangesAsync();
+            }
         }
 
         public async Task CreateAsync(CreateTrainerInputModel input, string userId, string imagePath)

@@ -1,6 +1,8 @@
 ﻿namespace SportApp.Web.Controllers
 {
     using System;
+    using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
@@ -111,6 +113,14 @@
         public async Task<IActionResult> Delete(int id)
         {
             await this.trainerService.DeleteAsync(id);
+            return this.RedirectToAction(nameof(this.All));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Book(int id)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            await this.trainerService.BookTrainerAsync(id, user.Id);
             return this.RedirectToAction(nameof(this.All));
         }
     }

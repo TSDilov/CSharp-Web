@@ -21,5 +21,7 @@
         Task DeleteAsync(int id);
 
         int GetCount();
+
+        Task BookTrainerAsync(int id, string userId);
     }
 }
