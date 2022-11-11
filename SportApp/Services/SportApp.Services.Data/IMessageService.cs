@@ -11,6 +11,10 @@
     {
         IEnumerable<Message> GetAll();
 
+        Message GetById(int id);
+
         Task CreateAsync(Message input);
+
+        Task DeleteAsync(int id);
     }
 }

@@ -4,7 +4,7 @@
         .build();
 connection.on("NewMessage",
     function (message) {
-        var chatInfo = `<div>[${message.user}] ${escapeHtml(message.text)}</div>`;
+        var chatInfo = `<div>[${message.user}]: ${escapeHtml(message.text)}</div>`;
         $("#messagesList").append(chatInfo);
     });
 $("#sendButton").click(function () {

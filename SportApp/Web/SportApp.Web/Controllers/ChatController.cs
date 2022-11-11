@@ -1,5 +1,7 @@
 ﻿namespace SportApp.Web.Controllers
 {
+    using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using SportApp.Services.Data;
@@ -23,6 +25,19 @@
             };
 
             return this.View(model);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var message = this.messageService.GetById(id);
+            if (this.User.Identity.Name == message.User)
+            {
+                await this.messageService.DeleteAsync(id);
+                return this.RedirectToAction(nameof(this.Chat));
+            }
+
+            return this.BadRequest();
         }
     }
 }
