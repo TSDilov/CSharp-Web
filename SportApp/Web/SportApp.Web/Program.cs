@@ -21,6 +21,7 @@
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using SportApp.Web.Model_Binders;
+    using SportApp.Web.Hubs;
 
     public class Program
     {
@@ -53,6 +54,7 @@
                     options.MinimumSameSitePolicy = SameSiteMode.None;
                 });
 
+            services.AddSignalR();
             services.AddControllersWithViews(
                 options =>
                 {
@@ -83,6 +85,7 @@
             services.AddTransient<ITrainerService, TrainerService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IVoteService, VoteService>();
+            services.AddTransient<IMessageService, MessageService>();
         }
 
         private static void Configure(WebApplication app)
@@ -117,9 +120,14 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-            app.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            app.MapRazorPages();
+            app.UseEndpoints(
+                endpoints =>
+                {
+                    endpoints.MapHub<ChatHub>("/chat");
+                    endpoints.MapControllerRoute("areaRoute", "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                    endpoints.MapRazorPages();
+                });
         }
     }
 }

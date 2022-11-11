@@ -29,6 +29,8 @@
 
         public DbSet<Category> Categories { get; set; }
 
+        public DbSet<Message> Messages { get; set; }
+
         public virtual DbSet<Vote> Votes { get; set; }
 
         public DbSet<Setting> Settings { get; set; }
