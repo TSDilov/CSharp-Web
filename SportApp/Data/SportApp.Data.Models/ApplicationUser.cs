@@ -17,6 +17,7 @@ namespace SportApp.Data.Models
             this.Logins = new HashSet<IdentityUserLogin<string>>();
             this.ApplicationUsersTrainers = new HashSet<ApplicationUserTrainer>();
             this.Votes = new HashSet<Vote>();
+            this.Comments = new HashSet<Comment>();
         }
 
         // Audit info
@@ -38,5 +39,7 @@ namespace SportApp.Data.Models
         public virtual ICollection<ApplicationUserTrainer> ApplicationUsersTrainers { get; set; }
 
         public virtual ICollection<Vote> Votes { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

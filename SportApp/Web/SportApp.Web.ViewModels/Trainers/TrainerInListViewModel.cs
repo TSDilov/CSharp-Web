@@ -1,9 +1,10 @@
 ﻿namespace SportApp.Web.ViewModels.Trainers
 {
+    using System.Linq;
+
     using AutoMapper;
     using SportApp.Data.Models;
     using SportApp.Services.Mapping;
-    using System.Linq;
 
     public class TrainerInListViewModel : IMapFrom<Trainer>, IHaveCustomMappings
     {

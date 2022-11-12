@@ -17,6 +17,8 @@
         {
             this.ApplicationUsersTrainers = new HashSet<ApplicationUserTrainer>();
             this.Images = new HashSet<Image>();
+            this.Votes = new HashSet<Vote>();
+            this.Comments = new HashSet<Comment>();
         }
 
         [Required]
@@ -44,5 +46,6 @@
 
         public virtual ICollection<ApplicationUserTrainer> ApplicationUsersTrainers { get; set; }
 
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

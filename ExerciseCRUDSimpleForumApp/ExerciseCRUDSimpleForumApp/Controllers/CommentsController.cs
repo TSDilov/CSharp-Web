@@ -1,5 +1,6 @@
 ﻿using ExerciseCRUDSimpleForumApp.Service;
 using ExerciseCRUDSimpleForumApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,11 +19,13 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize]
         public IActionResult Add(int id)
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Add(int id, CreateCommentViewModel model)
         {

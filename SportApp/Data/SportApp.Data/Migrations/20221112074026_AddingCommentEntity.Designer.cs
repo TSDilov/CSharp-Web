@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportApp.Data;
 
@@ -11,9 +12,10 @@ using SportApp.Data;
 namespace SportApp.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221112074026_AddingCommentEntity")]
+    partial class AddingCommentEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -303,9 +305,6 @@ namespace SportApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ApplicationUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -334,8 +333,6 @@ namespace SportApp.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("IsDeleted");
 
@@ -589,17 +586,11 @@ namespace SportApp.Data.Migrations
 
             modelBuilder.Entity("SportApp.Data.Models.Comment", b =>
                 {
-                    b.HasOne("SportApp.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("Comments")
-                        .HasForeignKey("ApplicationUserId");
-
                     b.HasOne("SportApp.Data.Models.Trainer", "Trainer")
                         .WithMany("Comments")
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("ApplicationUser");
 
                     b.Navigation("Trainer");
                 });
@@ -648,8 +639,6 @@ namespace SportApp.Data.Migrations
                     b.Navigation("ApplicationUsersTrainers");
 
                     b.Navigation("Claims");
-
-                    b.Navigation("Comments");
 
                     b.Navigation("Logins");
 

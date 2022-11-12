@@ -11,6 +11,7 @@
     using SportApp.Common;
     using SportApp.Data.Models;
     using SportApp.Services.Data;
+    using SportApp.Web.ViewModels.Comment;
     using SportApp.Web.ViewModels.Trainers;
 
     public class TrainersController : Controller
@@ -19,17 +20,20 @@
         private readonly ICategoriesService categoriesService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IWebHostEnvironment environment;
+        private readonly ICommentsService commentsService;
 
         public TrainersController(
             ITrainerService trainerService,
             ICategoriesService categoriesService,
             UserManager<ApplicationUser> userManager,
-            IWebHostEnvironment environment)
+            IWebHostEnvironment environment,
+            ICommentsService commentsService)
         {
             this.trainerService = trainerService;
             this.categoriesService = categoriesService;
             this.userManager = userManager;
             this.environment = environment;
+            this.commentsService = commentsService;
         }
 
         public async Task<IActionResult> All(int id = 1)
@@ -122,6 +126,14 @@
             var user = await this.userManager.GetUserAsync(this.User);
             await this.trainerService.BookTrainerAsync(id, user.Id);
             return this.RedirectToAction(nameof(this.All));
+        }
+
+        public IActionResult ShowComments(int id)
+        {
+            var model = new CommentsViewModel();
+            model.Comments = this.commentsService.GetTrainerComments(id);
+            model.TrainerId = id;
+            return this.View(model);
         }
     }
 }

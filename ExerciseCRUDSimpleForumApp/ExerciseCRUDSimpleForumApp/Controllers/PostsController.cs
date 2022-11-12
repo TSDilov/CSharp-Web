@@ -1,6 +1,7 @@
 ﻿using ExerciseCRUDSimpleForumApp.Data.Model;
 using ExerciseCRUDSimpleForumApp.Service;
 using ExerciseCRUDSimpleForumApp.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,12 +26,14 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
             return View(posts);
         }
 
+        [Authorize]
         public IActionResult Add()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Add(CreatePostViewModel model)
         {
             if (!this.ModelState.IsValid)
@@ -48,6 +51,7 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
             return this.RedirectToAction("All");
         }
 
+        [Authorize]
         public IActionResult Edit(int id)
         {
             var postFromBase = this.postService.GetById(id);
@@ -59,6 +63,7 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
             });
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(int id, CreatePostViewModel model)
         {
@@ -72,6 +77,7 @@ namespace ExerciseCRUDSimpleForumApp.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             await this.postService.DeleteAsync(id);

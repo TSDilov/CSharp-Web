@@ -86,6 +86,7 @@
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IVoteService, VoteService>();
             services.AddTransient<IMessageService, MessageService>();
+            services.AddTransient<ICommentsService, CommentsServise>();
         }
 
         private static void Configure(WebApplication app)
