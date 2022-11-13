@@ -10,6 +10,7 @@
     using AutoMapper;
     using SportApp.Data.Models;
     using SportApp.Services.Mapping;
+    using SportApp.Web.ViewModels.Comment;
 
     public class SingleTrainerViewModel : IMapFrom<Trainer>, IHaveCustomMappings
     {

@@ -60,7 +60,7 @@
             <form>
                 <div class="row">
                     <div class="col-12 col-lg-6">
-                        <input type="text" class="form-control" id="name" placeholder="Name">
+                        <input type="text" class="form-control" id="name" placeholder="Name">                        
                     </div>
                     <div class="col-12 col-lg-6">
                         <input type="email" class="form-control" id="email" placeholder="E-mail">
@@ -72,12 +72,11 @@
                         <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
                     </div>
                     <div class="col-12">
-                        <button class="btn delicious-btn mt-30" type="submit" id="commentBtn">Post Comments</button>
+                        <button class="btn delicious-btn mt-30" type="submit" id="commentBtn">Post Comment</button>
                         <div>
                             <br />
                             <a asp-controller="Trainers" asp-action="ShowComments" asp-route-id="@Model.Id" class="btn btn-primary">View comments</a>
-                        </div>
-                       
+                        </div>                     
                     </div>
                 </div>
             </form>
@@ -139,4 +138,4 @@
         });
     </script>
 }
-    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp - append - version="true"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js" asp-append-version="true"></script>

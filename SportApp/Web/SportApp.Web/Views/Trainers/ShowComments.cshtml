@@ -1,4 +1,5 @@
-﻿@model SportApp.Web.ViewModels.Comment.CommentsViewModel
+﻿@using System.Security.Claims
+@model SportApp.Web.ViewModels.Comment.CommentsViewModel
 
 @foreach (var comment in Model.Comments)
 {
@@ -12,7 +13,14 @@
         </div>
         <div>
             Comment: @comment.Message
-        </div>        
+        </div>
+        @if (this.User.FindFirst(ClaimTypes.NameIdentifier).Value == comment.ApplicationUserId)
+        {
+            <a asp-controller="Comments" asp-action="Delete" asp-route-id="@comment.Id"
+                                onclick="return confirm('Are you sure you want to delete comment?')">
+                                Delete
+            </a>
+        }       
     </div>
 }
 <br />

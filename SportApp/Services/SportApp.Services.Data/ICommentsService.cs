@@ -13,5 +13,9 @@
         Task CreateAsync(CommentInputModel input, string userId);
 
         IEnumerable<CommentViewModel> GetTrainerComments(int id);
+
+        CommentViewModel GetById(int id);
+
+        Task DeleteAsync(int id);
     }
 }
