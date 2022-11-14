@@ -49,6 +49,7 @@
             {
                 UserName = model.Username,
                 Email = model.Email,
+                PhoneNumber = model.PhoneNumber,
             };
 
             var result = await this.userManager.CreateAsync(user, model.Password);

@@ -128,6 +128,7 @@
                 {
                     Username = user.ApplicationUser.UserName,
                     Email = user.ApplicationUser?.Email,
+                    PhoneNumber = user.ApplicationUser?.PhoneNumber,
                 };
 
                 bookedUsersList.Add(currentUser);

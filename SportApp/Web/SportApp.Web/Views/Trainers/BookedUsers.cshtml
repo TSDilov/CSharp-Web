@@ -12,6 +12,9 @@
                 UserName
             </th>
             <th>
+                Phone number
+            </th>
+            <th>
                 Email
             </th>
         </tr>
@@ -22,6 +25,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => user.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.PhoneNumber)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => user.Email)
