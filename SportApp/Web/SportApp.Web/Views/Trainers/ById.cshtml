@@ -39,7 +39,10 @@
 
                     }
                     <br/>
-                    <a asp-controller="Trainers" asp-action="Book" asp-route-id="@Model.Id" class="btn btn-primary">Book Trainer</a>
+                    <div class="row">
+                        <a asp-controller="Trainers" asp-action="Book" asp-route-id="@Model.Id" class="btn btn-primary">Book Trainer</a>
+                        <a asp-controller="Trainers" asp-action="BookedUsers" asp-route-id="@Model.Id" class="btn btn-success">View Booked Users</a>
+                    </div>                 
                 </div>
             </div>
 		</div>

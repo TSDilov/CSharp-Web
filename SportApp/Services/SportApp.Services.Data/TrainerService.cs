@@ -12,6 +12,7 @@
     using SportApp.Data.Models;
     using SportApp.Services.Mapping;
     using SportApp.Web.ViewModels.Trainers;
+    using SportApp.Web.ViewModels.Users;
 
     using static System.Net.Mime.MediaTypeNames;
 
@@ -109,6 +110,33 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefault();
+        }
+
+        public async Task<BookedUsersViewModel> BookedUsersAsync(int id)
+        {
+            var trainer = await this.trainerRepository.All()
+                .Include(x => x.ApplicationUsersTrainers)
+                .ThenInclude(y => y.ApplicationUser)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var bookedUsersModel = new BookedUsersViewModel();
+            var bookedUsersList = new List<BookedUserViewModel>();
+
+            foreach (var user in trainer.ApplicationUsersTrainers)
+            {
+                var currentUser = new BookedUserViewModel
+                {
+                    Username = user.ApplicationUser.UserName,
+                    Email = user.ApplicationUser?.Email,
+                };
+
+                bookedUsersList.Add(currentUser);
+            }
+
+            bookedUsersModel.BookedUsers = bookedUsersList;
+            bookedUsersModel.TrainerName = trainer.Name;
+
+            return bookedUsersModel;
         }
 
         public int GetCount()

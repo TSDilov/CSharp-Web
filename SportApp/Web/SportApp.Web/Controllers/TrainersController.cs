@@ -50,7 +50,7 @@
             return this.View(viewModel);
         }
 
-        [Authorize(Roles =GlobalConstants.AdministratorRoleName)]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public IActionResult Create()
         {
             var viewModel = new CreateTrainerInputModel();
@@ -134,6 +134,12 @@
             model.Comments = this.commentsService.GetTrainerComments(id);
             model.TrainerId = id;
             return this.View(model);
+        }
+
+        public async Task<IActionResult> BookedUsers(int id)
+        {
+            var bookedUsers = await this.trainerService.BookedUsersAsync(id);
+            return this.View(bookedUsers);
         }
     }
 }

@@ -7,6 +7,7 @@
     using System.Threading.Tasks;
 
     using SportApp.Web.ViewModels.Trainers;
+    using SportApp.Web.ViewModels.Users;
 
     public interface ITrainerService
     {
@@ -23,5 +24,7 @@
         int GetCount();
 
         Task BookTrainerAsync(int id, string userId);
+
+        Task<BookedUsersViewModel> BookedUsersAsync(int id);
     }
 }
