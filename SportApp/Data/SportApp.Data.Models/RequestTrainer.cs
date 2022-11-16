@@ -1,4 +1,4 @@
-﻿namespace SportApp.Web.ViewModels.Trainers
+﻿namespace SportApp.Data.Models
 {
     using System;
     using System.Collections.Generic;
@@ -7,15 +7,21 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class BaseTrainerInputModel
+    using SportApp.Data.Common.Models;
+
+    public class RequestTrainer : BaseDeletableModel<int>
     {
         [Required]
-        [MinLength(5)]
+        public string UserId { get; set; }
+
+        [Required]
+        public string Username { get; set; }
+
+        [Required]
         [MaxLength(30)]
         public string Name { get; set; }
 
         [Required]
-        [MinLength(30)]
         [MaxLength(500)]
         public string InfoCard { get; set; }
 
@@ -31,8 +37,9 @@
         [Required]
         public decimal PricePerTraining { get; set; }
 
-        public int CategoryId { get; set; }
+        [Required]
+        public string CategoryOfTraining { get; set; }
 
-        public IEnumerable<KeyValuePair<string, string>> CategoryItems { get; set; }
+        public bool IsApproved { get; set; }
     }
 }

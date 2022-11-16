@@ -35,6 +35,8 @@
 
         public virtual DbSet<Comment> Comments { get; set; }
 
+        public DbSet<RequestTrainer> RequestsTrainers { get; set; }
+
         public DbSet<Setting> Settings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);

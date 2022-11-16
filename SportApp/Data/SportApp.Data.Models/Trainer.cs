@@ -30,6 +30,12 @@
         public string InfoCard { get; set; }
 
         [Required]
+        public string Email { get; set; }
+
+        [Required]
+        public string PhoneNumber { get; set; }
+
+        [Required]
         public DateTime DateOfBirth { get; set; }
 
         [Required]

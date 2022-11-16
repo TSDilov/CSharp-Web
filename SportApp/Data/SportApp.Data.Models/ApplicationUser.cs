@@ -30,6 +30,8 @@ namespace SportApp.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
+        public bool RequestTrainer { get; set; } = false;
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }

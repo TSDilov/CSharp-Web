@@ -6,6 +6,7 @@
 
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
+    using SportApp.Common;
 
     public class ApplicationDbContextSeeder : ISeeder
     {
@@ -25,7 +26,8 @@
 
             var seeders = new List<ISeeder>
                           {
-                              new RolesSeeder(),
+                              new RolesSeeder(GlobalConstants.AdministratorRoleName),
+                              new RolesSeeder(GlobalConstants.TrainerRoleName),
                               new SettingsSeeder(),
                               new CategorySeeder(),
                           };

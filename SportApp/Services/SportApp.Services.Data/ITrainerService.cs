@@ -26,5 +26,9 @@
         Task BookTrainerAsync(int id, string userId);
 
         Task<BookedUsersViewModel> BookedUsersAsync(int id);
+
+        Task RequestTrainerAsync(RequestTrainerInputModel input, string emali, string phone);
+
+        Task<IEnumerable<TrainerRequestViewModel>> GetAllTrainersRequestsAsync();
     }
 }

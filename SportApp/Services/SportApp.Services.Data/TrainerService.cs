@@ -20,13 +20,16 @@
     {
         private readonly IDeletableEntityRepository<Trainer> trainerRepository;
         private readonly IRepository<ApplicationUserTrainer> aplicationUserTrainer;
+        private readonly IDeletableEntityRepository<RequestTrainer> requestTrainerRepository;
 
         public TrainerService(
             IDeletableEntityRepository<Trainer> trainerRepository,
-            IRepository<ApplicationUserTrainer> aplicationUserTrainer)
+            IRepository<ApplicationUserTrainer> aplicationUserTrainer,
+            IDeletableEntityRepository<RequestTrainer> requestTrainerRepository)
         {
             this.trainerRepository = trainerRepository;
             this.aplicationUserTrainer = aplicationUserTrainer;
+            this.requestTrainerRepository = requestTrainerRepository;
         }
 
         public async Task BookTrainerAsync(int id, string userId)
@@ -58,6 +61,8 @@
                 DateOfBirth = input.DateOfBirth,
                 PricePerTraining = input.PricePerTraining,
                 CategotyId = input.CategoryId,
+                Email = input.Email,
+                PhoneNumber = input.PhoneNumber,
             };
 
             var allowedExtensions = new[] { "jpg", "png", "gif", "jfif" };
@@ -157,6 +162,37 @@
             trainer.CategotyId = input.CategoryId;
 
             await this.trainerRepository.SaveChangesAsync();
+        }
+
+        public async Task RequestTrainerAsync(RequestTrainerInputModel input, string email, string phone)
+        {
+            var requestTrainer = new RequestTrainer
+            {
+                UserId = input.UserId,
+                Username = input.Username,
+                Name = input.Name,
+                InfoCard = input.InfoCard,
+                DateOfBirth = input.DateOfBirth,
+                PricePerTraining = input.PricePerTraining,
+                CategoryOfTraining = input.CategoryOfTraining,
+            };
+
+            requestTrainer.IsApproved = false;
+            requestTrainer.Email = email;
+            requestTrainer.PhoneNumber = phone;
+
+            await this.requestTrainerRepository.AddAsync(requestTrainer);
+            await this.requestTrainerRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<TrainerRequestViewModel>> GetAllTrainersRequestsAsync()
+        {
+            var trainerRequests = await this.requestTrainerRepository.All()
+                .Where(x => x.IsApproved == false)
+                .To<TrainerRequestViewModel>()
+                .ToListAsync();
+
+            return trainerRequests;
         }
     }
 }

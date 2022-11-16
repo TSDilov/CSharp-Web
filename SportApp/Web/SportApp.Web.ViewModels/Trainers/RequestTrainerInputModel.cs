@@ -7,8 +7,17 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class BaseTrainerInputModel
+    using SportApp.Data.Models;
+    using SportApp.Services.Mapping;
+
+    public class RequestTrainerInputModel
     {
+        [Required]
+        public string UserId { get; set; }
+
+        [Required]
+        public string Username { get; set; }
+
         [Required]
         [MinLength(5)]
         [MaxLength(30)]
@@ -20,19 +29,12 @@
         public string InfoCard { get; set; }
 
         [Required]
-        public string Email { get; set; }
-
-        [Required]
-        public string PhoneNumber { get; set; }
-
-        [Required]
         public DateTime DateOfBirth { get; set; }
 
         [Required]
         public decimal PricePerTraining { get; set; }
 
-        public int CategoryId { get; set; }
-
-        public IEnumerable<KeyValuePair<string, string>> CategoryItems { get; set; }
+        [Required]
+        public string CategoryOfTraining { get; set; }
     }
 }

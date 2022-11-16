@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Security.Cryptography.X509Certificates;
     using System.Threading.Tasks;
+
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -21,19 +22,25 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IWebHostEnvironment environment;
         private readonly ICommentsService commentsService;
+        private readonly RoleManager<ApplicationRole> roleManager;
+        private readonly ITrainerRequestsService trainerRequestService;
 
         public TrainersController(
             ITrainerService trainerService,
             ICategoriesService categoriesService,
             UserManager<ApplicationUser> userManager,
             IWebHostEnvironment environment,
-            ICommentsService commentsService)
+            ICommentsService commentsService,
+            RoleManager<ApplicationRole> roleManager,
+            ITrainerRequestsService trainerRequestService)
         {
             this.trainerService = trainerService;
             this.categoriesService = categoriesService;
             this.userManager = userManager;
             this.environment = environment;
             this.commentsService = commentsService;
+            this.roleManager = roleManager;
+            this.trainerRequestService = trainerRequestService;
         }
 
         public async Task<IActionResult> All(int id = 1)
@@ -140,6 +147,63 @@
         {
             var bookedUsers = await this.trainerService.BookedUsersAsync(id);
             return this.View(bookedUsers);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> RequestTrainerForm()
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            if (!user.RequestTrainer)
+            {
+                var model = new RequestTrainerInputModel();
+                return this.View(model);
+            }
+
+            return this.Redirect("/");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> RequestTrainerForm(RequestTrainerInputModel input)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(input);
+            }
+
+            var user = await this.userManager.GetUserAsync(this.User);
+            try
+            {
+                user.RequestTrainer = true;
+                await this.trainerService.RequestTrainerAsync(input, user.Email, user.PhoneNumber);
+            }
+            catch (Exception ex)
+            {
+                this.ModelState.AddModelError(string.Empty, ex.Message);
+                return this.View(input);
+            }
+
+            return this.RedirectToAction("All", "Trainers");
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> AllRequestForTrainer()
+        {
+            var viewModel = new TrainerRequestsViewModel
+            {
+                TrainersRequests = await this.trainerService.GetAllTrainersRequestsAsync(),
+            };
+
+            return this.View(viewModel);
+        }
+
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> ApprovedTrainer(string userId, int requestTrainerId)
+        {
+            var user = await this.userManager.FindByIdAsync(userId);
+            await this.userManager.AddToRoleAsync(user, GlobalConstants.TrainerRoleName);
+            await this.trainerRequestService.Approved(requestTrainerId);
+            return this.RedirectToAction("AllRequestForTrainer", "Trainers");
         }
     }
 }

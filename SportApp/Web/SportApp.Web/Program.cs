@@ -2,6 +2,13 @@
 {
     using System.Reflection;
 
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using SportApp.Data;
     using SportApp.Data.Common;
     using SportApp.Data.Common.Repositories;
@@ -11,17 +18,9 @@
     using SportApp.Services.Data;
     using SportApp.Services.Mapping;
     using SportApp.Services.Messaging;
-    using SportApp.Web.ViewModels;
-
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Hosting;
-    using SportApp.Web.Model_Binders;
     using SportApp.Web.Hubs;
+    using SportApp.Web.Model_Binders;
+    using SportApp.Web.ViewModels;
 
     public class Program
     {
@@ -87,6 +86,7 @@
             services.AddTransient<IVoteService, VoteService>();
             services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<ICommentsService, CommentsServise>();
+            services.AddTransient<ITrainerRequestsService, TrainerRequestsService>();
         }
 
         private static void Configure(WebApplication app)
