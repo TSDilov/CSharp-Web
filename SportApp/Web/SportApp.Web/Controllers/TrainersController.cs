@@ -83,7 +83,6 @@
             catch (Exception ex)
             {
                 this.ModelState.AddModelError(string.Empty, ex.Message);
-                input.CategoryItems = this.categoriesService.GetAllCategoriesAsKeyValuePairs();
                 return this.View(input);
             }
 
@@ -115,6 +114,7 @@
                 return this.View(model);
             }
 
+
             await this.trainerService.UpdateAsync(id, model);
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
@@ -138,11 +138,17 @@
         public IActionResult ShowComments(int id)
         {
             var model = new CommentsViewModel();
-            model.Comments = this.commentsService.GetTrainerComments(id);
-            model.TrainerId = id;
-            return this.View(model);
+            if (this.User.Identity.IsAuthenticated)
+            {
+                model.Comments = this.commentsService.GetTrainerComments(id);
+                model.TrainerId = id;
+                return this.View(model);
+            }
+
+            return this.RedirectToAction("Login", "User");
         }
 
+        [Authorize(Roles = GlobalConstants.TrainerRoleName)]
         public async Task<IActionResult> BookedUsers(int id)
         {
             var bookedUsers = await this.trainerService.BookedUsersAsync(id);
@@ -187,7 +193,7 @@
         }
 
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
-        public async Task<IActionResult> AllRequestForTrainer()
+        public async Task<IActionResult> AllRequestsForTrainer()
         {
             var viewModel = new TrainerRequestsViewModel
             {
@@ -203,7 +209,7 @@
             var user = await this.userManager.FindByIdAsync(userId);
             await this.userManager.AddToRoleAsync(user, GlobalConstants.TrainerRoleName);
             await this.trainerRequestService.Approved(requestTrainerId);
-            return this.RedirectToAction("AllRequestForTrainer", "Trainers");
+            return this.RedirectToAction("AllRequestsForTrainer", "Trainers");
         }
     }
 }

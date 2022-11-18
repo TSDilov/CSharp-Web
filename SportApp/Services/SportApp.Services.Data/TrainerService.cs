@@ -157,6 +157,8 @@
 
             trainer.Name = input.Name;
             trainer.InfoCard = input.InfoCard;
+            trainer.Email = input.Email;
+            trainer.PhoneNumber = input.PhoneNumber;
             trainer.DateOfBirth = input.DateOfBirth;
             trainer.PricePerTraining = input.PricePerTraining;
             trainer.CategotyId = input.CategoryId;
