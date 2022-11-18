@@ -11,39 +11,24 @@
     using SportApp.Data;
     using SportApp.Data.Common.Repositories;
     using SportApp.Data.Models;
+    using SportApp.Services.Data;
+    using SportApp.Web.ViewModels.Administration.Categories;
 
     [Area("Administration")]
     public class CategoriesController : AdministrationController
     {
-        private readonly IDeletableEntityRepository<Category> categoryRepository;
+        private readonly ICategoriesService categoryService;
 
-        public CategoriesController(IDeletableEntityRepository<Category> categoryRepository)
+        public CategoriesController(ICategoriesService categoryService)
         {
-            this.categoryRepository = categoryRepository;
+            this.categoryService = categoryService;
         }
 
         // GET: Administration/Categories
         public async Task<IActionResult> Index()
         {
-              return this.View(await this.categoryRepository.All().ToListAsync());
-        }
-
-        // GET: Administration/Categories/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || this.categoryRepository.All() == null)
-            {
-                return this.NotFound();
-            }
-
-            var category = await this.categoryRepository.All()
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (category == null)
-            {
-                return this.NotFound();
-            }
-
-            return this.View(category);
+            var model = await this.categoryService.All();
+            return this.View(model);
         }
 
         // GET: Administration/Categories/Create
@@ -53,82 +38,52 @@
         }
 
         // POST: Administration/Categories/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Name,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Category category)
+        public async Task<IActionResult> Create(CategoryInputModel input)
         {
             if (this.ModelState.IsValid)
             {
-                await this.categoryRepository.AddAsync(category);
-                await this.categoryRepository.SaveChangesAsync();
+                await this.categoryService.CreateAsync(input);
                 return this.RedirectToAction(nameof(this.Index));
             }
-            return this.View(category);
+
+            return this.View(input);
         }
 
         // GET: Administration/Categories/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || this.categoryRepository.All() == null)
-            {
-                return this.NotFound();
-            }
-
-            var category = await this.categoryRepository.All().FirstOrDefaultAsync(x => x.Id == id);
-            if (category == null)
-            {
-                return this.NotFound();
-            }
+            var category = await this.categoryService.GetById(id);
             return this.View(category);
         }
 
         // POST: Administration/Categories/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,IsDeleted,DeletedOn,Id,CreatedOn,ModifiedOn")] Category category)
+        public async Task<IActionResult> Edit(int id, EditCategoryInputModel input)
         {
-            if (id != category.Id)
-            {
-                return this.NotFound();
-            }
-
             if (this.ModelState.IsValid)
             {
                 try
                 {
-                    this.categoryRepository.Update(category);
-                    await this.categoryRepository.SaveChangesAsync();
+                    await this.categoryService.UpdateAsync(id, input);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!this.CategoryExists(category.Id))
-                    {
-                        return this.NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    return this.View(input);
                 }
+
                 return this.RedirectToAction(nameof(this.Index));
             }
-            return this.View(category);
+
+            return this.View(input);
         }
 
         // GET: Administration/Categories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || this.categoryRepository.All() == null)
-            {
-                return this.NotFound();
-            }
-
-            var category = await this.categoryRepository.All()
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var category = await this.categoryService.GetById(id);
             if (category == null)
             {
                 return this.NotFound();
@@ -143,23 +98,8 @@
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (this.categoryRepository.All() == null)
-            {
-                return this.Problem("Entity set 'ApplicationDbContext.Categories'  is null.");
-            }
-            var category = await this.categoryRepository.All().FirstOrDefaultAsync(x => x.Id == id);
-            if (category != null)
-            {
-                this.categoryRepository.Delete(category);
-            }
-
-            await this.categoryRepository.SaveChangesAsync();
+            await this.categoryService.DeleteAsync(id);
             return this.RedirectToAction(nameof(this.Index));
-        }
-
-        private bool CategoryExists(int id)
-        {
-          return this.categoryRepository.All().Any(e => e.Id == id);
         }
     }
 }

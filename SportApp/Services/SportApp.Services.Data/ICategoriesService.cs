@@ -6,8 +6,21 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    using SportApp.Web.ViewModels.Administration.Categories;
+    using SportApp.Web.ViewModels.Trainers;
+
     public interface ICategoriesService
     {
         IEnumerable<KeyValuePair<string, string>> GetAllCategoriesAsKeyValuePairs();
+
+        Task<IEnumerable<CategoryViewModel>> All();
+
+        Task CreateAsync(CategoryInputModel input);
+
+        Task<EditCategoryInputModel> GetById(int id);
+
+        Task UpdateAsync(int id, EditCategoryInputModel input);
+
+        Task DeleteAsync(int id);
     }
 }

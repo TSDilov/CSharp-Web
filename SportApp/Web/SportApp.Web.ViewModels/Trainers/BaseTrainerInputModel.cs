@@ -23,6 +23,7 @@
         public string Email { get; set; }
 
         [Required]
+        [RegularExpression("08[7-9][2-9][0-9]{6}")]
         public string PhoneNumber { get; set; }
 
         [Required]

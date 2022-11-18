@@ -94,8 +94,8 @@
 
         public async Task DeleteAsync(int id)
         {
-            var recipe = await this.trainerRepository.All().FirstOrDefaultAsync(t => t.Id == id);
-            this.trainerRepository.Delete(recipe);
+            var trainer = await this.trainerRepository.All().FirstOrDefaultAsync(t => t.Id == id);
+            this.trainerRepository.Delete(trainer);
             await this.trainerRepository.SaveChangesAsync();
         }
 

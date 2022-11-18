@@ -66,6 +66,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Create(CreateTrainerInputModel input)
         {
@@ -105,6 +106,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Edit(int id, EditTrainerInputModel model)
         {
@@ -114,12 +116,12 @@
                 return this.View(model);
             }
 
-
             await this.trainerService.UpdateAsync(id, model);
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
         public async Task<IActionResult> Delete(int id)
         {
@@ -169,6 +171,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> RequestTrainerForm(RequestTrainerInputModel input)
         {
