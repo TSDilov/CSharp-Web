@@ -1,4 +1,4 @@
-﻿namespace SportApp.Data.Models
+﻿namespace SportApp.Web.ViewModels.GroupTrainings
 {
     using System;
     using System.Collections.Generic;
@@ -7,24 +7,20 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    using SportApp.Data.Common.Models;
-
-    public class GroupTraining : BaseDeletableModel<int>
+    public class CreateGroupTrainingInputModel
     {
-        public GroupTraining()
-        {
-            this.ApplicationUserGroupTrainings = new HashSet<ApplicationUserGroupTraining>();
-        }
-
         [Required]
+        [MinLength(5)]
         [MaxLength(50)]
         public string Name { get; set; }
 
         [Required]
+        [MinLength(5)]
         [MaxLength(500)]
         public string Description { get; set; }
 
         [Required]
+        [MinLength(5)]
         [MaxLength(100)]
         public string Place { get; set; }
 
@@ -34,10 +30,9 @@
         [Required]
         public TimeSpan StartHour { get; set; }
 
-        public int TrainerId { get; set; }
-
-        public Trainer Trainer { get; set; }
-
-        public virtual ICollection<ApplicationUserGroupTraining> ApplicationUserGroupTrainings { get; set; }
+        [Required]
+        [MinLength(5)]
+        [MaxLength(30)]
+        public string TrainerName { get; set; }
     }
 }

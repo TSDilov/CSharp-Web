@@ -87,6 +87,7 @@
             services.AddTransient<IMessageService, MessageService>();
             services.AddTransient<ICommentsService, CommentsServise>();
             services.AddTransient<ITrainerRequestsService, TrainerRequestsService>();
+            services.AddTransient<IGroupTrainingsService, GroupTrainingsService>();
         }
 
         private static void Configure(WebApplication app)

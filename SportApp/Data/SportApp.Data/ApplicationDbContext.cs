@@ -65,6 +65,9 @@
             builder.Entity<ApplicationUserTrainer>()
                 .HasKey(x => new { x.ApplicationUserId, x.TrainerId });
 
+            builder.Entity<ApplicationUserGroupTraining>()
+                .HasKey(x => new { x.ApplicationUserId, x.GroupTrainingId });
+
             builder.Entity<ApplicationUser>()
                 .Property(u => u.UserName)
                 .HasMaxLength(20)

@@ -16,6 +16,7 @@ namespace SportApp.Data.Models
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
             this.ApplicationUsersTrainers = new HashSet<ApplicationUserTrainer>();
+            this.ApplicationUserGroupTrainings = new HashSet<ApplicationUserGroupTraining>();
             this.Votes = new HashSet<Vote>();
             this.Comments = new HashSet<Comment>();
         }
@@ -39,6 +40,8 @@ namespace SportApp.Data.Models
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
 
         public virtual ICollection<ApplicationUserTrainer> ApplicationUsersTrainers { get; set; }
+
+        public virtual ICollection<ApplicationUserGroupTraining> ApplicationUserGroupTrainings { get; set; }
 
         public virtual ICollection<Vote> Votes { get; set; }
 
