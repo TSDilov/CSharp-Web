@@ -6,6 +6,7 @@
     using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
+
     using FileManagerApp.Data.Common.Repositories;
     using FileManagerApp.Data.Models;
     using FileManagerApp.Services.Mapping;
@@ -63,17 +64,22 @@
                 .Where(x => x.Id == id)
                 .To<T>()
                 .FirstOrDefaultAsync();
-
         }
 
-        public Task<OperationResult<byte[]>> GetBytesAsync(string id)
+        public async Task<byte[]> GetBytesAsync(string id)
         {
-            throw new NotImplementedException();
+            var file = await this.fileRepository.All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return file.Content;
         }
 
-        public Task<OperationResult<string>> GetHashAsync(string id)
+        public async Task<int> GetHashAsync(string id)
         {
-            throw new NotImplementedException();
+            var file = await this.fileRepository.All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            return file.GetHashCode();
         }
 
         public async Task<OperationResult> StoreAsync(StreamInfoViewModel fileContent)

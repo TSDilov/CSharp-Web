@@ -30,6 +30,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\FileManagerApp.Data\FileManagerApp.Data.csproj" />
     <ProjectReference Include="..\..\Services\FileManagerApp.Services.Data\FileManagerApp.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\FileManagerApp.Services\FileManagerApp.Services.csproj" />
+    <ProjectReference Include="..\..\Web\FileManagerApp.Web.ViewModels\FileManagerApp.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

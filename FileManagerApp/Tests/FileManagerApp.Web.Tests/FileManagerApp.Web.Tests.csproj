@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="6.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.11" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
     <PackageReference Include="OneBitSoftware.Utilities.OperationResult" Version="1.4.3" />
     <PackageReference Include="xunit" Version="2.4.1" />
@@ -27,6 +28,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Data\FileManagerApp.Data\FileManagerApp.Data.csproj" />
+    <ProjectReference Include="..\..\Services\FileManagerApp.Services\FileManagerApp.Services.csproj" />
+    <ProjectReference Include="..\..\Web\FileManagerApp.Web.ViewModels\FileManagerApp.Web.ViewModels.csproj" />
     <ProjectReference Include="..\..\Web\FileManagerApp.Web\FileManagerApp.Web.csproj" />
   </ItemGroup>
 

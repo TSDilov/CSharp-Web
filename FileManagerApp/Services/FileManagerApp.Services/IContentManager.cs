@@ -21,12 +21,12 @@
 
         Task<T> GetAsync<T>(string id);
 
-        Task<OperationResult<byte[]>> GetBytesAsync(string id);
+        Task<byte[]> GetBytesAsync(string id);
 
         Task<OperationResult> UpdateAsync(string id, StreamInfoViewModel fileContent);
 
         Task<OperationResult> DeleteAsync(string id);
 
-        Task<OperationResult<string>> GetHashAsync(string id);
+        Task<int> GetHashAsync(string id);
     }
 }
