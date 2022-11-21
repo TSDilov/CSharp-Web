@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <UserSecretsId>aspnet-FileManagerApp-BBB373B5-EF3F-4DBB-B8AA-7152CEC275BF</UserSecretsId>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+	<ItemGroup>
+		<AdditionalFiles Include="..\..\stylecop.json" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<InternalsVisibleTo Include="FileManagerApp.Web.Tests" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.5" />
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.161" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.5" />
+    <PackageReference Include="OneBitSoftware.Utilities.OperationResult" Version="1.4.3" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\FileManagerApp.Common\FileManagerApp.Common.csproj" />
+    <ProjectReference Include="..\..\Data\FileManagerApp.Data.Models\FileManagerApp.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\FileManagerApp.Data\FileManagerApp.Data.csproj" />
+    <ProjectReference Include="..\..\Services\FileManagerApp.Services.Data\FileManagerApp.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\FileManagerApp.Services.Mapping\FileManagerApp.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\Services\FileManagerApp.Services.Messaging\FileManagerApp.Services.Messaging.csproj" />
+    <ProjectReference Include="..\..\Services\FileManagerApp.Services\FileManagerApp.Services.csproj" />
+    <ProjectReference Include="..\FileManagerApp.Web.Infrastructure\FileManagerApp.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\FileManagerApp.Web.ViewModels\FileManagerApp.Web.ViewModels.csproj" />
+  </ItemGroup>
+</Project>

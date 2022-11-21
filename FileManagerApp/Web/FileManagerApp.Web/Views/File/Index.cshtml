@@ -1,0 +1,50 @@
+﻿@model IEnumerable<FileManagerApp.Web.ViewModels.StreamInfoViewModel>
+
+@{
+    this.ViewData["Title"] = "All files";
+}
+
+<a asp-controller="File" asp-action="Create" class="btn btn-primary"> Add file</a>
+
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr>
+            <th>
+                FileName
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Length
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FileName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Length)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-fileId="@item.Id" class="btn btn-primary">Edit</a>
+                    <form asp-action="Delete" asp-route-fileId="@item.Id">
+                        <button type="submit" class="btn btn-danger"
+                            onclick="return confirm('Are you sure you want  to delete recipe: @item.FileName ?')">
+                            Delete
+                        </button>
+                    </form>
+                    <a asp-action="Details" asp-route-fileId="@item.Id" class="btn btn-success">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
