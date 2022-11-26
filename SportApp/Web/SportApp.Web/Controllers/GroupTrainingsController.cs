@@ -55,6 +55,8 @@
 
             try
             {
+                var user = await this.userManager.GetUserAsync(this.User);
+                input.TrainerUserId = user.Id;
                 await this.groupTrainingsService.CreateAsync(input);
             }
             catch (Exception ex)

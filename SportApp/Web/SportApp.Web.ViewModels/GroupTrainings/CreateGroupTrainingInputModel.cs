@@ -34,5 +34,7 @@
         [MinLength(5)]
         [MaxLength(30)]
         public string TrainerName { get; set; }
+
+        public string TrainerUserId { get; set; }
     }
 }

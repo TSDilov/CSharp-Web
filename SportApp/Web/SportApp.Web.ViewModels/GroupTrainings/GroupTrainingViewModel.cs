@@ -27,5 +27,7 @@
         public int TrainerId { get; set; }
 
         public string TrainerName { get; set; }
+
+        public string TrainerUserId { get; set; }
     }
 }

@@ -39,5 +39,7 @@
         public Trainer Trainer { get; set; }
 
         public virtual ICollection<ApplicationUserGroupTraining> ApplicationUserGroupTrainings { get; set; }
+
+        public string TrainerUserId { get; set; }
     }
 }
