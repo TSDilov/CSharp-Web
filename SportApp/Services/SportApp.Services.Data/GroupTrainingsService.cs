@@ -51,9 +51,39 @@
                 DaysOfWeek = input.DaysOfWeek,
                 StartHour = input.StartHour,
                 Trainer = trainer,
+                TrainerUserId = input.TrainerUserId,
             };
 
             await this.groupTrainingRepository.AddAsync(groupTraining);
+            await this.trainerRepository.SaveChangesAsync();
+        }
+
+        public T GetById<T>(int id)
+        {
+            return this.groupTrainingRepository.AllAsNoTracking()
+                .Where(x => x.Id == id)
+                .To<T>()
+                .FirstOrDefault();
+        }
+
+        public async Task UpdateAsync(int id, EditGroupTrainingInputModel input)
+        {
+            var training = await this.groupTrainingRepository.All()
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            training.Name = input.Name;
+            training.Description = input.Description;
+            training.DaysOfWeek = input.DaysOfWeek;
+            training.Place = input.Place;
+            training.StartHour = input.StartHour;
+
+            await this.groupTrainingRepository.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var training = await this.groupTrainingRepository.All().FirstOrDefaultAsync(t => t.Id == id);
+            this.groupTrainingRepository.Delete(training);
             await this.trainerRepository.SaveChangesAsync();
         }
     }

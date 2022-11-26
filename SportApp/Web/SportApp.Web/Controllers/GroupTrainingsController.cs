@@ -67,5 +67,52 @@
 
             return this.Redirect("/");
         }
+
+        [Authorize(Roles = GlobalConstants.TrainerRoleName)]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            var model = this.groupTrainingsService.GetById<EditGroupTrainingInputModel>(id);
+            if (model.TrainerUserId == user.Id)
+            {
+                return this.View(model);
+            }
+
+            return this.RedirectToAction(nameof(this.All));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = GlobalConstants.TrainerRoleName)]
+        public async Task<IActionResult> Edit(int id, EditGroupTrainingInputModel model)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(model);
+            }
+
+            if (model.TrainerUserId == this.userManager.GetUserId(this.User))
+            {
+                await this.groupTrainingsService.UpdateAsync(id, model);
+                return this.RedirectToAction(nameof(this.All));
+            }
+
+            return this.NotFound();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = GlobalConstants.TrainerRoleName)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var model = this.groupTrainingsService.GetById<DeleteModel>(id);
+            if (model.TrainerUserId == this.userManager.GetUserId(this.User))
+            {
+                await this.groupTrainingsService.DeleteAsync(id);
+                return this.RedirectToAction(nameof(this.All));
+            }
+
+            return this.NotFound();
+        }
     }
 }
