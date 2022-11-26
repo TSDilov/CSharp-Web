@@ -63,7 +63,7 @@
                 @if (this.User.Identity.IsAuthenticated)
                 {
                     <td>
-                        <a asp-action="ApprovedTrainer" asp-route-id="@item.Id">Sign up!</a>
+                        <a asp-action="SignForTraining" asp-route-id="@item.Id">Sign up!</a>
                     </td>
                 }
                 @if (this.User.IsInRole(GlobalConstants.TrainerRoleName) 
@@ -78,6 +78,7 @@
                                 Delete
                             </button>
                         </form>
+                        <a asp-action="SignInUsers" asp-route-id="@item.Id" class="btn btn-success">SignIn Users</a>
                     </td>
                 }
             </tr>

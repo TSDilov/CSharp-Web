@@ -11,18 +11,22 @@
     using SportApp.Data.Models;
     using SportApp.Services.Mapping;
     using SportApp.Web.ViewModels.GroupTrainings;
+    using SportApp.Web.ViewModels.Users;
 
     public class GroupTrainingsService : IGroupTrainingsService
     {
         private readonly IDeletableEntityRepository<GroupTraining> groupTrainingRepository;
         private readonly IRepository<Trainer> trainerRepository;
+        private readonly IRepository<ApplicationUserGroupTraining> userGroupTrainingService;
 
         public GroupTrainingsService(
             IDeletableEntityRepository<GroupTraining> groupTrainingRepository,
-            IRepository<Trainer> trainerRepository)
+            IRepository<Trainer> trainerRepository,
+            IRepository<ApplicationUserGroupTraining> userGroupTrainingService)
         {
             this.groupTrainingRepository = groupTrainingRepository;
             this.trainerRepository = trainerRepository;
+            this.userGroupTrainingService = userGroupTrainingService;
         }
 
         public async Task<IEnumerable<T>> GetAll<T>()
@@ -85,6 +89,54 @@
             var training = await this.groupTrainingRepository.All().FirstOrDefaultAsync(t => t.Id == id);
             this.groupTrainingRepository.Delete(training);
             await this.trainerRepository.SaveChangesAsync();
+        }
+
+        public async Task SignInForTraining(int id, string userId)
+        {
+            var groupTrainingUser = await this.userGroupTrainingService.All()
+                .FirstOrDefaultAsync(x => x.GroupTrainingId == id && x.ApplicationUserId == userId);
+
+            if (groupTrainingUser == null)
+            {
+                groupTrainingUser = new ApplicationUserGroupTraining
+                {
+                    GroupTrainingId = id,
+                    ApplicationUserId = userId,
+                };
+
+                var training = await this.groupTrainingRepository.All()
+                    .FirstOrDefaultAsync(t => t.Id == id);
+                training.ApplicationUserGroupTrainings.Add(groupTrainingUser);
+                await this.trainerRepository.SaveChangesAsync();
+            }
+        }
+
+        public async Task<BookedUsersViewModel> SighnInUsers(int id)
+        {
+            var training = await this.groupTrainingRepository.All()
+                .Include(x => x.ApplicationUserGroupTrainings)
+                .ThenInclude(y => y.ApplicationUser)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            var bookedUsersModel = new BookedUsersViewModel();
+            var bookedUsersList = new List<BookedUserViewModel>();
+
+            foreach (var user in training.ApplicationUserGroupTrainings)
+            {
+                var currentUser = new BookedUserViewModel
+                {
+                    Username = user.ApplicationUser.UserName,
+                    Email = user.ApplicationUser?.Email,
+                    PhoneNumber = user.ApplicationUser?.PhoneNumber,
+                };
+
+                bookedUsersList.Add(currentUser);
+            }
+
+            bookedUsersModel.BookedUsers = bookedUsersList;
+            bookedUsersModel.TrainerName = training.Name;
+
+            return bookedUsersModel;
         }
     }
 }

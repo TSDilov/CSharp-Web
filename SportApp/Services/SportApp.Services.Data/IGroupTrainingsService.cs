@@ -8,6 +8,7 @@
 
     using SportApp.Web.ViewModels.GroupTrainings;
     using SportApp.Web.ViewModels.Trainers;
+    using SportApp.Web.ViewModels.Users;
 
     public interface IGroupTrainingsService
     {
@@ -20,5 +21,9 @@
         Task UpdateAsync(int id, EditGroupTrainingInputModel input);
 
         Task DeleteAsync(int id);
+
+        Task SignInForTraining(int id, string userId);
+
+        Task<BookedUsersViewModel> SighnInUsers(int id);
     }
 }

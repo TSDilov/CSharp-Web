@@ -1,5 +1,7 @@
 ﻿namespace SportApp.Web.Controllers
 {
+    using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
@@ -69,7 +71,7 @@
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
             if (this.User?.Identity?.IsAuthenticated ?? false)
             {
@@ -77,6 +79,7 @@
             }
 
             var model = new LoginViewModel();
+            model.ExternalLogins = (await this.signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             return this.View(model);
         }
@@ -112,6 +115,50 @@
             await this.signInManager.SignOutAsync();
 
             return this.RedirectToAction("Index", "Home");
+        }
+
+        // not working
+        [HttpPost]
+        [AllowAnonymous]
+        public IActionResult ExternalLogin(string provider, string? returnUrl = null)
+        {
+            var redirectUrl = this.Url.Action("ExternalLoginCallback", "User", new { returnUrl });
+            var properties = this.signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
+            return new ChallengeResult(provider, properties);
+        }
+
+        // not working
+        [AllowAnonymous]
+        public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
+        {
+            returnUrl = returnUrl ?? this.Url.Content("~/");
+            if (remoteError != null)
+            {
+                this.TempData["ErrorMessage"] = $"Error from external provider: {remoteError}";
+                return this.RedirectToAction("Login", new { ReturnUrl = returnUrl });
+            }
+
+            var info = await this.signInManager.GetExternalLoginInfoAsync();
+            if (info == null)
+            {
+                this.TempData["ErrorMessage"] = "Error loading external login information.";
+                return this.RedirectToAction("Login", new { ReturnUrl = returnUrl });
+            }
+
+            var result = await this.signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, false);
+            if (result.Succeeded)
+            {
+                return this.LocalRedirect(returnUrl);
+            }
+
+            if (result.IsLockedOut)
+            {
+                return this.RedirectToPage("./Lockout");
+            }
+            else
+            {
+                return this.RedirectToAction("Register");
+            }
         }
     }
 }

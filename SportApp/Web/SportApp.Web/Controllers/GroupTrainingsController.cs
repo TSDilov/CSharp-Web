@@ -114,5 +114,20 @@
 
             return this.NotFound();
         }
+
+        [Authorize]
+        public async Task<IActionResult> SignForTraining(int id)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            await this.groupTrainingsService.SignInForTraining(id, user.Id);
+            return this.RedirectToAction(nameof(this.All));
+        }
+
+        [Authorize(Roles = GlobalConstants.TrainerRoleName)]
+        public async Task<IActionResult> SignInUsers(int id)
+        {
+            var bookedUsers = await this.groupTrainingsService.SighnInUsers(id);
+            return this.View(bookedUsers);
+        }
     }
 }
