@@ -39,6 +39,8 @@
 
         public virtual DbSet<GroupTraining> GroupTraining { get; set; }
 
+        public virtual DbSet<Video> Videos { get; set; }
+
         public DbSet<Setting> Settings { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);

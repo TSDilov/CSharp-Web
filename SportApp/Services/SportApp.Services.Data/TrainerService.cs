@@ -66,7 +66,7 @@
             };
 
             var allowedExtensions = new[] { "jpg", "png", "gif", "jfif" };
-            Directory.CreateDirectory($"{imagePath}/recipes/");
+            Directory.CreateDirectory($"{imagePath}/trainerss/");
             foreach (var image in input.Images)
             {
                 var extension = Path.GetExtension(image.FileName).TrimStart('.');

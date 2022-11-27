@@ -98,6 +98,7 @@ namespace SportApp.Web
             services.AddTransient<ICommentsService, CommentsServise>();
             services.AddTransient<ITrainerRequestsService, TrainerRequestsService>();
             services.AddTransient<IGroupTrainingsService, GroupTrainingsService>();
+            services.AddTransient<IVideoSurvice, VideoSurvice>();
         }
 
         private static void Configure(WebApplication app)

@@ -47,4 +47,8 @@
     <ProjectReference Include="..\SportApp.Web.Infrastructure\SportApp.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\SportApp.Web.ViewModels\SportApp.Web.ViewModels.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\videos\" />
+  </ItemGroup>
 </Project>

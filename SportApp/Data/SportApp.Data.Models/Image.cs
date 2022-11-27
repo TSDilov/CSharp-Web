@@ -1,9 +1,10 @@
-﻿using SportApp.Data.Common.Models;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace SportApp.Data.Models
+﻿namespace SportApp.Data.Models
 {
+    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
+
+    using SportApp.Data.Common.Models;
+
     public class Image : BaseModel<string>
     {
         public Image()
