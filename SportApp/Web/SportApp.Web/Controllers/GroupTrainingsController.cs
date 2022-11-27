@@ -36,6 +36,17 @@
             return this.View(viewModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> All(string looking)
+        {
+            var viewModel = new GroupTrainingsListViewModel
+            {
+                GroupTrainings = await this.groupTrainingsService.GetSearchedTrainings<GroupTrainingViewModel>(looking),
+            };
+
+            return this.View(viewModel);
+        }
+
         [Authorize(Roles = GlobalConstants.TrainerRoleName)]
         public IActionResult Create()
         {

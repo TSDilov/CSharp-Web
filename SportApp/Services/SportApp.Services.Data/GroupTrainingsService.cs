@@ -37,6 +37,14 @@
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> GetSearchedTrainings<T>(string looking)
+        {
+            return await this.groupTrainingRepository.All()
+                .Where(x => x.Name.Contains(looking))
+                .To<T>()
+                .ToListAsync();
+        }
+
         public async Task CreateAsync(CreateGroupTrainingInputModel input)
         {
             var trainer = await this.trainerRepository.All()

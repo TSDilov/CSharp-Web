@@ -109,6 +109,17 @@
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<T>> GetSearchedTrainers<T>(string looking, int page, int itemsPerPage = 12)
+        {
+            return await this.trainerRepository.AllAsNoTracking()
+                .Where(x => x.Name.Contains(looking))
+                .OrderByDescending(x => x.Id)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .To<T>()
+                .ToListAsync();
+        }
+
         public T GetById<T>(int id)
         {
             return this.trainerRepository.AllAsNoTracking()

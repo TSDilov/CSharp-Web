@@ -13,6 +13,7 @@
     using SportApp.Data.Models;
     using SportApp.Services.Data;
     using SportApp.Web.ViewModels.Comment;
+    using SportApp.Web.ViewModels.GroupTrainings;
     using SportApp.Web.ViewModels.Trainers;
 
     public class TrainersController : Controller
@@ -50,6 +51,21 @@
             {
                 PageNumber = id,
                 Trainers = await this.trainerService.GetAll<TrainerInListViewModel>(id, ItemsPerPage),
+                TrainersCount = this.trainerService.GetCount(),
+                ItemsPerPage = ItemsPerPage,
+            };
+
+            return this.View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> All(string looking, int id = 1)
+        {
+            const int ItemsPerPage = 12;
+            var viewModel = new TrainersListViewModel
+            {
+                PageNumber = id,
+                Trainers = await this.trainerService.GetSearchedTrainers<TrainerInListViewModel>(looking, id, ItemsPerPage),
                 TrainersCount = this.trainerService.GetCount(),
                 ItemsPerPage = ItemsPerPage,
             };

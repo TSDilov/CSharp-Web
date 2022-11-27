@@ -25,5 +25,7 @@
         Task SignInForTraining(int id, string userId);
 
         Task<BookedUsersViewModel> SighnInUsers(int id);
+
+        Task<IEnumerable<T>> GetSearchedTrainings<T>(string looking);
     }
 }
