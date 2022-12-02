@@ -13,10 +13,22 @@
     @foreach (var video in this.Model.Videos)
     {
         <div class="media col-md-3">
-            <video id="videoPlayer" src="@Url.Content($"~/videos/{video.Id}.{video.Extension}")" controls width="300" height="300" loop/>
+            <video id="videoPlayer" src="@Url.Content($"~/videos/{video.Id}.{video.Extension}")" controls width="300" height="300" loop/>           
+        </div>
+        <div class="media col-md-3">
             <h5 class="mt-0">
                 @video.Name
             </h5>
-        </div>        
+            @if (this.User.IsInRole("Administrator"))
+            {
+                <form asp-action="Delete" asp-route-id="@video.Id">
+                    <br>
+                    <button type="submit" class="btn btn-danger"
+                    onclick="return confirm('Are you sure you want  to delete recipe: @video.Name ?')">
+                        Delete
+                    </button>
+                </form>
+            }
+        </div>
     }
 </div>

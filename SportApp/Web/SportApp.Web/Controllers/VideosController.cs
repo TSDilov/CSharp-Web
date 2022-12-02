@@ -25,7 +25,7 @@
         {
             var videos = new ListWithVideosViewModel
             {
-                Videos = await this.videoSurvice.GetAll<VideoViewModel>(),
+                Videos = await this.videoSurvice.GetAllAsync<VideoViewModel>(),
             };
 
             return this.View(videos);
@@ -39,6 +39,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize(Roles = GlobalConstants.TrainerRoleName)]
         public async Task<IActionResult> Add(VideoModel model)
         {
@@ -58,6 +59,15 @@
             }
 
             return this.RedirectToAction("All");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
+        public async Task<IActionResult> Delete(string id)
+        {
+            await this.videoSurvice.DeleteAsync(id);
+            return this.RedirectToAction(nameof(this.All));
         }
     }
 }

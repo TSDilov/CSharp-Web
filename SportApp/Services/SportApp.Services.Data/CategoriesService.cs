@@ -21,7 +21,7 @@
             this.categoryRepository = categoryRepository;
         }
 
-        public async Task<IEnumerable<CategoryViewModel>> All()
+        public async Task<IEnumerable<CategoryViewModel>> AllAsync()
         {
             var categories = await this.categoryRepository.All().ToListAsync();
 
@@ -73,7 +73,7 @@
                 .Select(x => new KeyValuePair<string, string>(x.Id.ToString(), x.Name));
         }
 
-        public async Task<EditCategoryInputModel> GetById(int id)
+        public async Task<EditCategoryInputModel> GetByIdAsync(int id)
         {
             var category = await this.categoryRepository.All()
                 .FirstOrDefaultAsync(x => x.Id == id);

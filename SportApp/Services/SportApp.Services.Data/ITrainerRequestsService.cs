@@ -8,6 +8,6 @@
 
     public interface ITrainerRequestsService
     {
-        Task Approved(int id);
+        Task ApprovedAsync(int id);
     }
 }

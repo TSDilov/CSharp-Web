@@ -99,7 +99,7 @@
             await this.trainerRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>(int page, int itemsPerPage = 12)
+        public async Task<IEnumerable<T>> GetAllAsync<T>(int page, int itemsPerPage = 12)
         {
             return await this.trainerRepository.AllAsNoTracking()
                 .OrderByDescending(x => x.Id)
@@ -109,7 +109,7 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetSearchedTrainers<T>(string looking, int page, int itemsPerPage = 12)
+        public async Task<IEnumerable<T>> GetSearchedTrainersAsync<T>(string looking, int page, int itemsPerPage = 12)
         {
             return await this.trainerRepository.AllAsNoTracking()
                 .Where(x => x.Name.Contains(looking))

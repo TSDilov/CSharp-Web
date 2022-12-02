@@ -42,7 +42,14 @@
             await this.videoRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>()
+        public async Task DeleteAsync(string id)
+        {
+            var video = await this.videoRepository.All().FirstOrDefaultAsync(t => t.Id == id);
+            this.videoRepository.Delete(video);
+            await this.videoRepository.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             return await this.videoRepository.AllAsNoTracking()
                     .OrderByDescending(x => x.Id)

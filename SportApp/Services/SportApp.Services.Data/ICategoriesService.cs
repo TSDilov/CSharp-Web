@@ -13,11 +13,11 @@
     {
         IEnumerable<KeyValuePair<string, string>> GetAllCategoriesAsKeyValuePairs();
 
-        Task<IEnumerable<CategoryViewModel>> All();
+        Task<IEnumerable<CategoryViewModel>> AllAsync();
 
         Task CreateAsync(CategoryInputModel input);
 
-        Task<EditCategoryInputModel> GetById(int id);
+        Task<EditCategoryInputModel> GetByIdAsync(int id);
 
         Task UpdateAsync(int id, EditCategoryInputModel input);
 

@@ -29,7 +29,7 @@
             this.userGroupTrainingService = userGroupTrainingService;
         }
 
-        public async Task<IEnumerable<T>> GetAll<T>()
+        public async Task<IEnumerable<T>> GetAllAsync<T>()
         {
             return await this.groupTrainingRepository.All()
                 .OrderByDescending(x => x.CreatedOn)
@@ -37,7 +37,7 @@
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<T>> GetSearchedTrainings<T>(string looking)
+        public async Task<IEnumerable<T>> GetSearchedTrainingsAsync<T>(string looking)
         {
             return await this.groupTrainingRepository.All()
                 .Where(x => x.Name.Contains(looking))
@@ -99,7 +99,7 @@
             await this.trainerRepository.SaveChangesAsync();
         }
 
-        public async Task SignInForTraining(int id, string userId)
+        public async Task SignInForTrainingAsync(int id, string userId)
         {
             var groupTrainingUser = await this.userGroupTrainingService.All()
                 .FirstOrDefaultAsync(x => x.GroupTrainingId == id && x.ApplicationUserId == userId);
@@ -119,7 +119,7 @@
             }
         }
 
-        public async Task<BookedUsersViewModel> SighnInUsers(int id)
+        public async Task<BookedUsersViewModel> SighnInUsersAsync(int id)
         {
             var training = await this.groupTrainingRepository.All()
                 .Include(x => x.ApplicationUserGroupTrainings)

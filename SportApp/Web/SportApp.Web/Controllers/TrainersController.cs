@@ -50,7 +50,7 @@
             var viewModel = new TrainersListViewModel
             {
                 PageNumber = id,
-                Trainers = await this.trainerService.GetAll<TrainerInListViewModel>(id, ItemsPerPage),
+                Trainers = await this.trainerService.GetAllAsync<TrainerInListViewModel>(id, ItemsPerPage),
                 TrainersCount = this.trainerService.GetCount(),
                 ItemsPerPage = ItemsPerPage,
             };
@@ -65,7 +65,7 @@
             var viewModel = new TrainersListViewModel
             {
                 PageNumber = id,
-                Trainers = await this.trainerService.GetSearchedTrainers<TrainerInListViewModel>(looking, id, ItemsPerPage),
+                Trainers = await this.trainerService.GetSearchedTrainersAsync<TrainerInListViewModel>(looking, id, ItemsPerPage),
                 TrainersCount = this.trainerService.GetCount(),
                 ItemsPerPage = ItemsPerPage,
             };
@@ -227,7 +227,7 @@
         {
             var user = await this.userManager.FindByIdAsync(userId);
             await this.userManager.AddToRoleAsync(user, GlobalConstants.TrainerRoleName);
-            await this.trainerRequestService.Approved(requestTrainerId);
+            await this.trainerRequestService.ApprovedAsync(requestTrainerId);
             return this.RedirectToAction("AllRequestsForTrainer", "Trainers");
         }
     }

@@ -30,7 +30,7 @@
         {
             var viewModel = new GroupTrainingsListViewModel
             {
-                GroupTrainings = await this.groupTrainingsService.GetAll<GroupTrainingViewModel>(),
+                GroupTrainings = await this.groupTrainingsService.GetAllAsync<GroupTrainingViewModel>(),
             };
 
             return this.View(viewModel);
@@ -41,7 +41,7 @@
         {
             var viewModel = new GroupTrainingsListViewModel
             {
-                GroupTrainings = await this.groupTrainingsService.GetSearchedTrainings<GroupTrainingViewModel>(looking),
+                GroupTrainings = await this.groupTrainingsService.GetSearchedTrainingsAsync<GroupTrainingViewModel>(looking),
             };
 
             return this.View(viewModel);
@@ -130,14 +130,14 @@
         public async Task<IActionResult> SignForTraining(int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.groupTrainingsService.SignInForTraining(id, user.Id);
+            await this.groupTrainingsService.SignInForTrainingAsync(id, user.Id);
             return this.RedirectToAction(nameof(this.All));
         }
 
         [Authorize(Roles = GlobalConstants.TrainerRoleName)]
         public async Task<IActionResult> SignInUsers(int id)
         {
-            var bookedUsers = await this.groupTrainingsService.SighnInUsers(id);
+            var bookedUsers = await this.groupTrainingsService.SighnInUsersAsync(id);
             return this.View(bookedUsers);
         }
     }

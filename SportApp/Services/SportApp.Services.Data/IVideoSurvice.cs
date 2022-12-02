@@ -11,8 +11,10 @@
 
     public interface IVideoSurvice
     {
-        Task<IEnumerable<T>> GetAll<T>();
+        Task<IEnumerable<T>> GetAllAsync<T>();
 
         Task CreateAsync(VideoModel model, string imagePath);
+
+        Task DeleteAsync(string id);
     }
 }

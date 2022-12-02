@@ -20,7 +20,7 @@
             this.requestTrainerRepository = requestTrainerRepository;
         }
 
-        public async Task Approved(int id)
+        public async Task ApprovedAsync(int id)
         {
             var trainerRequest = await this.requestTrainerRepository.All()
                 .FirstOrDefaultAsync(x => x.Id == id);

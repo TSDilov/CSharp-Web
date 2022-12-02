@@ -27,7 +27,7 @@
         // GET: Administration/Categories
         public async Task<IActionResult> Index()
         {
-            var model = await this.categoryService.All();
+            var model = await this.categoryService.AllAsync();
             return this.View(model);
         }
 
@@ -54,7 +54,7 @@
         // GET: Administration/Categories/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-            var category = await this.categoryService.GetById(id);
+            var category = await this.categoryService.GetByIdAsync(id);
             return this.View(category);
         }
 
@@ -83,7 +83,7 @@
         // GET: Administration/Categories/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            var category = await this.categoryService.GetById(id);
+            var category = await this.categoryService.GetByIdAsync(id);
             if (category == null)
             {
                 return this.NotFound();

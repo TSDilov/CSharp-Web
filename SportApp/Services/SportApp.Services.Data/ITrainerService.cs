@@ -11,9 +11,9 @@
 
     public interface ITrainerService
     {
-        Task<IEnumerable<T>> GetAll<T>(int page, int itemsPerPage = 12);
+        Task<IEnumerable<T>> GetAllAsync<T>(int page, int itemsPerPage = 12);
 
-        Task<IEnumerable<T>> GetSearchedTrainers<T>(string looing, int page, int itemsPerPage = 12);
+        Task<IEnumerable<T>> GetSearchedTrainersAsync<T>(string looing, int page, int itemsPerPage = 12);
 
         Task CreateAsync(CreateTrainerInputModel input, string userId, string imagePath);
 

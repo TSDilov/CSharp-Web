@@ -8,8 +8,8 @@
 
         public const string TrainerRoleName = "Trainer";
 
-        public const string AppId = "470951094936787";
+        public const string AppId = "5600371800076678";
 
-        public const string AppSecret = "28b87f7f0ffd9efb1217fa3cfa5594b1";
+        public const string AppSecret = "03aed411fd1d5f23f77fd7afeb64cdb7";
     }
 }

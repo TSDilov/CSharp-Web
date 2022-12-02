@@ -12,7 +12,7 @@
 
     public interface IGroupTrainingsService
     {
-        Task<IEnumerable<T>> GetAll<T>();
+        Task<IEnumerable<T>> GetAllAsync<T>();
 
         Task CreateAsync(CreateGroupTrainingInputModel input);
 
@@ -22,10 +22,10 @@
 
         Task DeleteAsync(int id);
 
-        Task SignInForTraining(int id, string userId);
+        Task SignInForTrainingAsync(int id, string userId);
 
-        Task<BookedUsersViewModel> SighnInUsers(int id);
+        Task<BookedUsersViewModel> SighnInUsersAsync(int id);
 
-        Task<IEnumerable<T>> GetSearchedTrainings<T>(string looking);
+        Task<IEnumerable<T>> GetSearchedTrainingsAsync<T>(string looking);
     }
 }
