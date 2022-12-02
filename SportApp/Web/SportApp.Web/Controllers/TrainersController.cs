@@ -110,6 +110,11 @@
         public IActionResult ById(int id)
         {
             var trainer = this.trainerService.GetById<SingleTrainerViewModel>(id);
+            if (trainer == null)
+            {
+                return this.RedirectToAction("All");
+            }
+
             return this.View(trainer);
         }
 

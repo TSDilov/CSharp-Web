@@ -31,13 +31,17 @@
         public async Task<IActionResult> Delete(int id)
         {
             var message = this.messageService.GetById(id);
-            if (this.User.Identity.Name == message.User)
+            if (message == null)
             {
-                await this.messageService.DeleteAsync(id);
                 return this.RedirectToAction(nameof(this.Chat));
             }
 
-            return this.BadRequest();
+            if (this.User.Identity.Name == message.User)
+            {
+                await this.messageService.DeleteAsync(id);
+            }
+
+            return this.RedirectToAction(nameof(this.Chat));
         }
     }
 }

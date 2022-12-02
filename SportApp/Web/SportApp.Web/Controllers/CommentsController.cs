@@ -35,12 +35,17 @@
         {
             var userId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value;
             var comment = this.commentsService.GetById(id);
+            if (comment == null)
+            {
+                return this.RedirectToAction("All", "Trainers");
+            }
+
             if (comment.ApplicationUserId == userId)
             {
                 await this.commentsService.DeleteAsync(id);
             }
 
-            return this.RedirectToAction("Index", "Home");
+            return this.RedirectToAction("All", "Trainers");
         }
     }
 }
