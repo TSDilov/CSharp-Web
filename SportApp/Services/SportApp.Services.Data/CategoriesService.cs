@@ -21,9 +21,9 @@
             this.categoryRepository = categoryRepository;
         }
 
-        public async Task<IEnumerable<CategoryViewModel>> AllAsync()
+        public IEnumerable<CategoryViewModel> All()
         {
-            var categories = await this.categoryRepository.All().ToListAsync();
+            var categories = this.categoryRepository.All().ToList();
 
             var listWithCategories = new List<CategoryViewModel>();
 

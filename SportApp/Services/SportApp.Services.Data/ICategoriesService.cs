@@ -13,7 +13,7 @@
     {
         IEnumerable<KeyValuePair<string, string>> GetAllCategoriesAsKeyValuePairs();
 
-        Task<IEnumerable<CategoryViewModel>> AllAsync();
+        IEnumerable<CategoryViewModel> All();
 
         Task CreateAsync(CategoryInputModel input);
 

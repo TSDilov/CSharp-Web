@@ -25,9 +25,9 @@
         }
 
         // GET: Administration/Categories
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var model = await this.categoryService.AllAsync();
+            var model = this.categoryService.All();
             return this.View(model);
         }
 
