@@ -84,6 +84,12 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
             var model = this.groupTrainingsService.GetById<EditGroupTrainingInputModel>(id);
+
+            if (model == null)
+            {
+                return this.RedirectToAction(nameof(this.All));
+            }
+
             if (model.TrainerUserId == user.Id)
             {
                 return this.View(model);

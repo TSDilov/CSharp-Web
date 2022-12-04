@@ -55,6 +55,11 @@
         public async Task<IActionResult> Edit(int id)
         {
             var category = await this.categoryService.GetByIdAsync(id);
+            if (category == null)
+            {
+                return this.RedirectToAction(nameof(this.Index));
+            }
+
             return this.View(category);
         }
 

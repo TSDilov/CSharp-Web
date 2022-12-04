@@ -78,6 +78,11 @@
             var category = await this.categoryRepository.All()
                 .FirstOrDefaultAsync(x => x.Id == id);
 
+            if (category == null)
+            {
+                return null;
+            }
+
             return new EditCategoryInputModel
             {
                 Id = category.Id,
