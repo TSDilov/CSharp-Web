@@ -25,7 +25,7 @@
 
         int GetCount();
 
-        Task BookTrainerAsync(int id, string userId);
+        Task<bool> BookTrainerAsync(int id, string userId);
 
         Task<BookedUsersViewModel> BookedUsersAsync(int id);
 

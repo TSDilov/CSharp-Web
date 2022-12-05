@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.Entity;
+    using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
@@ -43,10 +45,6 @@
         public async Task DeleteCategory()
         {
             var list = new List<Category>();
-            var mockRepo = new Mock<IDeletableEntityRepository<Category>>();
-            mockRepo.Setup(x => x.All()).Returns(list.AsQueryable());
-            var service = new CategoriesService(mockRepo.Object);
-
             var category = new Category
             {
                 Id = 1,
@@ -55,6 +53,11 @@
             };
 
             list.Add(category);
+
+            var result = list.ToAsyncDbSetMock().Object;
+            var mockRepo = new Mock<IDeletableEntityRepository<Category>>();
+            mockRepo.Setup(x => x.All()).Returns(result.AsQueryable());
+            var service = new CategoriesService(mockRepo.Object);
 
             await service.DeleteAsync(1);
 

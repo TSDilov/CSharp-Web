@@ -22,7 +22,7 @@
 
         Task DeleteAsync(int id);
 
-        Task SignInForTrainingAsync(int id, string userId);
+        Task<bool> SignInForTrainingAsync(int id, string userId);
 
         Task<BookedUsersViewModel> SighnInUsersAsync(int id);
 

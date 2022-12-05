@@ -122,6 +122,11 @@
         public IActionResult Edit(int id)
         {
             var model = this.trainerService.GetById<EditTrainerInputModel>(id);
+            if (model == null)
+            {
+                return this.RedirectToAction(nameof(this.All));
+            }
+
             model.CategoryItems = this.categoriesService.GetAllCategoriesAsKeyValuePairs();
             return this.View(model);
         }
@@ -154,7 +159,12 @@
         public async Task<IActionResult> Book(int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.trainerService.BookTrainerAsync(id, user.Id);
+            var result = await this.trainerService.BookTrainerAsync(id, user.Id);
+            if (!result)
+            {
+                return this.RedirectToAction(nameof(this.All));
+            }
+
             return this.RedirectToAction(nameof(this.All));
         }
 
@@ -175,6 +185,11 @@
         public async Task<IActionResult> BookedUsers(int id)
         {
             var bookedUsers = await this.trainerService.BookedUsersAsync(id);
+            if (bookedUsers == null)
+            {
+                return this.RedirectToAction(nameof(this.All));
+            }
+
             return this.View(bookedUsers);
         }
 

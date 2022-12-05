@@ -136,7 +136,12 @@
         public async Task<IActionResult> SignForTraining(int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.groupTrainingsService.SignInForTrainingAsync(id, user.Id);
+            var result = await this.groupTrainingsService.SignInForTrainingAsync(id, user.Id);
+            if (!result)
+            {
+                return this.RedirectToAction(nameof(this.All));
+            }
+
             return this.RedirectToAction(nameof(this.All));
         }
 
@@ -144,6 +149,11 @@
         public async Task<IActionResult> SignInUsers(int id)
         {
             var bookedUsers = await this.groupTrainingsService.SighnInUsersAsync(id);
+            if (bookedUsers == null)
+            {
+                return this.RedirectToAction(nameof(this.All));
+            }
+
             return this.View(bookedUsers);
         }
     }

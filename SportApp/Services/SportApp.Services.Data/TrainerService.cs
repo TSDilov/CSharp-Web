@@ -32,7 +32,7 @@
             this.requestTrainerRepository = requestTrainerRepository;
         }
 
-        public async Task BookTrainerAsync(int id, string userId)
+        public async Task<bool> BookTrainerAsync(int id, string userId)
         {
             var trainerUser = await this.aplicationUserTrainer.All()
                 .FirstOrDefaultAsync(x => x.TrainerId == id && x.ApplicationUserId == userId);
@@ -47,9 +47,16 @@
 
                 var trainer = await this.trainerRepository.All()
                     .FirstOrDefaultAsync(t => t.Id == id);
+                if (trainer == null)
+                {
+                    return false;
+                }
+
                 trainer.ApplicationUsersTrainers.Add(trainerUser);
                 await this.trainerRepository.SaveChangesAsync();
             }
+
+            return true;
         }
 
         public async Task CreateAsync(CreateTrainerInputModel input, string userId, string imagePath)
@@ -134,6 +141,10 @@
                 .Include(x => x.ApplicationUsersTrainers)
                 .ThenInclude(y => y.ApplicationUser)
                 .FirstOrDefaultAsync(x => x.Id == id);
+            if (trainer == null)
+            {
+                return null;
+            }
 
             var bookedUsersModel = new BookedUsersViewModel();
             var bookedUsersList = new List<BookedUserViewModel>();

@@ -25,6 +25,7 @@
         }
 
         [HttpGet]
+        [Route("/User/Register")]
         [AllowAnonymous]
         public IActionResult Register()
         {
@@ -85,6 +86,7 @@
         }
 
         [HttpPost]
+        [Route("/User/Login")]
         [AllowAnonymous]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -110,6 +112,7 @@
             return this.View(model);
         }
 
+        [Route("/User/Logout")]
         public async Task<IActionResult> Logout()
         {
             await this.signInManager.SignOutAsync();

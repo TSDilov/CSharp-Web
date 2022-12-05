@@ -99,7 +99,7 @@
             await this.trainerRepository.SaveChangesAsync();
         }
 
-        public async Task SignInForTrainingAsync(int id, string userId)
+        public async Task<bool> SignInForTrainingAsync(int id, string userId)
         {
             var groupTrainingUser = await this.userGroupTrainingService.All()
                 .FirstOrDefaultAsync(x => x.GroupTrainingId == id && x.ApplicationUserId == userId);
@@ -114,9 +114,16 @@
 
                 var training = await this.groupTrainingRepository.All()
                     .FirstOrDefaultAsync(t => t.Id == id);
+                if (training == null)
+                {
+                    return false;
+                }
+
                 training.ApplicationUserGroupTrainings.Add(groupTrainingUser);
                 await this.trainerRepository.SaveChangesAsync();
             }
+
+            return true;
         }
 
         public async Task<BookedUsersViewModel> SighnInUsersAsync(int id)
@@ -125,6 +132,11 @@
                 .Include(x => x.ApplicationUserGroupTrainings)
                 .ThenInclude(y => y.ApplicationUser)
                 .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (training == null)
+            {
+                return null;
+            }
 
             var bookedUsersModel = new BookedUsersViewModel();
             var bookedUsersList = new List<BookedUserViewModel>();
