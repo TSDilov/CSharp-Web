@@ -16,15 +16,22 @@
 
     public class CategoriesServiceTests
     {
+        private readonly ICategoriesService service;
+        private readonly Mock<IDeletableEntityRepository<Category>> categoryRepo = new Mock<IDeletableEntityRepository<Category>>();
+        private readonly List<Category> categories;
+
+        public CategoriesServiceTests()
+        {
+            this.service = new CategoriesService(this.categoryRepo.Object);
+            this.categories = new List<Category>();
+        }
+
         [Fact]
         public async Task CreateCategoryAndGetAllCategories()
         {
-            var list = new List<Category>();
-            var mockRepo = new Mock<IDeletableEntityRepository<Category>>();
-            mockRepo.Setup(x => x.All()).Returns(list.AsQueryable());
-            mockRepo.Setup(x => x.AddAsync(It.IsAny<Category>()))
-                .Callback((Category category) => list.Add(category));
-            var service = new CategoriesService(mockRepo.Object);
+            this.categoryRepo.Setup(x => x.All()).Returns(this.categories.AsQueryable());
+            this.categoryRepo.Setup(x => x.AddAsync(It.IsAny<Category>()))
+                .Callback((Category category) => this.categories.Add(category));
 
             var category = new CategoryInputModel
             {
@@ -32,11 +39,11 @@
                 CreatedOn = DateTime.Now,
             };
 
-            await service.CreateAsync(category);
+            await this.service.CreateAsync(category);
 
-            var categories = service.All();
+            var categories = this.service.All();
 
-            Assert.Equal(1, list.Count);
+            Assert.Equal(1, this.categories.Count);
             Assert.Contains(categories, x => x.Name == "Test");
             Assert.DoesNotContain(categories, x => x.Name == "NotTest");
         }
@@ -44,24 +51,7 @@
         [Fact]
         public async Task DeleteCategory()
         {
-            var list = new List<Category>();
-            var category = new Category
-            {
-                Id = 1,
-                Name = "Test",
-                CreatedOn = DateTime.Now,
-            };
 
-            list.Add(category);
-
-            var result = list.ToAsyncDbSetMock().Object;
-            var mockRepo = new Mock<IDeletableEntityRepository<Category>>();
-            mockRepo.Setup(x => x.All()).Returns(result.AsQueryable());
-            var service = new CategoriesService(mockRepo.Object);
-
-            await service.DeleteAsync(1);
-
-            Assert.Equal(0, list.Count);
         }
     }
 }
