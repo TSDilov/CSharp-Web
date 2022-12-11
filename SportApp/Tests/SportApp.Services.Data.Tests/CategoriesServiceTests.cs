@@ -21,7 +21,6 @@
 
     public class CategoriesServiceTests
     {
-
         private readonly Mock<IDeletableEntityRepository<Category>> categoryRepo = new Mock<IDeletableEntityRepository<Category>>();
         private readonly List<Category> categories;
         private ICategoriesService service;
@@ -114,7 +113,7 @@
             var categoriesLikeKeyValuePairs = this.service.GetAllCategoriesAsKeyValuePairs();
 
             Assert.NotNull(categoriesLikeKeyValuePairs);
-            Assert.Contains(categoriesLikeKeyValuePairs, x => x.Key == "2" && x.Value == "A test");
+            Assert.Contains(categoriesLikeKeyValuePairs, x => x.Value == "A test");
             var firstInTheKeyValueListOrder = categoriesLikeKeyValuePairs.First();
             Assert.Equal("A test", firstInTheKeyValueListOrder.Value);
 
