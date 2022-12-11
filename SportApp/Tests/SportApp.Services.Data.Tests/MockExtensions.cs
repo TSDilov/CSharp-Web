@@ -1,14 +1,15 @@
 ﻿namespace SportApp.Services.Data.Tests
 {
-    using Microsoft.EntityFrameworkCore;
-    using Moq;
-    using SportApp.Data.Models;
     using System;
     using System.Collections.Generic;
     using System.Data.Entity.Infrastructure;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+
+    using Microsoft.EntityFrameworkCore;
+    using Moq;
+    using SportApp.Data.Models;
 
     internal static class MockExtensions
     {
