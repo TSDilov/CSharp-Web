@@ -113,7 +113,6 @@
             var categoriesLikeKeyValuePairs = this.service.GetAllCategoriesAsKeyValuePairs();
 
             Assert.NotNull(categoriesLikeKeyValuePairs);
-            Assert.Contains(categoriesLikeKeyValuePairs, x => x.Value == "A test");
             var firstInTheKeyValueListOrder = categoriesLikeKeyValuePairs.First();
             Assert.Equal("A test", firstInTheKeyValueListOrder.Value);
 
