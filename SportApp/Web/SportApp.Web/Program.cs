@@ -47,7 +47,6 @@ namespace SportApp.Web
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/User/Login";
-                options.LoginPath = "/User/Logout";
             });
 
             services.AddAuthentication()
