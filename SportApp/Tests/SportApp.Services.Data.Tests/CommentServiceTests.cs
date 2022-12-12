@@ -108,49 +108,5 @@
             this.applicationDbContext.Database.EnsureDeleted();
             this.applicationDbContext.Database.EnsureCreated();
         }
-
-        [Fact]
-        public async Task GetTrainerComments()
-        {
-            var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
-                .UseInMemoryDatabase("SportDb").Options;
-            this.applicationDbContext = new ApplicationDbContext(contextOptions);
-            var commentRepo = new EfDeletableEntityRepository<Comment>(this.applicationDbContext);
-            this.service = new CommentsServise(commentRepo);
-
-            var comment = new Comment
-            {
-                Id = 1,
-                Name = "Test",
-                Email = "test@abv.bg",
-                Subject = "Test Subject",
-                Message = "Test Message",
-                ApplicationUserId = "user",
-                TrainerId = 2,
-            };
-
-            await commentRepo.AddAsync(comment);
-            await commentRepo.SaveChangesAsync();
-
-            var comment2 = new Comment
-            {
-                Id = 2,
-                Name = "Test2",
-                Email = "test@abv.bg2",
-                Subject = "Test Subject2",
-                Message = "Test Message2",
-                ApplicationUserId = "user2",
-                TrainerId = 1,
-            };
-
-            await commentRepo.AddAsync(comment2);
-            await commentRepo.SaveChangesAsync();
-
-            var getTrainerComments = this.service.GetTrainerComments(comment.TrainerId);
-
-            Assert.Equal(1, getTrainerComments.Count());
-            this.applicationDbContext.Database.EnsureDeleted();
-            this.applicationDbContext.Database.EnsureCreated();
-        }
     }
 }
