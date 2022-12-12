@@ -17,15 +17,8 @@
 
     public class CommentServiceTests
     {
-        private readonly Mock<IDeletableEntityRepository<Comment>> commentRepo = new Mock<IDeletableEntityRepository<Comment>>();
-        private readonly List<Category> categories;
         private ICommentsService service;
         private ApplicationDbContext applicationDbContext;
-
-        public CommentServiceTests()
-        {
-            this.categories = new List<Category>();
-        }
 
         [Fact]
         public async Task CreateCommentAndGetAllComments()

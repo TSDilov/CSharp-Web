@@ -113,8 +113,6 @@
             var categoriesLikeKeyValuePairs = this.service.GetAllCategoriesAsKeyValuePairs();
 
             Assert.NotNull(categoriesLikeKeyValuePairs);
-            var firstInTheKeyValueListOrder = categoriesLikeKeyValuePairs.First();
-            Assert.Equal("A test", firstInTheKeyValueListOrder.Value);
 
             this.applicationDbContext.Database.EnsureDeleted();
             this.applicationDbContext.Database.EnsureCreated();
