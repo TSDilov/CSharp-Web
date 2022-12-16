@@ -9,7 +9,7 @@
     using SportApp.Data.Models;
     using SportApp.Services.Mapping;
 
-    public class VideoViewModel : IMapFrom<Video>
+    public class VideoViewModel 
     {
         public string Id { get; set; }
 

@@ -25,7 +25,7 @@
         {
             var videos = new ListWithVideosViewModel
             {
-                Videos = await this.videoSurvice.GetAllAsync<VideoViewModel>(),
+                Videos = await this.videoSurvice.GetAllAsync(),
             };
 
             return this.View(videos);

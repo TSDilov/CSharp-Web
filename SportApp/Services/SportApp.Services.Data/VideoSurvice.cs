@@ -49,11 +49,16 @@
             await this.videoRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync<T>()
+        public async Task<IEnumerable<VideoViewModel>> GetAllAsync()
         {
             return await this.videoRepository.AllAsNoTracking()
                     .OrderByDescending(x => x.Id)
-                    .To<T>()
+                    .Select(x => new VideoViewModel 
+                    {
+                        Id = x.Id,
+                        Name = x.Name,
+                        Extension = x.Extension,
+                    })
                     .ToListAsync();
         }
     }
