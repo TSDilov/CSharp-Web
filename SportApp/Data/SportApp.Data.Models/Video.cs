@@ -8,7 +8,7 @@
 
     using SportApp.Data.Common.Models;
 
-    public class Video : BaseModel<string>
+    public class Video : BaseDeletableModel<string>
     {
         public Video()
         {

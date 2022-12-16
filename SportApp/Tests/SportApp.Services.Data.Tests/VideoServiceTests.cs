@@ -27,7 +27,7 @@
             var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase("SportDb").Options;
             this.applicationDbContext = new ApplicationDbContext(contextOptions);
-            var videoRepo = new EfRepository<Video>(this.applicationDbContext);
+            var videoRepo = new EfDeletableEntityRepository<Video>(this.applicationDbContext);
             this.service = new VideoSurvice(videoRepo);
 
             var video = new Video
@@ -52,7 +52,7 @@
             var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase("SportDb").Options;
             this.applicationDbContext = new ApplicationDbContext(contextOptions);
-            var videoRepo = new EfRepository<Video>(this.applicationDbContext);
+            var videoRepo = new EfDeletableEntityRepository<Video>(this.applicationDbContext);
             this.service = new VideoSurvice(videoRepo);
             var bytes = Encoding.UTF8.GetBytes("This is a dummy file");
 
@@ -77,9 +77,8 @@
             var contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
                 .UseInMemoryDatabase("SportDb").Options;
             this.applicationDbContext = new ApplicationDbContext(contextOptions);
-            var videoRepo = new EfRepository<Video>(this.applicationDbContext);
+            var videoRepo = new EfDeletableEntityRepository<Video>(this.applicationDbContext);
             this.service = new VideoSurvice(videoRepo);
-            var bytes = Encoding.UTF8.GetBytes("This is a dummy file");
 
             var id = Guid.NewGuid().ToString();
 
@@ -99,6 +98,9 @@
             var videos = await this.service.GetAllAsync();
 
             Assert.Equal(0, videos.Count());
+
+            this.applicationDbContext.Database.EnsureDeleted();
+            this.applicationDbContext.Database.EnsureCreated();
         }
     }
 }

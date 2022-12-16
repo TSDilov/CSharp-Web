@@ -14,9 +14,9 @@
 
     public class VideoSurvice : IVideoSurvice
     {
-        private readonly IRepository<Video> videoRepository;
+        private readonly IDeletableEntityRepository<Video> videoRepository;
 
-        public VideoSurvice(IRepository<Video> videoRepository)
+        public VideoSurvice(IDeletableEntityRepository<Video> videoRepository)
         {
             this.videoRepository = videoRepository;
         }
@@ -53,7 +53,7 @@
         {
             return await this.videoRepository.AllAsNoTracking()
                     .OrderByDescending(x => x.Id)
-                    .Select(x => new VideoViewModel 
+                    .Select(x => new VideoViewModel
                     {
                         Id = x.Id,
                         Name = x.Name,
