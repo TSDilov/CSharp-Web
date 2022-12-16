@@ -1,30 +1,31 @@
-using System;
-using System.Reflection;
-
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using SportApp.Common;
-using SportApp.Data;
-using SportApp.Data.Common;
-using SportApp.Data.Common.Repositories;
-using SportApp.Data.Models;
-using SportApp.Data.Repositories;
-using SportApp.Data.Seeding;
-using SportApp.Services.Data;
-using SportApp.Services.Mapping;
-using SportApp.Services.Messaging;
-using SportApp.Web.Hubs;
-using SportApp.Web.Model_Binders;
-using SportApp.Web.ViewModels;
-
 namespace SportApp.Web
 {
+    using System;
+    using System.Reflection;
+
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.CodeAnalysis.CSharp.Syntax;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using SportApp.Common;
+    using SportApp.Data;
+    using SportApp.Data.Common;
+    using SportApp.Data.Common.Repositories;
+    using SportApp.Data.Models;
+    using SportApp.Data.Repositories;
+    using SportApp.Data.Seeding;
+    using SportApp.Services.Data;
+    using SportApp.Services.Mapping;
+    using SportApp.Services.Messaging;
+    using SportApp.Web.Hubs;
+    using SportApp.Web.Model_Binders;
+    using SportApp.Web.ViewModels;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -89,7 +90,7 @@ namespace SportApp.Web
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>( x => new SendGridEmailSender(configuration["SendGrid:ApiKey"]));
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ITrainerService, TrainerService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
