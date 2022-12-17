@@ -44,6 +44,9 @@
 
             Assert.Equal(1, videos.Count());
             Assert.Contains(videoRepo.All().ToList(), x => x.Name == "Test");
+
+            this.applicationDbContext.Database.EnsureDeleted();
+            this.applicationDbContext.Database.EnsureCreated();
         }
 
         [Fact]
@@ -58,7 +61,7 @@
 
             var video = new VideoModel
             {
-                Name = "Test",
+                Name = "Test1",
                 Video = new FormFile(new MemoryStream(bytes), 0, bytes.Length, "Data", "dummy.txt"),
             };
 
@@ -67,8 +70,10 @@
             var videos = await this.service.GetAllAsync();
 
             Assert.Equal(1, videos.Count());
-            Assert.Contains(videos, x => x.Name == "Test");
             Assert.DoesNotContain(videos, x => x.Name == "NotTest");
+
+            this.applicationDbContext.Database.EnsureDeleted();
+            this.applicationDbContext.Database.EnsureCreated();
         }
 
         [Fact]
@@ -85,7 +90,7 @@
             var video = new Video
             {
                 Id = id,
-                Name = "Test",
+                Name = "Test2",
                 Extension = "mp4",
                 RemoteImageUrl = null,
             };

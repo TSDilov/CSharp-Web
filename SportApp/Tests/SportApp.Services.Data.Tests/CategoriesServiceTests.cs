@@ -65,7 +65,7 @@
 
             var category = new Category
             {
-                Id = 1,
+                Id = 2,
                 Name = "Test",
                 CreatedOn = DateTime.Now,
             };
@@ -73,7 +73,7 @@
             await categoryRepo.AddAsync(category);
             await categoryRepo.SaveChangesAsync();
 
-            await this.service.DeleteAsync(1);
+            await this.service.DeleteAsync(2);
 
             Assert.Equal(0, categoryRepo.All().ToList().Count);
             Assert.DoesNotContain(categoryRepo.All().ToList(), x => x.Name == "Test");
@@ -92,7 +92,7 @@
 
             var category = new Category
             {
-                Id = 1,
+                Id = 3,
                 Name = "Test",
                 CreatedOn = DateTime.Now,
             };
@@ -102,7 +102,7 @@
 
             var category2 = new Category
             {
-                Id = 2,
+                Id = 4,
                 Name = "A test",
                 CreatedOn = DateTime.Now,
             };
@@ -129,7 +129,7 @@
 
             var category = new Category
             {
-                Id = 1,
+                Id = 5,
                 Name = "Test",
                 CreatedOn = DateTime.Now,
             };
@@ -137,7 +137,7 @@
             await categoryRepo.AddAsync(category);
             await categoryRepo.SaveChangesAsync();
 
-            var gettedCategory = await this.service.GetByIdAsync(category.Id);
+            var gettedCategory = await this.service.GetByIdAsync(5);
 
             Assert.Equal("Test", gettedCategory.Name);
             Assert.Contains(categoryRepo.All().ToList(), x => x.Name == "Test");
@@ -156,7 +156,7 @@
 
             var category = new Category
             {
-                Id = 1,
+                Id = 6,
                 Name = "Test",
                 CreatedOn = DateTime.Now,
             };
@@ -166,12 +166,10 @@
 
             var editedCategory = new EditCategoryInputModel { Name = "TestUpdated" };
 
-            await this.service.UpdateAsync(1, editedCategory);
+            await this.service.UpdateAsync(6, editedCategory);
 
-            Assert.Equal("TestUpdated", categoryRepo.All()
-                .FirstOrDefault().Name);
+            Assert.Equal("TestUpdated", categoryRepo.All().FirstOrDefault().Name);
             Assert.DoesNotContain(categoryRepo.All().ToList(), x => x.Name == "Test");
-            Assert.Contains(categoryRepo.All().ToList(), x => x.Name == "TestUpdated");
             this.applicationDbContext.Database.EnsureDeleted();
             this.applicationDbContext.Database.EnsureCreated();
         }

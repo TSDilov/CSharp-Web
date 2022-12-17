@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+
     using Microsoft.EntityFrameworkCore;
     using Moq;
     using SportApp.Data;
@@ -84,7 +85,7 @@
 
             var comment = new Comment
             {
-                Id = 1,
+                Id = 2,
                 Name = "Test",
                 Email = "test@abv.bg",
                 Subject = "Test Subject",
