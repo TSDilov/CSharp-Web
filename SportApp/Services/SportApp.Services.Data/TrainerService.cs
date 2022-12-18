@@ -7,7 +7,9 @@
     using System.Text;
     using System.Threading.Tasks;
 
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using SportApp.Data;
     using SportApp.Data.Common.Repositories;
     using SportApp.Data.Models;
     using SportApp.Services.Mapping;
@@ -21,15 +23,21 @@
         private readonly IDeletableEntityRepository<Trainer> trainerRepository;
         private readonly IRepository<ApplicationUserTrainer> aplicationUserTrainer;
         private readonly IDeletableEntityRepository<RequestTrainer> requestTrainerRepository;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly ApplicationDbContext dbContext;
 
         public TrainerService(
             IDeletableEntityRepository<Trainer> trainerRepository,
             IRepository<ApplicationUserTrainer> aplicationUserTrainer,
-            IDeletableEntityRepository<RequestTrainer> requestTrainerRepository)
+            IDeletableEntityRepository<RequestTrainer> requestTrainerRepository,
+            UserManager<ApplicationUser> userManager,
+            ApplicationDbContext dbContext)
         {
             this.trainerRepository = trainerRepository;
             this.aplicationUserTrainer = aplicationUserTrainer;
             this.requestTrainerRepository = requestTrainerRepository;
+            this.userManager = userManager;
+            this.dbContext = dbContext;
         }
 
         public async Task<bool> BookTrainerAsync(int id, string userId)
@@ -59,7 +67,7 @@
             return true;
         }
 
-        public async Task CreateAsync(CreateTrainerInputModel input, string userId, string imagePath)
+        public async Task CreateAsync(CreateTrainerInputModel input, string imagePath)
         {
             var trainer = new Trainer
             {
@@ -97,6 +105,10 @@
 
             await this.trainerRepository.AddAsync(trainer);
             await this.trainerRepository.SaveChangesAsync();
+
+            var user = await this.userManager.FindByNameAsync(input.Username);
+            user.OwnTrainerId = trainer.Id.ToString();
+            await this.dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)

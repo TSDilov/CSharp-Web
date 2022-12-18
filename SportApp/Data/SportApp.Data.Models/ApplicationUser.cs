@@ -33,6 +33,8 @@ namespace SportApp.Data.Models
 
         public bool RequestTrainer { get; set; } = false;
 
+        public string OwnTrainerId { get; set; }
+
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }

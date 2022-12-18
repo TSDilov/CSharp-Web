@@ -13,5 +13,8 @@
     {
         [Required]
         public IEnumerable<IFormFile> Images { get; set; }
+
+        [Required]
+        public string Username { get; set; }
     }
 }

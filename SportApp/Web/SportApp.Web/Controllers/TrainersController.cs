@@ -92,10 +92,10 @@
                 return this.View(input);
             }
 
-            var user = await this.userManager.GetUserAsync(this.User);
+            var user = await this.userManager.FindByNameAsync(input.Username);
             try
             {
-                await this.trainerService.CreateAsync(input, user.Id, $"{this.environment.WebRootPath}/images");
+                await this.trainerService.CreateAsync(input, $"{this.environment.WebRootPath}/images");
             }
             catch (Exception ex)
             {
@@ -184,13 +184,14 @@
         [Authorize(Roles = GlobalConstants.TrainerRoleName)]
         public async Task<IActionResult> BookedUsers(int id)
         {
+            var user = await this.userManager.GetUserAsync(this.User);
             var bookedUsers = await this.trainerService.BookedUsersAsync(id);
-            if (bookedUsers == null)
+            if (bookedUsers != null && user.OwnTrainerId == id.ToString())
             {
-                return this.RedirectToAction(nameof(this.All));
+                return this.View(bookedUsers);
             }
 
-            return this.View(bookedUsers);
+            return this.RedirectToAction(nameof(this.All));
         }
 
         [Authorize]

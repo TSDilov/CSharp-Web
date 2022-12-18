@@ -15,7 +15,7 @@
 
         Task<IEnumerable<T>> GetSearchedTrainersAsync<T>(string looing, int page, int itemsPerPage = 12);
 
-        Task CreateAsync(CreateTrainerInputModel input, string userId, string imagePath);
+        Task CreateAsync(CreateTrainerInputModel input, string imagePath);
 
         T GetById<T>(int id);
 
