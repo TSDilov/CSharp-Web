@@ -9,13 +9,14 @@
 <h1>@this.ViewData["Title"]</h1>
 
 <hr />
-<div class="row">
+<div class="row border">
     @foreach (var reply in this.Model.Replies)
     {
-        <div class="media col-md-3">
+        <div class="media col-md-3 border">
             <div class="media-body">
                 @reply.Content
             </div>
+            Likes: @reply.LikesCount
             @if (this.User.Identity.IsAuthenticated)
             {
                 @if (this.UserManager.GetUserId(this.User) == reply.UserId)
@@ -30,6 +31,15 @@
                                 Delete
                             </button>
                         </form>
+                    </div>
+                }
+                else
+                {
+                    <div>
+                        <a asp-action="Like" asp-route-replyId="@reply.Id" asp-route-userId="@reply.UserId" class="btn btn-primary">Like</a>
+                    </div>
+                    <div>
+                        <a asp-action="DisLike" asp-route-replyId="@reply.Id" asp-route-userId="@reply.UserId" class="btn btn-primary">DisLike</a>
                     </div>
                 }
             }

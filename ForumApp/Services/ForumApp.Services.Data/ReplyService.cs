@@ -13,10 +13,14 @@
     public class ReplyService : IReplyService
     {
         private readonly IDeletableEntityRepository<Reply> repliesRepository;
+        private readonly IDeletableEntityRepository<Like> likesRepository;
 
-        public ReplyService(IDeletableEntityRepository<Reply> repliesRepository)
+        public ReplyService(
+            IDeletableEntityRepository<Reply> repliesRepository,
+            IDeletableEntityRepository<Like> likesRepository)
         {
             this.repliesRepository = repliesRepository;
+            this.likesRepository = likesRepository;
         }
 
         public async Task CreateAsync(ReplyInputModel input)
@@ -54,6 +58,50 @@
                 .To<T>()
                 .FirstOrDefault();
         }
+
+        public async Task<bool> LikeTopic(string replyId, string userId)
+        {
+            var userLike = await this.likesRepository.All()
+                .FirstOrDefaultAsync(x => x.ReplyId == replyId && x.UserId == userId);
+
+            if (userLike == null)
+            {
+                var like = new Like
+                {
+                    IsLiked = true,
+                    ReplyId = replyId,
+                    UserId = userId,
+                };
+
+                await this.likesRepository.AddAsync(like);
+                await this.likesRepository.SaveChangesAsync();
+                return true;
+            }
+            else if (userLike.IsLiked == false)
+            {
+                userLike.IsLiked = true;
+                await this.likesRepository.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> DisLikeTopic(string replyId, string userId)
+        {
+            var userLike = await this.likesRepository.All()
+                .FirstOrDefaultAsync(x => x.ReplyId == replyId && x.UserId == userId);
+
+            if (userLike != null)
+            {
+                userLike.IsLiked = false;
+                await this.likesRepository.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
 
         public async Task UpdateAsync(string replyId, ReplyInputModel input)
         {

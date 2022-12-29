@@ -17,5 +17,9 @@
         Task DeleteAsync(string replyId);
 
         T GetById<T>(string replyId);
+
+        Task<bool> LikeTopic(string replyId, string userId);
+
+        Task<bool> DisLikeTopic(string replyId, string userId);
     }
 }

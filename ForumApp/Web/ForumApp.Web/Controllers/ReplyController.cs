@@ -80,5 +80,40 @@
 
             return this.RedirectToAction(nameof(this.All), "Topic");
         }
+
+        [Authorize]
+        public async Task<IActionResult> Like(string replyId, string userId)
+        {
+            if (this.userManager.GetUserId(this.User) == userId)
+            {
+                return this.RedirectToAction("OwnTopic", "Topic");
+            }
+
+            var result = await this.replyService.LikeTopic(replyId, this.userManager.GetUserId(this.User));
+            if (!result)
+            {
+                return this.RedirectToAction("AlreadyLike", "Topic");
+            }
+
+            return this.RedirectToAction("All", "Topic");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> DisLike(string replyId, string userId)
+        {
+            if (this.userManager.GetUserId(this.User) == userId)
+            {
+                return this.RedirectToAction("OwnTopic", "Topic");
+            }
+
+            var result = await this.replyService.DisLikeTopic(replyId, this.userManager.GetUserId(this.User));
+            if (!result)
+            {
+                return this.RedirectToAction("AlreadyLike", "Topic");
+            }
+
+            return this.RedirectToAction("All", "Topic");
+        }
+
     }
 }
