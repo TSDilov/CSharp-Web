@@ -1,9 +1,10 @@
-﻿using ForumApp.Data.Models;
-using ForumApp.Services.Mapping;
-using System.ComponentModel.DataAnnotations;
-
-namespace ForumApp.Web.ViewModels.Replies
+﻿namespace ForumApp.Web.ViewModels.Replies
 {
+    using System.ComponentModel.DataAnnotations;
+
+    using ForumApp.Data.Models;
+    using ForumApp.Services.Mapping;
+
     public class ReplyInListViewModel : IMapFrom<Reply>
     {
         public string Id { get; set; }

@@ -37,8 +37,8 @@
 
         public async Task DeleteAsync(string id)
         {
-            var trainer = await this.topicRepository.All().FirstOrDefaultAsync(t => t.Id == id);
-            this.topicRepository.Delete(trainer);
+            var topic = await this.topicRepository.All().FirstOrDefaultAsync(t => t.Id == id);
+            this.topicRepository.Delete(topic);
             await this.topicRepository.SaveChangesAsync();
         }
 

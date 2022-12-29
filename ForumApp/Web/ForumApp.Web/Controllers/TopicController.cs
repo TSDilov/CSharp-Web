@@ -125,14 +125,14 @@
         [Authorize]
         public IActionResult Reply(string id, string userId)
         {
-            var viewModel = new ReplayInputModel();
+            var viewModel = new ReplyInputModel();
             return this.View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Reply(string id, string userId, ReplayInputModel model)
+        public async Task<IActionResult> Reply(string id, string userId, ReplyInputModel model)
         {
             if (this.User.Identity.IsAuthenticated)
             {

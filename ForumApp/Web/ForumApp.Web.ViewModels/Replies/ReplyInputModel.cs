@@ -2,8 +2,13 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class ReplayInputModel
+    using ForumApp.Data.Models;
+    using ForumApp.Services.Mapping;
+
+    public class ReplyInputModel : IMapFrom<Reply>
     {
+        public string Id { get; set; }
+
         [Required]
         [MinLength(10)]
         [MaxLength(500)]
