@@ -9,10 +9,10 @@
 <h1>@this.ViewData["Title"]</h1>
 
 <hr />
-<div class="row">
+<div class="row border">
     @foreach (var topic in this.Model.Topics)
     {
-        <div class="media col-md-3">
+        <div class="media col-md-3 border">
             <div class="media-body">
                 @topic.Content
                 <br>
@@ -23,7 +23,6 @@
                 <div>
                     <a asp-action="Reply" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn btn-success">Reply</a>
                 </div>
-
                 <div>
                     <a asp-controller="Reply" asp-action="All" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn btn-success">ShowReplies</a>
                 </div>
@@ -31,7 +30,6 @@
                 
                 @if (this.UserManager.GetUserId(this.User) == topic.TopicUserId)
                 {
-                    <br>
                     <div>
                         <a asp-action="Edit" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn btn-primary">Edit</a>
                         <form asp-action="Delete" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId">
@@ -56,4 +54,5 @@
         </div>
     }
 </div>
+<br>
 <partial name="_PagingPartial" model="@this.Model" />
