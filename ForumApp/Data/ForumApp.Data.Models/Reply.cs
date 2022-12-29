@@ -21,6 +21,8 @@
 
         public Topic Topic { get; set; }
 
+        public string UserId { get; set; }
+
         public ICollection<Like> Likes { get; set; }
     }
 }
