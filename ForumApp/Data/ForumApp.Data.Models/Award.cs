@@ -9,5 +9,7 @@
         public string TopicId { get; set; }
 
         public Topic Topic { get; set; }
+
+        public string UserId { get; set; }
     }
 }

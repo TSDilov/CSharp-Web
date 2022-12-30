@@ -5,7 +5,7 @@
     using ForumApp.Services.Mapping;
     using System.Linq;
 
-    public class TopicInListViewModel : IMapFrom<Topic>, IHaveCustomMappings
+    public class TopicInListViewModel
     {
         public string Id { get; set; }
 
@@ -15,11 +15,10 @@
 
         public int LikesCount { get; set; }
 
-        public void CreateMappings(IProfileExpression configuration)
-        {
-            configuration.CreateMap<Topic, TopicInListViewModel>()
-                .ForMember(x => x.LikesCount, opt =>
-                opt.MapFrom(x => x.Likes.Where(l => l.IsLiked == true).Count()));
-        }
+        public int DayAwards { get; set; }
+
+        public int MonthAwards { get; set; }
+
+        public int YearAwards { get; set; }
     }
 }

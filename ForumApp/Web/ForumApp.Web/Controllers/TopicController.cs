@@ -35,7 +35,7 @@
             var viewModel = new TopicsListViewModel
             {
                 PageNumber = id,
-                Topics = await this.topicService.GetAllAsync<TopicInListViewModel>(id, ItemsPerPage),
+                Topics = await this.topicService.GetAllAsync(id, ItemsPerPage),
                 TopicsCount = this.topicService.GetCount(),
                 ItemsPerPage = ItemsPerPage,
             };
@@ -183,12 +183,71 @@
             return this.RedirectToAction(nameof(this.All));
         }
 
+        [Authorize]
+        public async Task<IActionResult> DayAward(string id, string userId)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            if (currentUser.Id == userId)
+            {
+                return this.RedirectToAction(nameof(this.OwnTopic));
+            }
+
+            var result = await this.topicService.DayAward(id, currentUser.Id);
+            if (!result)
+            {
+                return this.RedirectToAction(nameof(this.AlreadyGaveAward));
+            }
+
+            return this.RedirectToAction(nameof(this.All));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> MonthAward(string id, string userId)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            if (currentUser.Id == userId)
+            {
+                return this.RedirectToAction(nameof(this.OwnTopic));
+            }
+
+            var result = await this.topicService.MonthAward(id, currentUser.Id);
+            if (!result)
+            {
+                return this.RedirectToAction(nameof(this.AlreadyGaveAward));
+            }
+
+            return this.RedirectToAction(nameof(this.All));
+        }
+
+        [Authorize]
+        public async Task<IActionResult> YearAward(string id, string userId)
+        {
+            var currentUser = await this.userManager.GetUserAsync(this.User);
+            if (currentUser.Id == userId)
+            {
+                return this.RedirectToAction(nameof(this.OwnTopic));
+            }
+
+            var result = await this.topicService.YearAward(id, currentUser.Id);
+            if (!result)
+            {
+                return this.RedirectToAction(nameof(this.AlreadyGaveAward));
+            }
+
+            return this.RedirectToAction(nameof(this.All));
+        }
+
         public IActionResult AlreadyLike()
         {
             return this.View();
         }
 
         public IActionResult OwnTopic()
+        {
+            return this.View();
+        }
+
+        public IActionResult AlreadyGaveAward()
         {
             return this.View();
         }

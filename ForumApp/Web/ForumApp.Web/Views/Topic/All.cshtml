@@ -17,6 +17,9 @@
                 @topic.Content
                 <br>
                 Likes: @topic.LikesCount
+                Day Awards: @topic.DayAwards
+                Month Awards: @topic.MonthAwards
+                Year Awards: @topic.YearAwards
             </div>
             @if (this.User.Identity.IsAuthenticated)
             {
@@ -46,8 +49,21 @@
                     <div>
                         <a asp-action="Like" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn btn-primary">Like</a>
                     </div>
+                    <br>
                     <div>
                         <a asp-action="DisLike" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn btn-primary">DisLike</a>
+                    </div>
+                    <br>
+                    <div>
+                        <a asp-action="DayAward" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn">DayAward</a>
+                    </div>
+                    <br>
+                    <div>
+                        <a asp-action="MonthAward" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn">MonthAward</a>
+                    </div>
+                    <br>
+                    <div>
+                        <a asp-action="YearAward" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn">YearAward</a>
                     </div>
                 }
             }           

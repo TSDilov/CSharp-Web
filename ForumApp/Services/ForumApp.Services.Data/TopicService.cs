@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using ForumApp.Common.Enums;
     using ForumApp.Data.Common.Repositories;
     using ForumApp.Data.Models;
     using ForumApp.Services.Mapping;
@@ -14,13 +14,16 @@
     {
         private readonly IDeletableEntityRepository<Topic> topicRepository;
         private readonly IDeletableEntityRepository<Like> likesRepository;
+        private readonly IDeletableEntityRepository<Award> awardsRepository;
 
         public TopicService(
             IDeletableEntityRepository<Topic> topicRepository,
-            IDeletableEntityRepository<Like> likesRepository)
+            IDeletableEntityRepository<Like> likesRepository,
+            IDeletableEntityRepository<Award> awardsRepository)
         {
             this.topicRepository = topicRepository;
             this.likesRepository = likesRepository;
+            this.awardsRepository = awardsRepository;
         }
 
         public async Task CreateAsync(CreateTopicInputModel input)
@@ -42,13 +45,22 @@
             await this.topicRepository.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<T>> GetAllAsync<T>(int page, int itemsPerPage = 12)
+        public async Task<IEnumerable<TopicInListViewModel>> GetAllAsync(int page, int itemsPerPage = 12)
         {
             return await this.topicRepository.AllAsNoTracking()
                 .OrderByDescending(x => x.Id)
                 .Skip((page - 1) * itemsPerPage)
                 .Take(itemsPerPage)
-                .To<T>()
+                .Select(x => new TopicInListViewModel
+                {
+                    Id = x.Id,
+                    Content = x.Content,
+                    TopicUserId = x.TopicUserId,
+                    LikesCount = x.Likes.Where(l => l.IsLiked == true).Count(),
+                    DayAwards = x.Awards.Where(a => a.AwardType == "DayAward").Count(),
+                    MonthAwards = x.Awards.Where(a => a.AwardType == "MonthAward").Count(),
+                    YearAwards = x.Awards.Where(a => a.AwardType == "YearAward").Count(),
+                })
                 .ToListAsync();
         }
 
@@ -117,6 +129,72 @@
             topic.Content = input.Content;
 
             await this.topicRepository.SaveChangesAsync();
+        }
+
+        public async Task<bool> DayAward(string id, string userId)
+        {
+            var userAward = await this.awardsRepository.All()
+                .FirstOrDefaultAsync(x => x.TopicId == id && x.UserId == userId && x.AwardType == "DayAward");
+
+            if (userAward == null)
+            {
+                var award = new Award
+                {
+                    AwardType = AwardEnum.DayAward.ToString(),
+                    TopicId = id,
+                    UserId = userId,
+                };
+
+                await this.awardsRepository.AddAsync(award);
+                await this.likesRepository.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> MonthAward(string id, string userId)
+        {
+            var userAward = await this.awardsRepository.All()
+                .FirstOrDefaultAsync(x => x.TopicId == id && x.UserId == userId && x.AwardType == "MonthAward");
+
+            if (userAward == null)
+            {
+                var award = new Award
+                {
+                    AwardType = AwardEnum.MonthAward.ToString(),
+                    TopicId = id,
+                    UserId = userId,
+                };
+
+                await this.awardsRepository.AddAsync(award);
+                await this.likesRepository.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> YearAward(string id, string userId)
+        {
+            var userAward = await this.awardsRepository.All()
+                .FirstOrDefaultAsync(x => x.TopicId == id && x.UserId == userId && x.AwardType == "YearAward");
+
+            if (userAward == null)
+            {
+                var award = new Award
+                {
+                    AwardType = AwardEnum.YearAward.ToString(),
+                    TopicId = id,
+                    UserId = userId,
+                };
+
+                await this.awardsRepository.AddAsync(award);
+                await this.likesRepository.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
     }
 }

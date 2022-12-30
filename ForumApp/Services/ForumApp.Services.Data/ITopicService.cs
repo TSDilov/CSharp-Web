@@ -12,7 +12,7 @@
     {
         Task CreateAsync(CreateTopicInputModel input);
 
-        Task<IEnumerable<T>> GetAllAsync<T>(int page, int itemsPerPage = 12);
+        Task<IEnumerable<TopicInListViewModel>> GetAllAsync(int page, int itemsPerPage = 12);
 
         int GetCount();
 
@@ -25,5 +25,11 @@
         Task<bool> LikeTopic(string id, string userId);
 
         Task<bool> DisLikeTopic(string id, string userId);
+
+        Task<bool> DayAward(string id, string userId);
+
+        Task<bool> MonthAward(string id, string userId);
+
+        Task<bool> YearAward(string id, string userId);
     }
 }

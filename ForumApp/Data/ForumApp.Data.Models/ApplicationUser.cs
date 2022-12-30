@@ -28,12 +28,6 @@ namespace ForumApp.Data.Models
 
         public DateTime? DeletedOn { get; set; }
 
-        public bool HasDayAward { get; set; } = true;
-
-        public bool HasMonthAward { get; set; } = true;
-
-        public bool HasYearAward { get; set; } = true;
-
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
