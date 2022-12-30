@@ -20,5 +20,7 @@
         public int MonthAwards { get; set; }
 
         public int YearAwards { get; set; }
+
+        public int RepliesCount { get; set; }
     }
 }

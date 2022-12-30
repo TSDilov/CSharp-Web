@@ -60,6 +60,7 @@
                     DayAwards = x.Awards.Where(a => a.AwardType == "DayAward").Count(),
                     MonthAwards = x.Awards.Where(a => a.AwardType == "MonthAward").Count(),
                     YearAwards = x.Awards.Where(a => a.AwardType == "YearAward").Count(),
+                    RepliesCount = x.Replies.Count(),
                 })
                 .ToListAsync();
         }

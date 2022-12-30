@@ -16,9 +16,14 @@
             <div class="media-body">
                 @topic.Content
                 <br>
+                Replies: @topic.RepliesCount
+                <br>
                 Likes: @topic.LikesCount
+                <br>
                 Day Awards: @topic.DayAwards
+                <br>
                 Month Awards: @topic.MonthAwards
+                <br>
                 Year Awards: @topic.YearAwards
             </div>
             @if (this.User.Identity.IsAuthenticated)
@@ -26,6 +31,7 @@
                 <div>
                     <a asp-action="Reply" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn btn-success">Reply</a>
                 </div>
+                <br>
                 <div>
                     <a asp-controller="Reply" asp-action="All" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn btn-success">ShowReplies</a>
                 </div>
@@ -55,15 +61,15 @@
                     </div>
                     <br>
                     <div>
-                        <a asp-action="DayAward" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn">DayAward</a>
+                        <a asp-action="DayAward" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn btn-dark">DayAward</a>
                     </div>
                     <br>
                     <div>
-                        <a asp-action="MonthAward" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn">MonthAward</a>
+                        <a asp-action="MonthAward" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn btn-dark">MonthAward</a>
                     </div>
                     <br>
                     <div>
-                        <a asp-action="YearAward" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn">YearAward</a>
+                        <a asp-action="YearAward" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn btn-dark">YearAward</a>
                     </div>
                 }
             }           
