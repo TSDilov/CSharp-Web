@@ -42,7 +42,8 @@
                 var model = this.replyService.GetById<ReplyInputModel>(replyId);
                 if (model == null)
                 {
-                    return this.RedirectToAction(nameof(this.All));
+                    var reply = this.replyService.GetById<ReplyInputModel>(replyId);
+                    return this.RedirectToAction(nameof(this.All), new { id = reply.TopicId });
                 }
 
                 return this.View(model);
@@ -66,7 +67,8 @@
                 await this.replyService.UpdateAsync(replyId, model);
             }
 
-            return this.RedirectToAction(nameof(this.All), "Topic");
+            var reply = this.replyService.GetById<ReplyInputModel>(replyId);
+            return this.RedirectToAction(nameof(this.All), new { id = reply.TopicId });
         }
 
         [HttpPost]
@@ -77,7 +79,6 @@
             {
                 await this.replyService.DeleteAsync(replyId);
             }
-
             return this.RedirectToAction(nameof(this.All), "Topic");
         }
 
@@ -95,7 +96,8 @@
                 return this.RedirectToAction("AlreadyLike", "Topic");
             }
 
-            return this.RedirectToAction("All", "Topic");
+            var reply = this.replyService.GetById<ReplyInputModel>(replyId);
+            return this.RedirectToAction(nameof(this.All), new { id = reply.TopicId });
         }
 
         [Authorize]
@@ -112,8 +114,8 @@
                 return this.RedirectToAction("AlreadyLike", "Topic");
             }
 
-            return this.RedirectToAction("All", "Topic");
+            var reply = this.replyService.GetById<ReplyInputModel>(replyId);
+            return this.RedirectToAction(nameof(this.All), new { id = reply.TopicId });
         }
-
     }
 }

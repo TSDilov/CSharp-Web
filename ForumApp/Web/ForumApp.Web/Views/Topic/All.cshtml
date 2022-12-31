@@ -29,11 +29,11 @@
             @if (this.User.Identity.IsAuthenticated)
             {
                 <div>
-                    <a asp-action="Reply" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn btn-success">Reply</a>
+                    <a asp-action="Reply" asp-route-id="@topic.Id" class="btn btn-success">Reply</a>
                 </div>
                 <br>
                 <div>
-                    <a asp-controller="Reply" asp-action="All" asp-route-id="@topic.Id" asp-route-userId="@topic.TopicUserId" class="btn btn-success">ShowReplies</a>
+                    <a asp-controller="Reply" asp-action="All" asp-route-id="@topic.Id" class="btn btn-success">ShowReplies</a>
                 </div>
                 <br>
                 

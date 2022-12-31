@@ -123,7 +123,7 @@
         }
 
         [Authorize]
-        public IActionResult Reply(string id, string userId)
+        public IActionResult Reply()
         {
             var viewModel = new ReplyInputModel();
             return this.View(viewModel);
@@ -132,7 +132,7 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Reply(string id, string userId, ReplyInputModel model)
+        public async Task<IActionResult> Reply(string id, ReplyInputModel model)
         {
             if (this.User.Identity.IsAuthenticated)
             {
@@ -142,7 +142,7 @@
                 }
 
                 model.TopicId = id;
-                model.UserId = userId;
+                model.UserId = this.userManager.GetUserId(this.User);
                 await this.replyService.CreateAsync(model);
             }
 
