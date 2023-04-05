@@ -60,6 +60,7 @@
                     return false;
                 }
 
+                trainer.Rating += 0.5M;
                 trainer.ApplicationUsersTrainers.Add(trainerUser);
                 await this.trainerRepository.SaveChangesAsync();
             }
