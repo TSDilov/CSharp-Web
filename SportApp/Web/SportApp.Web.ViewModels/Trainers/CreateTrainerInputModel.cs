@@ -16,5 +16,7 @@
 
         [Required]
         public string Username { get; set; }
+
+        public decimal Rating { get; set; }
     }
 }

@@ -18,6 +18,8 @@
 
         public string CategoryName { get; set; }
 
+        public decimal Rating { get; set; }
+
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<Trainer, TrainerInListViewModel>()

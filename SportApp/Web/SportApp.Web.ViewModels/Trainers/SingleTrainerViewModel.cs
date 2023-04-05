@@ -34,6 +34,8 @@
 
         public double VotesAverageValue { get; set; }
 
+        public decimal Rating { get; set; }
+
         public int UsersBooked { get; set; }
 
         public void CreateMappings(IProfileExpression configuration)

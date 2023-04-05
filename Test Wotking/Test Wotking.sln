@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test Wotking", "Test Wotking\Test Wotking.csproj", "{BFC69776-CA3B-4B26-9C80-3E7DC2F266C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BFC69776-CA3B-4B26-9C80-3E7DC2F266C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFC69776-CA3B-4B26-9C80-3E7DC2F266C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFC69776-CA3B-4B26-9C80-3E7DC2F266C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFC69776-CA3B-4B26-9C80-3E7DC2F266C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E21E3BA7-3D28-4774-90D9-3C22CC9E8195}
+	EndGlobalSection
+EndGlobal

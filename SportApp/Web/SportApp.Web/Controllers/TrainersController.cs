@@ -78,6 +78,7 @@
         {
             var viewModel = new CreateTrainerInputModel();
             viewModel.CategoryItems = this.categoriesService.GetAllCategoriesAsKeyValuePairs();
+            viewModel.Rating = 0;
             return this.View(viewModel);
         }
 
@@ -92,6 +93,7 @@
                 return this.View(input);
             }
 
+            input.Rating = 0;
             var user = await this.userManager.FindByNameAsync(input.Username);
             try
             {
