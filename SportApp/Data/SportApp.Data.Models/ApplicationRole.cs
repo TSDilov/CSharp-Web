@@ -3,9 +3,8 @@ namespace SportApp.Data.Models
 {
     using System;
 
-    using SportApp.Data.Common.Models;
-
     using Microsoft.AspNetCore.Identity;
+    using SportApp.Data.Common.Models;
 
     public class ApplicationRole : IdentityRole, IAuditInfo, IDeletableEntity
     {

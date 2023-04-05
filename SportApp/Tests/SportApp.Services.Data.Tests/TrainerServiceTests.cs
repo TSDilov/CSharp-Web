@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
 
     using SportApp.Data;
@@ -17,6 +18,7 @@
     {
         private ITrainerService service;
         private ApplicationDbContext applicationDbContext;
+        private readonly UserManager<ApplicationUser> userManager;
 
         [Fact]
         public async Task BookedTrainerReturnFalseIfTrainerDoesNotExist()
@@ -27,7 +29,7 @@
             var trainerRepo = new EfDeletableEntityRepository<Trainer>(this.applicationDbContext);
             var userTrainerRepo = new EfRepository<ApplicationUserTrainer>(this.applicationDbContext);
             var requestTrainerRepo = new EfDeletableEntityRepository<RequestTrainer>(this.applicationDbContext);
-            this.service = new TrainerService(trainerRepo, userTrainerRepo, requestTrainerRepo);
+            this.service = new TrainerService(trainerRepo, userTrainerRepo, requestTrainerRepo, this.userManager, this.applicationDbContext);
 
             var result = await this.service.BookTrainerAsync(2, "user1");
 
@@ -43,7 +45,7 @@
             var trainerRepo = new EfDeletableEntityRepository<Trainer>(this.applicationDbContext);
             var userTrainerRepo = new EfRepository<ApplicationUserTrainer>(this.applicationDbContext);
             var requestTrainerRepo = new EfDeletableEntityRepository<RequestTrainer>(this.applicationDbContext);
-            this.service = new TrainerService(trainerRepo, userTrainerRepo, requestTrainerRepo);
+            this.service = new TrainerService(trainerRepo, userTrainerRepo, requestTrainerRepo, this.userManager, this.applicationDbContext);
 
             var trainer = new Trainer
             {
@@ -73,7 +75,7 @@
             var trainerRepo = new EfDeletableEntityRepository<Trainer>(this.applicationDbContext);
             var userTrainerRepo = new EfRepository<ApplicationUserTrainer>(this.applicationDbContext);
             var requestTrainerRepo = new EfDeletableEntityRepository<RequestTrainer>(this.applicationDbContext);
-            this.service = new TrainerService(trainerRepo, userTrainerRepo, requestTrainerRepo);
+            this.service = new TrainerService(trainerRepo, userTrainerRepo, requestTrainerRepo, this.userManager, this.applicationDbContext);
 
             var trainer = new Trainer
             {

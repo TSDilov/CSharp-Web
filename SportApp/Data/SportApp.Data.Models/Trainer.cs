@@ -7,7 +7,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore.ChangeTracking;
     using SportApp.Data.Common.Models;
 
@@ -41,6 +41,8 @@
 
         [Required]
         public decimal PricePerTraining { get; set; }
+
+        public decimal Rating { get; set; }
 
         [ForeignKey("Category")]
         public int CategotyId { get; set; }

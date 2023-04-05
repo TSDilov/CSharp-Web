@@ -632,6 +632,9 @@ namespace SportApp.Data.Migrations
                     b.Property<decimal>("PricePerTraining")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<decimal>("Rating")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategotyId");
