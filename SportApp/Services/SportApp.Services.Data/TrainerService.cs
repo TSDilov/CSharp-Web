@@ -231,5 +231,13 @@
 
             return trainerRequests;
         }
+
+        public async Task<IEnumerable<T>> GetTopTrainersAsync<T>()
+        {
+            return await this.trainerRepository.AllAsNoTracking()
+                .Where(x => x.Rating > 0)
+                .To<T>()
+                .ToListAsync();
+        }
     }
 }
