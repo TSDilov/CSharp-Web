@@ -1,16 +1,35 @@
 ﻿namespace SportApp.Web.Controllers
 {
     using System.Diagnostics;
+    using System.Threading.Tasks;
 
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using SportApp.Data.Models;
+    using SportApp.Services.Data;
     using SportApp.Web.ViewModels;
+    using SportApp.Web.ViewModels.Trainers;
 
     public class HomeController : BaseController
     {
-        public IActionResult Index()
+        private readonly ITrainerService trainerService;
+
+        public HomeController(
+            ITrainerService trainerService)
         {
-            return this.View();
+            this.trainerService = trainerService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var viewModel = new TrainersListViewModel
+            {
+                Trainers = await this.trainerService.GetTopTrainersAsync<TrainerInListViewModel>(),
+            };
+
+            return this.View(viewModel);
         }
 
         public IActionResult Privacy()

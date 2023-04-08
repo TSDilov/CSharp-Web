@@ -1,10 +1,21 @@
 ﻿@using SportApp.Common
+@model SportApp.Web.ViewModels.Trainers.TrainersListViewModel
 @{
     this.ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>    
+    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
+    <div class="col-md-4">
+        <p>Top trainers:</p>
+        <ul class="list-group">
+            @foreach (var trainer in this.Model.Trainers)
+            {
+                <li class="list-group-item bg-info">@trainer.Name</li>
+            }
+        </ul>
+    </div>
+    <br>
     <img src="images/sport-congresse.jpg" class="img-fluid" alt="Sample Photo" />
 </div>
 
