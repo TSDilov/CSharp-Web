@@ -11,7 +11,9 @@
         <ul class="list-group">
             @foreach (var trainer in this.Model.Trainers)
             {
-                <li class="list-group-item bg-info">@trainer.Name</li>
+                <li class="list-group-item bg-info">
+                    <a asp-controller="Trainers" asp-action="ById" asp-route-id="@trainer.Id">@trainer.Name</a>
+                </li>       
             }
         </ul>
     </div>
